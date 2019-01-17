@@ -87,7 +87,6 @@ pre {
    word-wrap: break-word;
 }
 
-blockquote, q { quotes: &#8220 &#8220; }
 
 blockquote:before, blockquote:after,
 q:before, q:after {
@@ -544,8 +543,8 @@ select {
 	max-width: 100%;
    font-size: 15px;
    line-height: 24px;
-	color: #647373;
-	background: #D3D9D9;
+	color: #647373 !important;
+	background: transparent !important;
 
 }
 
@@ -558,7 +557,6 @@ input[type="password"]:focus,
 input[type="email"]:focus,
 textarea:focus {
    color: #B3B7BC;
-	background-color: #3d4145;
 }
 
 textarea { min-height: 220px; }

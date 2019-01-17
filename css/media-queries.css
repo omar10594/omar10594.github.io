@@ -335,6 +335,15 @@
       line-height: 54px;
    }
 
+   
+   #contact #email-field {
+      margin-left: 0px !important;
+   }
+
+   #contact #name-field {
+      margin-right: 0px !important;
+   }
+
 
 }
 

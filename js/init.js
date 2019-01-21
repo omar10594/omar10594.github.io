@@ -210,7 +210,7 @@
             // process the form
             $.ajax({
                type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-               url         : 'https://us-central1-serverless-contact.cloudfunctions.net/api/omar-lagartija/', // the url where we want to POST
+               url         : 'https://us-central1-serverless-contact-3b082.cloudfunctions.net/api/omar-lopez/', // the url where we want to POST
                data        : formData, // our data object
                dataType    : 'json', // what type of data do we expect back from the server
                encode      : true

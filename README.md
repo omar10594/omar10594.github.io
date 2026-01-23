@@ -30,32 +30,3 @@ Designed for high performance, accessibility, and SEO.
    npm run build
    ```
    Output will be in `dist/`.
-
-## Deployment
-
-This repository uses **GitHub Pages** with a **Custom Domain**.
-
-### Configuration
-- **CNAME**: The file `public/CNAME` contains the custom domain `lopezlopez.com.mx`. This ensures GitHub Pages preserves the domain across deployments.
-- **Astro Config**: `astro.config.mjs` has `site` set to `https://lopezlopez.com.mx` to generate correct canonical URLs and sitemaps.
-
-### Deployment Method
-The site is configured to deploy via **GitHub Actions**. Ensure your repository Settings > Pages has "Build and deployment source" set to **GitHub Actions**.
-
-## Maintenance & Performance
-
-This site is optimized for:
-- **Lighthouse Performance**: 95+ (Minimal JS, static HTML).
-- **Core Web Vitals**: Low CLS, fast LCP.
-- **SEO**: Semantic HTML, Open Graph tags, Sitemap, JSON-LD (if added).
-
-To maintain high scores:
-- Avoid adding heavy JavaScript libraries.
-- Optimize images before adding them (though Astro attempts to optimize assets, pre-optimized WebP/AVIF is better).
-- Keep the design clean and minimal.
-
-## Updates
-Edit the content in `src/components/*.astro` files.
-- `src/components/Hero.astro`: Header info.
-- `src/components/Experience.astro`: Job history.
-- `src/components/Projects.astro`: Project cards.

@@ -1,0 +1,33 @@
+---
+const navItems = [
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Experience", href: "#experience" },
+  { name: "Projects", href: "#projects" },
+  { name: "Education", href: "#education" },
+  { name: "Contact", href: "#contact" },
+];
+---
+
+<header class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-100 shadow-sm">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex-shrink-0">
+        <a href="#" class="font-bold text-xl tracking-tight text-gray-900">
+          G. Omar
+        </a>
+      </div>
+      <nav class="hidden md:flex space-x-8">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
+          >
+            {item.name}
+          </a>
+        ))}
+      </nav>
+      {/* Mobile menu button could go here - keeping it simple for now */}
+    </div>
+  </div>
+</header>

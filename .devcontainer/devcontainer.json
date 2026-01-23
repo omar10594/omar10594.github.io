@@ -1,0 +1,21 @@
+{
+    "name": "Guillermo Portafolio Dev Container",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node",
+    "forwardPorts": [
+        4321
+    ],
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+    },
+    "postCreateCommand": "npm install",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "astro-build.astro-vscode",
+                "bradlc.vscode-tailwindcss",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode"
+            ]
+        }
+    }
+}

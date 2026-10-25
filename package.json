@@ -12,7 +12,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "astro sync && tsc --noEmit",
     "test": "node --test tests/*.test.ts",
     "audit": "npm audit --audit-level=low",
     "check": "npm run typecheck && npm test && npm run build"

@@ -10,7 +10,7 @@ Designed for high performance, accessibility, and SEO.
 
 - **Framework**: [Astro](https://astro.build) (Static Site Generation)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com) (Utility-first)
-- **Deployment**: GitHub Pages (via GitHub Actions)
+- **Deployment**: Cloudflare Workers Static Assets (via GitHub Actions)
 
 ## Local Development
 
@@ -30,3 +30,32 @@ Designed for high performance, accessibility, and SEO.
    npm run build
    ```
    Output will be in `dist/`.
+
+## Production deployment
+
+Pushes to `master` run `.github/workflows/deploy.yml`: `npm ci`, `npm run build`,
+then Wrangler deploys `dist/` to the `lopezlopez-portfolio` Worker. Pull requests
+build the site without publishing. A manual run is available in GitHub Actions.
+
+The repository secret `CLOUDFLARE_API_TOKEN` authorizes deployment to this Worker.
+Keep its value only in GitHub Actions secrets; replace it before its configured
+expiry or if revoked. Cloudflare account and domain settings are declared in
+`wrangler.jsonc`. `lopezlopez.com.mx` is the Worker's custom domain. A Cloudflare
+zone redirect sends `www.lopezlopez.com.mx` to the canonical apex domain.
+Workers development and preview URLs are disabled. No Worker application code,
+server rendering, database, or Astro Cloudflare adapter is required.
+
+The migration preserves `package.json`, `package-lock.json`, and the existing
+site content. Dependency and design updates are intentionally deferred.
+
+For a manual deployment with an authorized Cloudflare session:
+
+```bash
+npm ci
+npm run build
+npx wrangler@4.149.0 deploy
+```
+
+To roll back a content release, revert its commit on `master` and let the same
+workflow publish it. GitHub Pages is disabled; re-enabling the previous provider
+would also require restoring its workflow, custom domain and DNS configuration.

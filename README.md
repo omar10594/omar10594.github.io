@@ -45,6 +45,11 @@ zone redirect sends `www.lopezlopez.com.mx` to the canonical apex domain.
 Workers development and preview URLs are disabled. No Worker application code,
 server rendering, database, or Astro Cloudflare adapter is required.
 
+The existing site build uses Node.js 20. Deployment then uses Node.js 24 and
+Wrangler 4.149.0 installed in the runner's temporary directory, keeping the
+project's dependency manifest and lockfile unchanged. The deployment token is
+limited to editing `lopezlopez-portfolio` and expires on October 24, 2027.
+
 The migration preserves `package.json`, `package-lock.json`, and the existing
 site content. Dependency and design updates are intentionally deferred.
 

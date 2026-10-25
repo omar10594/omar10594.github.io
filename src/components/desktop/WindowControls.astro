@@ -1,0 +1,9 @@
+---
+interface Props { name: string; }
+const { name } = Astro.props;
+---
+<div class="window-controls">
+  <button class="window-control close-control" type="button" data-window-action="close" aria-label={`Close ${name}`} title={`Close ${name}`}><span aria-hidden="true">×</span></button>
+  <button class="window-control minimize-control" type="button" data-window-action="minimize" aria-label={`Minimize ${name}`} title={`Minimize ${name}`}><span aria-hidden="true">−</span></button>
+  <button class="window-control maximize-control" type="button" data-window-action="maximize" aria-label={`Maximize ${name}`} title={`Maximize ${name}`}><span aria-hidden="true">+</span></button>
+</div>

@@ -1,29 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Skills from '../components/Skills.astro';
-import Experience from '../components/Experience.astro';
-import Projects from '../components/Projects.astro';
-import Education from '../components/Education.astro';
-import Contact from '../components/Contact.astro';
+import Desktop from '../components/desktop/Desktop.astro';
+import '../styles/desktop.css';
 ---
-
-<Layout title="Guillermo Omar López López - Portfolio">
-	<Header />
-	<main>
-		<Hero />
-		<About />
-		<Skills />
-		<Experience />
-		<Projects />
-		<Education />
-		<Contact />
-	</main>
-    <footer class="bg-gray-900 border-t border-gray-800 py-8">
-        <div class="max-w-4xl mx-auto px-4 text-center text-gray-500 text-sm">
-            &copy; {new Date().getFullYear()} Guillermo Omar López López. All rights reserved.
-        </div>
-    </footer>
+<Layout title="Guillermo Omar López López — Web & systems" description="A personal workspace. Explore the work and thinking of Guillermo Omar, a full-stack and infrastructure engineer.">
+  <Desktop />
 </Layout>

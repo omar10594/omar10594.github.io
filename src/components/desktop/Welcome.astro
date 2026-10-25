@@ -1,0 +1,21 @@
+---
+const lettering = [
+  "   ___  _ __ ___   __ _ _ __ ",
+  "  / _ \\| '_ ` _ \\ / _` | '__|",
+  " | (_) | | | | | | (_| | |   ",
+  "  \\___/|_| |_| |_|\\__,_|_|   ",
+].join('\n');
+const slash = ['    /', '   / ', '  /  ', ' /   '].join('\n');
+---
+<div class="terminal-welcome">
+  <div class="ascii-mark" aria-hidden="true"><pre>{lettering}</pre><pre class="ascii-slash">{slash}</pre></div>
+  <h1>Guillermo Omar López López</h1>
+  <p class="welcome-line">I build for the web.</p>
+  <nav class="welcome-paths" aria-label="Explore the workspace">
+    <button class="path-link primary-path" type="button" data-command="open ~/about.md"><span aria-hidden="true">&gt;</span> about.md</button>
+    <button class="path-link" type="button" data-command="cd ~/cv"><span aria-hidden="true">&gt;</span> cv/</button>
+    <button class="path-link" type="button" data-command="open ~/contact.md"><span aria-hidden="true">&gt;</span> contact.md</button>
+    <button class="path-link" type="button" data-command="cd ~/projects"><span aria-hidden="true">&gt;</span> projects/<small>next chapter</small></button>
+  </nav>
+  <p class="welcome-hint">Click a file, or type <button type="button" class="inline-command" data-command="help">help</button>.</p>
+</div>

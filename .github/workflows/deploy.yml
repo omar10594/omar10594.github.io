@@ -15,41 +15,36 @@ concurrency:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-        
+
       - name: Setup Node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: 20
+          node-version-file: .node-version
           cache: npm
-          
+
       - name: Install dependencies
         run: npm ci
-        
-      - name: Build with Astro
-        run: npm run build
-        
-      - name: Setup deployment runtime
-        if: github.event_name != 'pull_request'
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        with:
-          node-version: 24
 
-      - name: Install isolated deployment CLI
-        if: github.event_name != 'pull_request'
-        run: npm install --prefix "$RUNNER_TEMP/cloudflare-cli" --no-audit --no-fund wrangler@4.149.0
+      - name: Check types, tests and production build
+        run: npm run check
+
+      - name: Audit all dependencies
+        run: npm run audit
 
       - name: Deploy static assets to Cloudflare
-        if: github.event_name != 'pull_request'
+        if: >-
+          github.ref == 'refs/heads/master' &&
+          (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         run: |
-          node "$RUNNER_TEMP/cloudflare-cli/node_modules/wrangler/bin/wrangler.js" versions upload --tag "$GITHUB_SHA"
-          node "$RUNNER_TEMP/cloudflare-cli/node_modules/wrangler/bin/wrangler.js" versions deploy --version-tag "$GITHUB_SHA" --percentage 100 --yes --message "$GITHUB_SHA"
+          npm exec --no -- wrangler versions upload --tag "$GITHUB_SHA"
+          npm exec --no -- wrangler versions deploy --version-tag "$GITHUB_SHA" --percentage 100 --yes --message "$GITHUB_SHA"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: d892c10479122ea3f1c4258392f9770f

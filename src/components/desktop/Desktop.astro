@@ -1,0 +1,61 @@
+---
+import Welcome from './Welcome.astro';
+import WindowControls from './WindowControls.astro';
+import { documents } from '../../lib/workspace/content';
+const initialDocuments = documents.filter((doc) => ['About', 'Contact'].includes(doc.title));
+---
+<main id="desktop" class="desktop" aria-label="Omar's workspace">
+  <a class="skip-link" href="#command-input">Skip to terminal</a>
+  <div class="desktop-topline" aria-hidden="true"><span>omar / personal workspace</span><span>web · systems · curiosity</span></div>
+  <div class="desktop-signature" aria-hidden="true">Guillermo Omar</div>
+  <div id="window-area" class="window-area">
+    <section id="window-terminal" class="workspace-window terminal-window" data-window="terminal" aria-label="Terminal" tabindex="-1">
+      <header class="window-titlebar" data-drag-handle>
+        <WindowControls name="terminal" />
+        <span class="window-title">omar — <span id="terminal-title-path">~</span></span>
+        <button type="button" class="titlebar-utility" data-command="help" aria-label="Show terminal help" title="Show terminal help">?</button>
+      </header>
+      <div class="terminal-body" id="terminal-body">
+        <div id="terminal-output" class="terminal-output" role="log" aria-label="Terminal output" aria-live="off" tabindex="0">
+          <div class="command-echo initial-command"><span class="prompt-user">omar@workbench</span><span class="prompt-punctuation">:</span><span class="prompt-path">~</span><span class="prompt-punctuation">$</span> <span>info</span></div>
+          <Welcome />
+        </div>
+        <form id="terminal-form" class="terminal-form" autocomplete="off">
+          <label class="command-prompt" for="command-input"><span class="prompt-user">omar</span><span class="prompt-punctuation">:</span><span id="prompt-path" class="prompt-path">~</span><span class="prompt-punctuation">$</span><span class="sr-only"> Enter a command</span></label>
+          <input id="command-input" name="command" type="text" aria-label="Terminal command" aria-describedby="input-help" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="2000" enterkeyhint="send" />
+        </form>
+      </div>
+      <footer class="terminal-status"><span id="input-help">Tab to complete <span aria-hidden="true">·</span> ↑↓ history</span><span id="terminal-dimensions" aria-label="Terminal size"></span></footer>
+      <div class="resize-handle" data-resize-handle aria-hidden="true"></div>
+    </section>
+    {initialDocuments.map((doc) => (
+      <section id={`window-${doc.title.toLowerCase()}`} class={`workspace-window document-window initial-${doc.title.toLowerCase()}${doc.title === 'About' ? ' is-active' : ''}`} data-window={doc.title.toLowerCase()} data-document-path={doc.path} aria-label={doc.title} tabindex="-1">
+        <header class="window-titlebar" data-drag-handle>
+          <WindowControls name={doc.title} />
+          <span class="window-title">{doc.path.split('/').pop()}</span>
+          <span class="file-type" aria-hidden="true">md</span>
+        </header>
+        <article class="document-content markdown-content" data-document-content><pre>{doc.content}</pre></article>
+        <div class="resize-handle" data-resize-handle aria-hidden="true"></div>
+      </section>
+    ))}
+  </div>
+  <footer class="desktop-taskbar" aria-label="Workspace navigation">
+    <span class="taskbar-label" aria-hidden="true">~/</span>
+    <nav id="window-tasks" class="window-tasks" aria-label="Open or restore windows">
+      <button class="task-button" type="button" data-task="terminal" aria-pressed="false"><span aria-hidden="true">&gt;_</span> Terminal</button>
+      <button class="task-button is-current" type="button" data-task="about" aria-pressed="true">about.md</button>
+      <button class="task-button" type="button" data-task="contact" aria-pressed="false">contact.md</button>
+    </nav>
+    <button class="reset-desktop" type="button" id="reset-desktop" title="Restore the initial window arrangement">Reset<span class="reset-desktop-long"> desktop</span></button>
+  </footer>
+  <p id="workspace-announcement" class="sr-only" role="status" aria-live="polite"></p>
+  <p id="window-keyboard-help" class="sr-only">Focus the title bar. Arrow keys move the window; Shift and arrow keys resize it. Enter maximizes or restores it. Home centers it.</p>
+  <span class="cell-measure" id="cell-measure" aria-hidden="true">M</span>
+  <noscript><div class="no-script-note">The interactive terminal needs JavaScript. You can still find me on <a href="https://github.com/omar10594">GitHub</a> or <a href="https://www.linkedin.com/in/omar10594/">LinkedIn</a>.</div></noscript>
+</main>
+<template id="welcome-template"><Welcome /></template>
+<script>
+  import { initializeDesktop } from '../../lib/workspace/desktop';
+  initializeDesktop();
+</script>

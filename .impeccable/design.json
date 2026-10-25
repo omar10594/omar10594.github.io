@@ -1,0 +1,350 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-25T21:52:36+00:00",
+  "title": "Design System: Guillermo Omar — Personal Workspace",
+  "extensions": {
+    "colorMeta": {
+      "desktop": {
+        "role": "neutral",
+        "displayName": "Deep Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0270 263.38)",
+          "oklch(27% 0.0270 263.38)",
+          "oklch(38% 0.0270 263.38)",
+          "oklch(50% 0.0270 263.38)",
+          "oklch(61% 0.0270 263.38)",
+          "oklch(73% 0.0270 263.38)",
+          "oklch(84% 0.0270 263.38)",
+          "oklch(95% 0.0270 263.38)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Window Blue-Black",
+        "tonalRamp": [
+          "oklch(15% 0.0293 259.82)",
+          "oklch(27% 0.0293 259.82)",
+          "oklch(38% 0.0293 259.82)",
+          "oklch(50% 0.0293 259.82)",
+          "oklch(61% 0.0293 259.82)",
+          "oklch(73% 0.0293 259.82)",
+          "oklch(84% 0.0293 259.82)",
+          "oklch(95% 0.0293 259.82)"
+        ]
+      },
+      "chrome": {
+        "role": "neutral",
+        "displayName": "Chrome Slate",
+        "tonalRamp": [
+          "oklch(15% 0.0321 258.31)",
+          "oklch(27% 0.0321 258.31)",
+          "oklch(38% 0.0321 258.31)",
+          "oklch(50% 0.0321 258.31)",
+          "oklch(61% 0.0321 258.31)",
+          "oklch(73% 0.0321 258.31)",
+          "oklch(84% 0.0321 258.31)",
+          "oklch(95% 0.0321 258.31)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Window Line",
+        "tonalRamp": [
+          "oklch(15% 0.0386 257.28)",
+          "oklch(27% 0.0386 257.28)",
+          "oklch(38% 0.0386 257.28)",
+          "oklch(50% 0.0386 257.28)",
+          "oklch(61% 0.0386 257.28)",
+          "oklch(73% 0.0386 257.28)",
+          "oklch(84% 0.0386 257.28)",
+          "oklch(95% 0.0386 257.28)"
+        ]
+      },
+      "line-quiet": {
+        "role": "neutral",
+        "displayName": "Quiet Line",
+        "tonalRamp": [
+          "oklch(15% 0.0402 258.82)",
+          "oklch(27% 0.0402 258.82)",
+          "oklch(38% 0.0402 258.82)",
+          "oklch(50% 0.0402 258.82)",
+          "oklch(61% 0.0402 258.82)",
+          "oklch(73% 0.0402 258.82)",
+          "oklch(84% 0.0402 258.82)",
+          "oklch(95% 0.0402 258.82)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Warm Chalk",
+        "tonalRamp": [
+          "oklch(15% 0.0080 73.74)",
+          "oklch(27% 0.0080 73.74)",
+          "oklch(38% 0.0080 73.74)",
+          "oklch(50% 0.0080 73.74)",
+          "oklch(61% 0.0080 73.74)",
+          "oklch(73% 0.0080 73.74)",
+          "oklch(84% 0.0080 73.74)",
+          "oklch(95% 0.0080 73.74)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "tonalRamp": [
+          "oklch(15% 0.0318 260.69)",
+          "oklch(27% 0.0318 260.69)",
+          "oklch(38% 0.0318 260.69)",
+          "oklch(50% 0.0318 260.69)",
+          "oklch(61% 0.0318 260.69)",
+          "oklch(73% 0.0318 260.69)",
+          "oklch(84% 0.0318 260.69)",
+          "oklch(95% 0.0318 260.69)"
+        ]
+      },
+      "orange": {
+        "role": "primary",
+        "displayName": "Active Orange",
+        "tonalRamp": [
+          "oklch(15% 0.1497 52.77)",
+          "oklch(27% 0.1497 52.77)",
+          "oklch(38% 0.1497 52.77)",
+          "oklch(50% 0.1497 52.77)",
+          "oklch(61% 0.1497 52.77)",
+          "oklch(73% 0.1497 52.77)",
+          "oklch(84% 0.1497 52.77)",
+          "oklch(95% 0.1497 52.77)"
+        ]
+      },
+      "lilac": {
+        "role": "secondary",
+        "displayName": "Prompt Lilac",
+        "tonalRamp": [
+          "oklch(15% 0.1324 304.37)",
+          "oklch(27% 0.1324 304.37)",
+          "oklch(38% 0.1324 304.37)",
+          "oklch(50% 0.1324 304.37)",
+          "oklch(61% 0.1324 304.37)",
+          "oklch(73% 0.1324 304.37)",
+          "oklch(84% 0.1324 304.37)",
+          "oklch(95% 0.1324 304.37)"
+        ]
+      },
+      "link": {
+        "role": "secondary",
+        "displayName": "Link Blue",
+        "tonalRamp": [
+          "oklch(15% 0.0991 264.04)",
+          "oklch(27% 0.0991 264.04)",
+          "oklch(38% 0.0991 264.04)",
+          "oklch(50% 0.0991 264.04)",
+          "oklch(61% 0.0991 264.04)",
+          "oklch(73% 0.0991 264.04)",
+          "oklch(84% 0.0991 264.04)",
+          "oklch(95% 0.0991 264.04)"
+        ]
+      },
+      "control-close": {
+        "role": "tertiary",
+        "displayName": "Close Coral",
+        "tonalRamp": [
+          "oklch(15% 0.1757 24.51)",
+          "oklch(27% 0.1757 24.51)",
+          "oklch(38% 0.1757 24.51)",
+          "oklch(50% 0.1757 24.51)",
+          "oklch(61% 0.1757 24.51)",
+          "oklch(73% 0.1757 24.51)",
+          "oklch(84% 0.1757 24.51)",
+          "oklch(95% 0.1757 24.51)"
+        ]
+      },
+      "control-minimize": {
+        "role": "tertiary",
+        "displayName": "Minimize Gold",
+        "tonalRamp": [
+          "oklch(15% 0.1236 88.15)",
+          "oklch(27% 0.1236 88.15)",
+          "oklch(38% 0.1236 88.15)",
+          "oklch(50% 0.1236 88.15)",
+          "oklch(61% 0.1236 88.15)",
+          "oklch(73% 0.1236 88.15)",
+          "oklch(84% 0.1236 88.15)",
+          "oklch(95% 0.1236 88.15)"
+        ]
+      },
+      "control-maximize": {
+        "role": "tertiary",
+        "displayName": "Maximize Green",
+        "tonalRamp": [
+          "oklch(15% 0.1261 149.35)",
+          "oklch(27% 0.1261 149.35)",
+          "oklch(38% 0.1261 149.35)",
+          "oklch(50% 0.1261 149.35)",
+          "oklch(61% 0.1261 149.35)",
+          "oklch(73% 0.1261 149.35)",
+          "oklch(84% 0.1261 149.35)",
+          "oklch(95% 0.1261 149.35)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "ASCII Display",
+        "purpose": "Character-based welcome lettering."
+      },
+      "headline": {
+        "displayName": "Welcome Name",
+        "purpose": "Personal name below the ASCII mark."
+      },
+      "title": {
+        "displayName": "Window Title",
+        "purpose": "Centered filename or terminal path."
+      },
+      "body": {
+        "displayName": "Document Body",
+        "purpose": "Markdown reading text."
+      },
+      "terminal": {
+        "displayName": "Terminal Input",
+        "purpose": "Prompt and command entry."
+      },
+      "label": {
+        "displayName": "Supporting Hint",
+        "purpose": "Small terminal hints."
+      },
+      "signature": {
+        "displayName": "Desktop Signature",
+        "purpose": "Small background signature only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "window-ambient",
+        "value": "0 22px 62px #01040a70",
+        "purpose": "Structural separation between opaque windows and desktop."
+      },
+      {
+        "name": "input-focus-rule",
+        "value": "0 1px 0 var(--orange)",
+        "purpose": "Focus within the terminal input row."
+      }
+    ],
+    "motion": [
+      {
+        "name": "window-arrive",
+        "value": "240ms cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Brightness from .85 to 1; only under prefers-reduced-motion: no-preference."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "(max-width: 700px)"
+      },
+      {
+        "name": "short-viewport",
+        "value": "(max-height: 660px)"
+      },
+      {
+        "name": "short-terminal-container",
+        "value": "terminal (max-height: 610px)"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary welcome path",
+      "kind": "button",
+      "refersTo": "path-primary",
+      "description": "Selected file path with an aligned orange chevron.",
+      "html": "<button type=\"button\" class=\"ds-path ds-path-primary\"><span aria-hidden=\"true\">&gt;</span>about.md</button>",
+      "css": ".ds-path{display:flex;gap:12px;align-items:center;min-height:36px;padding:3px 12px 3px 0;font-size:16px;text-align:left;border:0;border-radius:4px;background:none;cursor:pointer;font-family:'Geist Mono',monospace;}.ds-path>span{width:14px;color:transparent}.ds-path:hover,.ds-path:focus-visible{background:#ff985215;color:var(--orange,#ff9852)}.ds-path:hover>span{color:var(--orange,#ff9852)}.ds-path:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:4px;}.ds-path-primary,.ds-path-primary>span{color:var(--orange,#ff9852)}"
+    },
+    {
+      "name": "Welcome path",
+      "kind": "button",
+      "refersTo": "path-default",
+      "description": "Plain file action that adopts orange on hover or focus.",
+      "html": "<button type=\"button\" class=\"ds-path ds-path-default\"><span aria-hidden=\"true\">&gt;</span>cv/</button>",
+      "css": ".ds-path{display:flex;gap:12px;align-items:center;min-height:36px;padding:3px 12px 3px 0;font-size:16px;text-align:left;border:0;border-radius:4px;background:none;cursor:pointer;font-family:'Geist Mono',monospace;}.ds-path>span{width:14px;color:transparent}.ds-path:hover,.ds-path:focus-visible{background:#ff985215;color:var(--orange,#ff9852)}.ds-path:hover>span{color:var(--orange,#ff9852)}.ds-path:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:4px;}.ds-path-default{color:var(--ink,#eeeae5)}"
+    },
+    {
+      "name": "Command input",
+      "kind": "input",
+      "refersTo": "command-input",
+      "description": "Borderless prompt row with an orange focus rule and caret.",
+      "html": "<form class=\"ds-command\"><label for=\"ds-input\"><span class=\"ds-user\">omar</span><span class=\"ds-punctuation\">:</span><span class=\"ds-path-label\">~</span><span class=\"ds-punctuation\">$</span></label><input id=\"ds-input\" aria-label=\"Terminal command\" type=\"text\" spellcheck=\"false\" autocomplete=\"off\"></form>",
+      "css": ".ds-command{display:flex;align-items:baseline;gap:10px;min-height:28px;background:var(--surface,#0c1421);font-family:'Geist Mono',monospace;}.ds-command label{flex:0 1 auto;max-width:45%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}.ds-user{color:var(--lilac,#c39af4)}.ds-path-label{color:#c5c0f1}.ds-punctuation{color:var(--muted,#a3afc3)}.ds-command input{min-width:0;flex:1;height:29px;padding:0;color:var(--ink,#eeeae5);background:transparent;border:0;border-radius:0;font:inherit;font-size:14px;caret-color:var(--orange,#ff9852)}.ds-command input:focus{outline:none}.ds-command:focus-within{box-shadow:0 1px 0 var(--orange,#ff9852)}"
+    },
+    {
+      "name": "Window controls",
+      "kind": "button",
+      "refersTo": "window-controls",
+      "description": "Conventional colored window dots reveal their symbols on hover or focus.",
+      "html": "<div class=\"ds-controls\"><button class=\"ds-control ds-close\" type=\"button\" aria-label=\"Close window\"><span aria-hidden=\"true\">×</span></button><button class=\"ds-control ds-minimize\" type=\"button\" aria-label=\"Minimize window\"><span aria-hidden=\"true\">−</span></button><button class=\"ds-control ds-maximize\" type=\"button\" aria-label=\"Maximize window\"><span aria-hidden=\"true\">+</span></button></div>",
+      "css": ".ds-controls{display:flex;gap:8px;align-items:center;padding:12px;background:var(--chrome,#182231)}.ds-control{position:relative;width:12px;height:12px;min-width:12px;border:0;border-radius:50%;padding:0;color:#17202e;line-height:12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Geist Mono',monospace;}.ds-control:after{content:\"\";position:absolute;inset:-6px -3px}.ds-control span{opacity:0}.ds-controls:hover span,.ds-controls:focus-within span{opacity:1}.ds-close{background:#ff706b}.ds-minimize{background:#eac463}.ds-maximize{background:#69bd7b}.ds-control:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:4px;}"
+    },
+    {
+      "name": "Document window",
+      "kind": "card",
+      "refersTo": "document-window",
+      "description": "Opaque framed reading surface with a restrained title bar and Markdown markers.",
+      "html": "<section class=\"ds-window\" aria-label=\"Example document\"><header class=\"ds-titlebar\" tabindex=\"0\"><span class=\"ds-title\">about.md</span><span class=\"ds-type\">md</span></header><article class=\"ds-document\"><h2>About</h2><p>I build web products and the systems behind them.</p><p>Explore <a href=\"https://github.com/omar10594\">GitHub</a>.</p></article></section>",
+      "css": ".ds-window{display:flex;flex-direction:column;overflow:hidden;max-width:440px;background:var(--surface,#0c1421);border:1px solid var(--line,#39475b);border-radius:10px;color:var(--ink,#eeeae5);box-shadow:0 22px 62px #01040a70;font-family:'Geist Mono',monospace;}.ds-titlebar{position:relative;display:flex;align-items:center;justify-content:center;flex:0 0 38px;padding:0 12px;background:var(--chrome,#182231);border-bottom:1px solid var(--line-quiet,#253246)}.ds-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:#b9c5d8}.ds-type{position:absolute;right:12px;font-size:10px;color:var(--muted,#a3afc3)}.ds-titlebar:focus-visible,.ds-document a:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:4px;}.ds-document{overflow:auto;padding:23px 25px 28px;font-size:12px;line-height:1.9;color:#c4ccda;overflow-wrap:anywhere}.ds-document h2{color:var(--ink,#eeeae5);font-size:15px;font-weight:500;line-height:1.6;margin:0 0 14px}.ds-document h2:before{content:\"# \";color:var(--orange,#ff9852)}.ds-document p{margin:0 0 16px;max-width:70ch}.ds-document a{color:var(--link,#9ebeff);text-underline-offset:4px;text-decoration-thickness:1px}.ds-document a:hover{color:var(--ink,#eeeae5)}"
+    },
+    {
+      "name": "Task navigation",
+      "kind": "nav",
+      "refersTo": "task-navigation",
+      "description": "Persistent text tasks; the active task is marked by an orange underline.",
+      "html": "<nav class=\"ds-tasks\" aria-label=\"Open or restore windows\"><button type=\"button\" class=\"ds-task\" aria-pressed=\"false\">&gt;_ Terminal</button><button type=\"button\" class=\"ds-task ds-current\" aria-pressed=\"true\">about.md</button><button type=\"button\" class=\"ds-task\" aria-pressed=\"false\">contact.md</button></nav>",
+      "css": ".ds-tasks{display:flex;align-items:center;gap:5px;overflow-x:auto;padding:7px 0;background:#0a111e;border-top:1px solid var(--line-quiet,#253246)}.ds-task{flex-shrink:0;position:relative;height:38px;padding:0 15px;border:0;background:none;color:#b7c2d5;font-size:11px;white-space:nowrap;cursor:pointer;font-family:'Geist Mono',monospace;}.ds-current{color:var(--ink,#eeeae5)}.ds-current:after{content:\"\";position:absolute;bottom:2px;left:15px;right:15px;height:2px;background:var(--orange,#ff9852)}.ds-minimized{color:#9ba7bc}.ds-task:hover{color:var(--orange,#ff9852)}.ds-task:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:4px;}"
+    },
+    {
+      "name": "File listing action",
+      "kind": "button",
+      "refersTo": "file-link",
+      "description": "Underlined file result; directories use lilac instead of Link Blue.",
+      "html": "<div class=\"ds-listing\"><button type=\"button\" class=\"ds-file\">about.md</button><button type=\"button\" class=\"ds-file ds-directory\">projects/</button></div>",
+      "css": ".ds-listing{display:flex;flex-wrap:wrap;gap:9px 24px;padding:5px 0 16px;background:var(--surface,#0c1421)}.ds-file{display:inline-flex;gap:13px;align-items:baseline;min-height:27px;padding:0;border:0;background:none;color:var(--link,#9ebeff);text-align:left;font-size:12px;text-decoration:underline;text-underline-offset:4px;cursor:pointer;font-family:'Geist Mono',monospace;}.ds-directory{color:var(--lilac,#c39af4)}.ds-file:hover{color:var(--orange,#ff9852)}.ds-file:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:4px;}"
+    },
+    {
+      "name": "Contact action",
+      "kind": "button",
+      "refersTo": "contact-action",
+      "description": "Orange email action placed before social links; empty status takes no height.",
+      "html": "<div class=\"ds-contact\"><button type=\"button\" class=\"ds-contact-action\">Reveal email</button><p class=\"ds-contact-status\" role=\"status\"></p></div>",
+      "css": ".ds-contact{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:0;background:var(--surface,#0c1421);font-family:'Geist Mono',monospace;}.ds-contact-action{display:inline-flex;align-items:center;min-height:34px;padding:3px 0;border:0;background:none;color:var(--orange,#ff9852);font:inherit;font-size:12px;text-decoration:underline;text-underline-offset:5px;cursor:pointer}.ds-contact-action:hover{color:var(--ink,#eeeae5)}.ds-contact-action:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:4px;}.ds-contact-status{flex-basis:100%;min-height:17px;margin:0;font-size:10px;color:var(--muted,#a3afc3)}.ds-contact-status:empty{min-height:0}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A Small Personal Development Environment",
+    "overview": "The workspace is a quiet, working desktop: deep ink outside, opaque blue-black windows inside, warm chalk text and a small handwritten signature behind the windows. A generous background terminal carries the real ASCII lettering, prompt and file paths. About and Contact start open in front of it, with About active.\n\nWindow chrome is restrained and familiar. Orange identifies the current path, focus and selected task; lilac distinguishes the prompt and directories. The layout leaves room around a centered welcome, then becomes denser when commands produce useful output. Markdown documents share the same visual language and overlap the terminal as working windows.",
+    "keyCharacteristics": [
+      "Real character-based identity and navigation.",
+      "Opaque, bordered windows on a deep ink desktop.",
+      "Warm chalk reading text with orange activity and lilac prompts.",
+      "A small script signature reserved for the desktop background.",
+      "Recoverable windows and one active surface on compact screens."
+    ],
+    "rules": [
+      {
+        "name": "The Activity Rule.",
+        "body": "Use orange to identify an action, current state or focus; retain warm chalk for sustained reading.",
+        "section": "colors"
+      },
+      {
+        "name": "The Character Integrity Rule.",
+        "body": "Render the identity as preformatted text in Geist Mono; preserve the character grid as the terminal changes size.",
+        "section": "typography"
+      },
+      {
+        "name": "The Recoverable Workspace Rule.",
+        "body": "Keep the task strip and Reset accessible as windows move, close or minimize; compact screens show one active window at a time.",
+        "section": "layout"
+      }
+    ],
+    "dos": [],
+    "donts": []
+  }
+}

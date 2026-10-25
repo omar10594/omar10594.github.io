@@ -34,7 +34,8 @@ Designed for high performance, accessibility, and SEO.
 ## Production deployment
 
 Pushes to `master` run `.github/workflows/deploy.yml`: `npm ci`, `npm run build`,
-then Wrangler deploys `dist/` to the `lopezlopez-portfolio` Worker. Pull requests
+then Wrangler uploads `dist/` as a version tagged with the commit SHA and deploys
+that exact version to 100% of traffic on `lopezlopez-portfolio`. Pull requests
 build the site without publishing. A manual run is available in GitHub Actions.
 
 The repository secret `CLOUDFLARE_API_TOKEN` authorizes deployment to this Worker.
@@ -49,6 +50,8 @@ The existing site build uses Node.js 20. Deployment then uses Node.js 24 and
 Wrangler 4.149.0 installed in the runner's temporary directory, keeping the
 project's dependency manifest and lockfile unchanged. The deployment token is
 limited to editing `lopezlopez-portfolio` and expires on October 24, 2027.
+The workflow uses version upload/deploy commands so it does not change custom
+domains or need zone permissions. Initial domain setup remains in `wrangler.jsonc`.
 
 The migration preserves `package.json`, `package-lock.json`, and the existing
 site content. Dependency and design updates are intentionally deferred.

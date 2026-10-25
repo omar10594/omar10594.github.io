@@ -47,7 +47,9 @@ jobs:
 
       - name: Deploy static assets to Cloudflare
         if: github.event_name != 'pull_request'
-        run: node "$RUNNER_TEMP/cloudflare-cli/node_modules/wrangler/bin/wrangler.js" deploy
+        run: |
+          node "$RUNNER_TEMP/cloudflare-cli/node_modules/wrangler/bin/wrangler.js" versions upload --tag "$GITHUB_SHA"
+          node "$RUNNER_TEMP/cloudflare-cli/node_modules/wrangler/bin/wrangler.js" versions deploy --version-tag "$GITHUB_SHA" --percentage 100 --yes --message "$GITHUB_SHA"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: d892c10479122ea3f1c4258392f9770f

@@ -6,6 +6,8 @@ import type { UnsupportedInputRequest } from '../terminal/fallback';
 import { documents, encodedEmail } from './content';
 import { renderMarkdown } from './markdown';
 import { getStartupLayout, windowIdForDocumentPath, type WindowRect } from './window-model';
+import { getMobileLayout } from './mobile-layout';
+import { getInlineSuggestion } from '../terminal/suggestion';
 
 interface WorkspaceWindow {
   id: string;
@@ -26,13 +28,27 @@ export function initializeDesktop(): void {
   const area = document.querySelector<HTMLElement>('#window-area')!;
   const terminal = document.querySelector<HTMLElement>('#window-terminal')!;
   const output = document.querySelector<HTMLElement>('#terminal-output')!;
+  const transcript = document.querySelector<HTMLElement>('#terminal-body')!;
   const input = document.querySelector<HTMLInputElement>('#command-input')!;
   const form = document.querySelector<HTMLFormElement>('#terminal-form')!;
   const tasks = document.querySelector<HTMLElement>('#window-tasks')!;
   const announcement = document.querySelector<HTMLElement>('#workspace-announcement')!;
   const welcomeTemplate = document.querySelector<HTMLTemplateElement>('#welcome-template')!;
+  const splitter = document.querySelector<HTMLElement>('#terminal-splitter')!;
+  const expandTerminal = document.querySelector<HTMLButtonElement>('#terminal-expand')!;
+  const prediction = document.querySelector<HTMLElement>('#command-prediction')!;
+  const predictionPrefix = document.querySelector<HTMLElement>('#prediction-prefix')!;
+  const predictionSuffix = document.querySelector<HTMLElement>('#prediction-suffix')!;
+  const completionAccept = document.querySelector<HTMLButtonElement>('#completion-accept')!;
   const windows = new Map<string, WorkspaceWindow>();
   let activeId = 'about';
+  let mobileDocumentId = 'about';
+  let terminalFraction = .34;
+  let splitFraction = .34;
+  let userPositionedWindows = false;
+  let printGeneration = 0;
+  let printing = false;
+  let suggestedInput = '';
   let zIndex = 10;
   let cwd = HOME;
   let previousCwd: string | undefined;
@@ -55,9 +71,12 @@ export function initializeDesktop(): void {
   }
 
   function applyRect(win: WorkspaceWindow): void {
-    const rect = compact() || win.maximized
-      ? { x: 0, y: 0, width: area.clientWidth, height: area.clientHeight }
-      : bounds(win.rect);
+    const documentWindow = windows.get(mobileDocumentId);
+    const mobile = getMobileLayout(area.clientWidth, area.clientHeight, terminalFraction,
+      !!documentWindow && !documentWindow.closed && !documentWindow.minimized);
+    const rect = compact()
+      ? win.id === 'terminal' ? mobile.terminal : mobile.document
+      : win.maximized ? { x: 0, y: 0, width: area.clientWidth, height: area.clientHeight } : bounds(win.rect);
     Object.assign(win.element.style, {
       left: `${rect.x}px`, top: `${rect.y}px`, width: `${rect.width}px`, height: `${rect.height}px`, transform: 'none',
     });
@@ -71,9 +90,29 @@ export function initializeDesktop(): void {
   }
 
   function syncWindows(): void {
+    if (compact()) {
+      const selected = windows.get(mobileDocumentId);
+      if (!selected || selected.closed || selected.minimized) {
+        mobileDocumentId = [...windows.values()].filter((win) => win.id !== 'terminal' && !win.closed && !win.minimized).at(-1)?.id ?? '';
+      }
+      const shell = windows.get('terminal')!;
+      shell.closed = false;
+      shell.minimized = false;
+    }
+    const mobile = getMobileLayout(area.clientWidth, area.clientHeight, terminalFraction, !!mobileDocumentId);
+    terminal.classList.toggle('is-docked', compact() && !mobile.full);
+    expandTerminal.setAttribute('aria-expanded', String(mobile.full));
+    expandTerminal.disabled = !mobileDocumentId;
+    expandTerminal.setAttribute('aria-label', mobile.full ? 'Show document and terminal' : 'Expand terminal');
+    expandTerminal.title = mobile.full ? 'Show document and terminal' : 'Expand terminal';
+    expandTerminal.querySelector('span')!.textContent = mobile.full ? 'v' : '^';
+    splitter.setAttribute('aria-valuenow', String(Math.round(mobile.fraction * 100)));
+    splitter.setAttribute('aria-valuemin', String(Math.round(getMobileLayout(area.clientWidth, area.clientHeight, 0, true).fraction * 100)));
+    splitter.setAttribute('aria-valuetext', mobile.full ? 'Full-height terminal' : `${Math.round(mobile.fraction * 100)} percent terminal`);
     windows.forEach((win) => {
-      win.element.hidden = win.closed || win.minimized || (compact() && win.id !== activeId);
+      win.element.hidden = win.closed || win.minimized || (compact() && win.id !== 'terminal' && (win.id !== mobileDocumentId || mobile.full));
       win.element.classList.toggle('is-active', win.id === activeId);
+      applyRect(win);
       const button = tasks.querySelector<HTMLButtonElement>(`[data-task="${win.id}"]`);
       if (button) {
         button.hidden = win.closed && !['terminal', 'about', 'contact'].includes(win.id);
@@ -85,12 +124,29 @@ export function initializeDesktop(): void {
     });
   }
 
+  function setTerminalSize(fraction: number): void {
+    if (!compact()) return;
+    terminalFraction = fraction >= .96 ? 1 : Math.max(.18, fraction);
+    if (terminalFraction < .96) splitFraction = terminalFraction;
+    focusWindow('terminal');
+    syncWindows();
+    scrollToPrompt();
+  }
+
+  function toggleTerminalSize(): void {
+    setTerminalSize(terminalFraction >= .96 ? splitFraction : 1);
+  }
+
   function focusWindow(id: string, moveFocus = false): void {
     const win = windows.get(id);
     if (!win) return;
     win.closed = false;
     win.minimized = false;
     activeId = id;
+    if (id !== 'terminal') {
+      mobileDocumentId = id;
+      if (compact() && terminalFraction >= .96) terminalFraction = Math.min(splitFraction, .48);
+    }
     win.element.style.zIndex = String(++zIndex);
     applyRect(win);
     syncWindows();
@@ -111,6 +167,13 @@ export function initializeDesktop(): void {
   }
 
   function closeWindow(win: WorkspaceWindow, minimize = false): void {
+    if (compact() && win.id === 'terminal') {
+      terminalFraction = .34;
+      splitFraction = .34;
+      syncWindows();
+      announce('Terminal docked.');
+      return;
+    }
     win.closed = !minimize;
     win.minimized = minimize;
     if (win.id === activeId) selectNextWindow();
@@ -124,6 +187,7 @@ export function initializeDesktop(): void {
 
   function toggleMaximize(win: WorkspaceWindow): void {
     if (compact()) return;
+    userPositionedWindows = true;
     if (!win.maximized) { win.restoreRect = { ...win.rect }; win.maximized = true; }
     else { win.maximized = false; win.rect = win.restoreRect ?? win.rect; }
     focusWindow(win.id);
@@ -228,6 +292,10 @@ export function initializeDesktop(): void {
   }
 
   function resetDesktop(moveFocus = true): void {
+    cancelPrinting();
+    mobileDocumentId = 'about';
+    terminalFraction = splitFraction = .34;
+    userPositionedWindows = false;
     cwd = HOME;
     previousCwd = undefined;
     input.value = '';
@@ -249,32 +317,53 @@ export function initializeDesktop(): void {
     focusWindow('about', moveFocus);
     window.history.replaceState(null, '', window.location.pathname + window.location.search);
     announce('Desktop reset.');
+    scrollToPrompt();
   }
 
   function updatePrompt(): void {
     document.querySelector('#prompt-path')!.textContent = shortPath(cwd);
     document.querySelector('#terminal-title-path')!.textContent = shortPath(cwd);
+    updateSuggestion();
   }
 
-  function appendText(text: string, tone?: string): void {
+  function updateSuggestion(): void {
+    const atEnd = input.selectionStart === input.value.length && input.selectionEnd === input.value.length;
+    suggestedInput = !printing && atEnd ? getInlineSuggestion(input.value, cwd, documents) : '';
+    predictionPrefix.textContent = suggestedInput ? input.value : '';
+    predictionSuffix.textContent = suggestedInput.slice(input.value.length);
+    prediction.style.textIndent = `${-input.scrollLeft}px`;
+    completionAccept.hidden = !suggestedInput;
+    completionAccept.title = suggestedInput ? `Complete to ${suggestedInput.trim()}` : '';
+  }
+
+  function acceptSuggestion(): void {
+    if (!suggestedInput || printing) return;
+    input.value = suggestedInput;
+    input.setSelectionRange(input.value.length, input.value.length);
+    focusWindow('terminal', true);
+    updateSuggestion();
+    scrollToPrompt();
+  }
+
+  function appendText(text: string, tone?: string, target = output): void {
     const pre = document.createElement('pre');
     pre.className = `terminal-text${tone ? ` tone-${tone}` : ''}`;
     pre.textContent = text;
-    output.append(pre);
+    target.append(pre);
   }
 
-  function appendBlock(block: TerminalBlock): void {
-    if (block.type === 'text') appendText(block.text, block.tone);
-    else if (block.type === 'welcome') output.append(welcomeTemplate.content.cloneNode(true));
+  function appendBlock(block: TerminalBlock, target = output): void {
+    if (block.type === 'text') appendText(block.text, block.tone, target);
+    else if (block.type === 'welcome') target.append(welcomeTemplate.content.cloneNode(true));
     else if (block.type === 'document') {
       const doc = documentFor(block.path);
       if (!doc) return;
       const article = document.createElement('article');
       article.className = 'terminal-document markdown-content';
       fillDocument(article, doc);
-      output.append(article);
+      target.append(article);
     } else if (block.type === 'listing') {
-      if (!block.entries.length) { appendText('(empty directory)', 'muted'); return; }
+      if (!block.entries.length) { appendText('(empty directory)', 'muted', target); return; }
       const listing = document.createElement('div');
       listing.className = `terminal-listing${block.long ? ' is-long' : ''}`;
       block.entries.forEach((entry) => {
@@ -294,12 +383,12 @@ export function initializeDesktop(): void {
         button.append(name);
         listing.append(button);
       });
-      output.append(listing);
+      target.append(listing);
     } else if (block.type === 'help') {
       const intro = document.createElement('p');
       intro.className = 'help-intro';
       intro.textContent = 'A small, read-only workspace. Click files to open them, or explore with these commands.';
-      output.append(intro);
+      target.append(intro);
       const commands = block.command ? [block.command] : [...COMMANDS];
       commands.forEach((command) => {
         const row = document.createElement('div');
@@ -311,11 +400,47 @@ export function initializeDesktop(): void {
         const text = document.createElement('span');
         text.textContent = (COMMAND_HELP[command] ?? command).replace(/^\S+(?:\s\[[^\]]+\]|\s<[^>]+>)?\s+/, '');
         row.append(button, text);
-        output.append(row);
+        target.append(row);
       });
-      appendText('Tab: complete a path · ↑↓: command history · Ctrl+L: clear', 'muted');
-      appendText('Focus a window title bar: arrows move · Shift+arrows resize · Enter maximizes · Home centers', 'muted');
+      appendText('Tab: complete a path · ↑↓: command history · Ctrl+L: clear', 'muted', target);
+      if (!compact()) appendText('Focus a window title bar: arrows move · Shift+arrows resize · Enter maximizes · Home centers', 'muted', target);
     }
+  }
+
+  function scrollToPrompt(): void {
+    transcript.scrollTop = transcript.scrollHeight;
+  }
+
+  function cancelPrinting(): void {
+    printGeneration++;
+    printing = false;
+    input.readOnly = false;
+    form.classList.remove('is-printing');
+    output.setAttribute('aria-busy', 'false');
+    updateSuggestion();
+  }
+
+  async function printBlocks(blocks: TerminalBlock[], generation: number): Promise<boolean> {
+    const staging = document.createElement('div');
+    blocks.forEach((block) => appendBlock(block, staging));
+    const jobs: (() => void)[] = [];
+    for (const node of [...staging.children] as HTMLElement[]) {
+      if (node.classList.contains('terminal-listing')) {
+        const entries = [...node.children];
+        node.replaceChildren();
+        jobs.push(() => output.append(node));
+        entries.forEach((entry) => jobs.push(() => { entry.classList.add('terminal-response'); node.append(entry); }));
+      } else jobs.push(() => { node.classList.add('terminal-response'); output.append(node); });
+    }
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const interval = reducedMotion ? 0 : Math.min(75, 750 / Math.max(1, jobs.length));
+    for (const job of jobs) {
+      if (generation !== printGeneration) return false;
+      job();
+      scrollToPrompt();
+      if (interval) await new Promise((resolve) => window.setTimeout(resolve, interval));
+    }
+    return generation === printGeneration;
   }
 
   function echoCommand(value: string): void {
@@ -330,17 +455,31 @@ export function initializeDesktop(): void {
     output.append(echo);
   }
 
-  function executeCommand(value: string, fromClick = false): void {
+  async function executeCommand(value: string, fromClick = false): Promise<void> {
     if (!value.trim()) return;
+    cancelPrinting();
+    const generation = printGeneration;
     focusWindow('terminal', false);
     echoCommand(value);
+    input.value = '';
+    historyDraft = '';
     if (history.at(-1) !== value) history.push(value);
     history = history.slice(-100);
     historyIndex = history.length;
     const result = runCommand(value, { cwd, previousCwd, columns: dimensions.columns, documents });
     cwd = result.cwd;
     previousCwd = result.previousCwd;
-    result.blocks.forEach(appendBlock);
+    printing = true;
+    input.readOnly = true;
+    form.classList.add('is-printing');
+    output.setAttribute('aria-busy', 'true');
+    updateSuggestion();
+    scrollToPrompt();
+    if (!await printBlocks(result.blocks, generation)) return;
+    printing = false;
+    input.readOnly = false;
+    form.classList.remove('is-printing');
+    output.setAttribute('aria-busy', 'false');
     if (result.unsupported) {
       lastUnsupportedRequest = { ...result.unsupported, rows: dimensions.rows, publicFiles: documents.map(({ path, title }) => ({ path, title })) };
       // Only a typed, in-memory envelope. No model or network is connected.
@@ -363,9 +502,8 @@ export function initializeDesktop(): void {
       }
     });
     updatePrompt();
-    input.value = '';
     while (output.childElementCount > 180) output.firstElementChild?.remove();
-    output.scrollTop = output.scrollHeight;
+    scrollToPrompt();
     if (fromClick && /^cd\s/.test(value) && !result.blocks.some((block) => block.type === 'text' && block.tone === 'error')) executeCommand('ls');
     else if (activeId === 'terminal' && !compact()) input.focus({ preventScroll: true });
     const spoken = result.blocks.filter((block) => block.type === 'text').map((block) => block.text).join(' ');
@@ -392,10 +530,12 @@ export function initializeDesktop(): void {
 
   desktop.addEventListener('click', async (event) => {
     const target = event.target as HTMLElement;
+    if (target.closest('#completion-accept')) { acceptSuggestion(); return; }
+    if (target.closest('#terminal-expand')) { toggleTerminalSize(); return; }
     const command = target.closest<HTMLElement>('[data-command]');
     if (command) { event.preventDefault(); executeCommand(command.dataset.command!, true); return; }
     const insert = target.closest<HTMLElement>('[data-insert-command]');
-    if (insert) { input.value = insert.dataset.insertCommand!; focusWindow('terminal', true); return; }
+    if (insert) { input.value = insert.dataset.insertCommand!; focusWindow('terminal', true); updateSuggestion(); scrollToPrompt(); return; }
     const task = target.closest<HTMLElement>('[data-task]');
     if (task) {
       const id = task.dataset.task!;
@@ -442,13 +582,27 @@ export function initializeDesktop(): void {
   });
 
   form.addEventListener('submit', (event) => { event.preventDefault(); executeCommand(input.value); });
+  input.addEventListener('input', updateSuggestion);
+  input.addEventListener('keyup', updateSuggestion);
+  input.addEventListener('click', updateSuggestion);
+  input.addEventListener('scroll', updateSuggestion);
   input.addEventListener('keydown', (event) => {
+    if (printing && !(event.ctrlKey && ['c', 'l'].includes(event.key.toLowerCase()))) {
+      if (event.key === 'Escape') { cancelPrinting(); scrollToPrompt(); }
+      event.preventDefault();
+      return;
+    }
+    if (event.key === 'Tab' && !event.shiftKey && suggestedInput) {
+      event.preventDefault();
+      acceptSuggestion();
+      return;
+    }
     if (event.key === 'Tab' && !event.shiftKey && input.value.trim()) {
       const completion = completeInput(input.value, cwd, documents);
       if (completion.candidates.length) {
         event.preventDefault();
         input.value = completion.value;
-        if (completion.candidates.length > 1) { appendText(completion.candidates.join('  '), 'muted'); output.scrollTop = output.scrollHeight; announce(completion.candidates.join(', ')); }
+        if (completion.candidates.length > 1) { appendText(completion.candidates.join('  '), 'muted'); scrollToPrompt(); announce(completion.candidates.join(', ')); }
       }
     } else if (event.key === 'ArrowUp') {
       event.preventDefault();
@@ -459,8 +613,8 @@ export function initializeDesktop(): void {
       event.preventDefault();
       historyIndex = Math.min(history.length, historyIndex + 1);
       input.value = history[historyIndex] ?? historyDraft;
-    } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'l') { event.preventDefault(); output.replaceChildren(); }
-    else if (event.ctrlKey && event.key.toLowerCase() === 'c') { event.preventDefault(); echoCommand(input.value + '^C'); input.value = ''; output.scrollTop = output.scrollHeight; }
+    } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'l') { event.preventDefault(); cancelPrinting(); output.replaceChildren(); scrollToPrompt(); }
+    else if (event.ctrlKey && event.key.toLowerCase() === 'c') { event.preventDefault(); cancelPrinting(); echoCommand(input.value + '^C'); input.value = ''; scrollToPrompt(); }
     else if (event.key === 'Escape') { input.value = ''; }
   });
 
@@ -473,6 +627,7 @@ export function initializeDesktop(): void {
     const resize = !!target.closest('[data-resize-handle]');
     const drag = !!target.closest('[data-drag-handle]') && !target.closest('button, a');
     if (compact() || win.maximized || (!resize && !drag)) return;
+    userPositionedWindows = true;
     event.preventDefault();
     const initial = { ...bounds(win.rect) };
     const startX = event.clientX;
@@ -497,6 +652,40 @@ export function initializeDesktop(): void {
     handle.addEventListener('pointerup', stop);
     handle.addEventListener('pointercancel', stop);
   });
+
+  splitter.addEventListener('pointerdown', (event) => {
+    if (!compact() || event.button !== 0 || !mobileDocumentId) return;
+    event.preventDefault();
+    const startY = event.clientY;
+    const startHeight = terminal.getBoundingClientRect().height;
+    const returnFraction = splitFraction;
+    splitter.setPointerCapture(event.pointerId);
+    desktop.classList.add('is-manipulating');
+    const move = (next: PointerEvent) => setTerminalSize((startHeight + startY - next.clientY) / Math.max(1, area.clientHeight));
+    const stop = () => {
+      if (terminalFraction >= .96) splitFraction = returnFraction;
+      splitter.removeEventListener('pointermove', move);
+      splitter.removeEventListener('pointerup', stop);
+      splitter.removeEventListener('pointercancel', stop);
+      desktop.classList.remove('is-manipulating');
+      if (splitter.hasPointerCapture(event.pointerId)) splitter.releasePointerCapture(event.pointerId);
+    };
+    splitter.addEventListener('pointermove', move);
+    splitter.addEventListener('pointerup', stop);
+    splitter.addEventListener('pointercancel', stop);
+  });
+  splitter.addEventListener('dblclick', toggleTerminalSize);
+  splitter.addEventListener('keydown', (event) => {
+    if (!compact()) return;
+    const step = 32 / Math.max(1, area.clientHeight);
+    if (event.key === 'ArrowUp') setTerminalSize(terminalFraction + step);
+    else if (event.key === 'ArrowDown') setTerminalSize(terminalFraction - step);
+    else if (event.key === 'Home' || event.key === 'Escape') setTerminalSize(.34);
+    else if (event.key === 'End') setTerminalSize(1);
+    else if (event.key === 'Enter' || event.key === ' ') toggleTerminalSize();
+    else return;
+    event.preventDefault();
+  });
   area.addEventListener('dblclick', (event) => {
     const target = event.target as HTMLElement;
     if (!target.closest('[data-drag-handle]') || target.closest('button')) return;
@@ -519,6 +708,7 @@ export function initializeDesktop(): void {
     const delta: Record<string, [number, number]> = { ArrowLeft: [-16, 0], ArrowRight: [16, 0], ArrowUp: [0, -16], ArrowDown: [0, 16] };
     const change = delta[event.key];
     if (!change) return;
+    userPositionedWindows = true;
     event.preventDefault();
     const rect = bounds(win.rect);
     win.rect = bounds(event.shiftKey ? { ...rect, width: rect.width + change[0], height: rect.height + change[1] } : { ...rect, x: rect.x + change[0], y: rect.y + change[1] });
@@ -533,16 +723,28 @@ export function initializeDesktop(): void {
   function measureTerminal(): void {
     const cell = document.querySelector('#cell-measure')!.getBoundingClientRect().width || 8.4;
     const lineHeight = parseFloat(getComputedStyle(output).fontSize) * 1.8;
-    dimensions = { columns: Math.max(10, Math.floor(output.clientWidth / cell)), rows: Math.max(3, Math.floor(output.clientHeight / lineHeight)) };
+    dimensions = { columns: Math.max(10, Math.floor(output.clientWidth / cell)), rows: Math.max(3, Math.floor(transcript.clientHeight / lineHeight)) };
     document.querySelector('#terminal-dimensions')!.textContent = `${dimensions.columns} × ${dimensions.rows}`;
   }
-  new ResizeObserver(measureTerminal).observe(output);
+  new ResizeObserver(measureTerminal).observe(transcript);
   document.fonts.ready.then(measureTerminal);
-  window.addEventListener('resize', () => {
+  let previousCompact = compact();
+  function updateViewport(): void {
+    if (compact() && window.visualViewport?.scale === 1) {
+      desktop!.style.setProperty('--workspace-viewport-height', `${window.visualViewport.height}px`);
+    } else if (!compact()) desktop!.style.removeProperty('--workspace-viewport-height');
+    if (!userPositionedWindows || previousCompact !== compact()) {
+      const layout = getStartupLayout(area.clientWidth, area.clientHeight);
+      for (const id of ['terminal', 'about', 'contact'] as const) windows.get(id)!.rect = layout[id];
+    }
+    previousCompact = compact();
     windows.forEach(applyRect);
     syncWindows();
     measureTerminal();
-  });
+    scrollToPrompt();
+  }
+  window.addEventListener('resize', updateViewport);
+  window.visualViewport?.addEventListener('resize', updateViewport);
   const readHash = () => {
     if (!window.location.hash || window.location.hash === '#') { focusWindow('terminal', true); return; }
     if (!window.location.hash.startsWith('#file=')) return;
@@ -552,6 +754,7 @@ export function initializeDesktop(): void {
   window.addEventListener('hashchange', readHash);
   const initialHash = window.location.hash;
   resetDesktop(false);
+  updateViewport();
   if (initialHash) {
     window.history.replaceState(null, '', initialHash);
     readHash();

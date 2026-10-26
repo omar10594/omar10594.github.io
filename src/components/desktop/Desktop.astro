@@ -10,8 +10,10 @@ const initialDocuments = documents.filter((doc) => ['About', 'Contact'].includes
   <div class="desktop-signature" aria-hidden="true">Guillermo Omar</div>
   <div id="window-area" class="window-area">
     <section id="window-terminal" class="workspace-window terminal-window" data-window="terminal" aria-label="Terminal" tabindex="-1">
+      <div id="terminal-splitter" class="terminal-splitter" role="separator" tabindex="0" aria-label="Resize terminal" aria-orientation="horizontal" aria-controls="window-terminal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="34"><span aria-hidden="true"></span></div>
       <header class="window-titlebar" data-drag-handle>
         <WindowControls name="terminal" />
+        <button type="button" id="terminal-expand" class="terminal-expand" aria-label="Expand terminal" aria-expanded="false" title="Expand terminal"><span aria-hidden="true">^</span></button>
         <span class="window-title">omar — <span id="terminal-title-path">~</span></span>
         <button type="button" class="titlebar-utility" data-command="help" aria-label="Show terminal help" title="Show terminal help">?</button>
       </header>
@@ -22,7 +24,12 @@ const initialDocuments = documents.filter((doc) => ['About', 'Contact'].includes
         </div>
         <form id="terminal-form" class="terminal-form" autocomplete="off">
           <label class="command-prompt" for="command-input"><span class="prompt-user">omar</span><span class="prompt-punctuation">:</span><span id="prompt-path" class="prompt-path">~</span><span class="prompt-punctuation">$</span><span class="sr-only"> Enter a command</span></label>
-          <input id="command-input" name="command" type="text" aria-label="Terminal command" aria-describedby="input-help" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="2000" enterkeyhint="send" />
+          <div class="command-entry">
+            <div id="command-prediction" class="command-prediction" aria-hidden="true"><span id="prediction-prefix"></span><span id="prediction-suffix"></span></div>
+            <input id="command-input" name="command" type="text" aria-label="Terminal command" aria-describedby="input-help completion-help" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="2000" enterkeyhint="send" />
+          </div>
+          <button id="completion-accept" class="completion-accept" type="button" aria-label="Accept command suggestion" hidden><kbd>Tab</kbd><span class="completion-label"> to complete</span></button>
+          <span id="completion-help" class="sr-only">A faint continuation is a suggestion. Press Tab to accept it, then Enter to run the command.</span>
         </form>
       </div>
       <footer class="terminal-status"><span id="input-help">Tab to complete <span aria-hidden="true">·</span> ↑↓ history</span><span id="terminal-dimensions" aria-label="Terminal size"></span></footer>

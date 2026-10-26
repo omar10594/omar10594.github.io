@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-25T21:52:36+00:00",
+  "generatedAt": "2026-10-25T18:34:09.200624-07:00",
   "title": "Design System: Guillermo Omar — Personal Workspace",
   "extensions": {
     "colorMeta": {
@@ -234,6 +234,16 @@
         "name": "window-arrive",
         "value": "240ms cubic-bezier(.16, 1, .3, 1)",
         "purpose": "Brightness from .85 to 1; only under prefers-reduced-motion: no-preference."
+      },
+      {
+        "name": "response-arrive",
+        "value": "140ms ease-out",
+        "purpose": "Brief opacity arrival for terminal result rows, omitted under reduced motion."
+      },
+      {
+        "name": "terminal-output-sequence",
+        "value": "750ms",
+        "purpose": "Maximum row-insertion sequence budget, with intervals up to 75ms. Reduced motion inserts immediately; a new command, Clear or Reset cancels a previous sequence."
       }
     ],
     "breakpoints": [
@@ -272,15 +282,15 @@
       "name": "Command input",
       "kind": "input",
       "refersTo": "command-input",
-      "description": "Borderless prompt row with an orange focus rule and caret.",
-      "html": "<form class=\"ds-command\"><label for=\"ds-input\"><span class=\"ds-user\">omar</span><span class=\"ds-punctuation\">:</span><span class=\"ds-path-label\">~</span><span class=\"ds-punctuation\">$</span></label><input id=\"ds-input\" aria-label=\"Terminal command\" type=\"text\" spellcheck=\"false\" autocomplete=\"off\"></form>",
-      "css": ".ds-command{display:flex;align-items:baseline;gap:10px;min-height:28px;background:var(--surface,#0c1421);font-family:'Geist Mono',monospace;}.ds-command label{flex:0 1 auto;max-width:45%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}.ds-user{color:var(--lilac,#c39af4)}.ds-path-label{color:#c5c0f1}.ds-punctuation{color:var(--muted,#a3afc3)}.ds-command input{min-width:0;flex:1;height:29px;padding:0;color:var(--ink,#eeeae5);background:transparent;border:0;border-radius:0;font:inherit;font-size:14px;caret-color:var(--orange,#ff9852)}.ds-command input:focus{outline:none}.ds-command:focus-within{box-shadow:0 1px 0 var(--orange,#ff9852)}"
+      "description": "Natural-flow prompt after terminal results, with a faint local continuation and a Tab acceptance action.",
+      "html": "<div class=\"ds-transcript\"><div class=\"ds-response\">/home/omar</div><form class=\"ds-command\"><label for=\"ds-input\"><span class=\"ds-user\">omar</span><span class=\"ds-punctuation\">:</span><span class=\"ds-path-label\">~</span><span class=\"ds-punctuation\">$</span></label><div class=\"ds-entry\"><span class=\"ds-prediction\" aria-hidden=\"true\">help</span><input id=\"ds-input\" aria-label=\"Terminal command\" type=\"text\" spellcheck=\"false\" autocomplete=\"off\"></div><button class=\"ds-accept\" type=\"button\" aria-label=\"Accept command suggestion\"><kbd>Tab</kbd><span> to complete</span></button></form></div>",
+      "css": ".ds-transcript{background:var(--surface,#0c1421);color:var(--ink,#eeeae5);font-family:'Geist Mono',monospace;}.ds-response{margin:0 0 8px;font-size:12px;line-height:1.8;white-space:pre-wrap}.ds-command{position:relative;display:flex;align-items:baseline;gap:10px;min-height:28px;margin-top:12px}.ds-command label{flex:0 1 auto;max-width:45%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}.ds-user{color:var(--lilac,#c39af4)}.ds-path-label{color:#c5c0f1}.ds-punctuation{color:var(--muted,#a3afc3)}.ds-entry{position:relative;flex:1;min-width:0;overflow:hidden}.ds-prediction{position:absolute;inset:0;font-size:14px;line-height:29px;white-space:pre;pointer-events:none;color:#8b98ad}.ds-command input{position:relative;display:block;width:100%;min-width:0;height:29px;padding:0;color:var(--ink,#eeeae5);background:transparent;border:0;border-radius:0;font:inherit;font-size:14px;caret-color:var(--orange,#ff9852)}.ds-command input:focus{outline:none}.ds-command:focus-within{box-shadow:0 1px 0 var(--orange,#ff9852)}.ds-accept{flex-shrink:0;min-height:29px;padding:0 3px;border:0;background:none;color:var(--muted,#a3afc3);font:inherit;font-size:9px;white-space:nowrap;cursor:pointer}.ds-accept kbd{font:inherit;color:var(--ink,#eeeae5);border-bottom:1px solid var(--line,#39475b)}.ds-accept:hover{color:var(--orange,#ff9852)}.ds-accept:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:4px}@media(max-width:700px){.ds-command label,.ds-command input,.ds-prediction{font-size:16px}.ds-accept{min-height:44px}.ds-accept span{display:none}}"
     },
     {
       "name": "Window controls",
       "kind": "button",
       "refersTo": "window-controls",
-      "description": "Conventional colored window dots reveal their symbols on hover or focus.",
+      "description": "Desktop window dots reveal symbols on hover or focus; terminal dots are hidden in compact split mode.",
       "html": "<div class=\"ds-controls\"><button class=\"ds-control ds-close\" type=\"button\" aria-label=\"Close window\"><span aria-hidden=\"true\">×</span></button><button class=\"ds-control ds-minimize\" type=\"button\" aria-label=\"Minimize window\"><span aria-hidden=\"true\">−</span></button><button class=\"ds-control ds-maximize\" type=\"button\" aria-label=\"Maximize window\"><span aria-hidden=\"true\">+</span></button></div>",
       "css": ".ds-controls{display:flex;gap:8px;align-items:center;padding:12px;background:var(--chrome,#182231)}.ds-control{position:relative;width:12px;height:12px;min-width:12px;border:0;border-radius:50%;padding:0;color:#17202e;line-height:12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Geist Mono',monospace;}.ds-control:after{content:\"\";position:absolute;inset:-6px -3px}.ds-control span{opacity:0}.ds-controls:hover span,.ds-controls:focus-within span{opacity:1}.ds-close{background:#ff706b}.ds-minimize{background:#eac463}.ds-maximize{background:#69bd7b}.ds-control:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:4px;}"
     },
@@ -296,7 +306,7 @@
       "name": "Task navigation",
       "kind": "nav",
       "refersTo": "task-navigation",
-      "description": "Persistent text tasks; the active task is marked by an orange underline.",
+      "description": "Persistent text tasks; compact document selection restores the upper pane above the terminal.",
       "html": "<nav class=\"ds-tasks\" aria-label=\"Open or restore windows\"><button type=\"button\" class=\"ds-task\" aria-pressed=\"false\">&gt;_ Terminal</button><button type=\"button\" class=\"ds-task ds-current\" aria-pressed=\"true\">about.md</button><button type=\"button\" class=\"ds-task\" aria-pressed=\"false\">contact.md</button></nav>",
       "css": ".ds-tasks{display:flex;align-items:center;gap:5px;overflow-x:auto;padding:7px 0;background:#0a111e;border-top:1px solid var(--line-quiet,#253246)}.ds-task{flex-shrink:0;position:relative;height:38px;padding:0 15px;border:0;background:none;color:#b7c2d5;font-size:11px;white-space:nowrap;cursor:pointer;font-family:'Geist Mono',monospace;}.ds-current{color:var(--ink,#eeeae5)}.ds-current:after{content:\"\";position:absolute;bottom:2px;left:15px;right:15px;height:2px;background:var(--orange,#ff9852)}.ds-minimized{color:#9ba7bc}.ds-task:hover{color:var(--orange,#ff9852)}.ds-task:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:4px;}"
     },
@@ -315,17 +325,25 @@
       "description": "Orange email action placed before social links; empty status takes no height.",
       "html": "<div class=\"ds-contact\"><button type=\"button\" class=\"ds-contact-action\">Reveal email</button><p class=\"ds-contact-status\" role=\"status\"></p></div>",
       "css": ".ds-contact{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:0;background:var(--surface,#0c1421);font-family:'Geist Mono',monospace;}.ds-contact-action{display:inline-flex;align-items:center;min-height:34px;padding:3px 0;border:0;background:none;color:var(--orange,#ff9852);font:inherit;font-size:12px;text-decoration:underline;text-underline-offset:5px;cursor:pointer}.ds-contact-action:hover{color:var(--ink,#eeeae5)}.ds-contact-action:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:4px;}.ds-contact-status{flex-basis:100%;min-height:17px;margin:0;font-size:10px;color:var(--muted,#a3afc3)}.ds-contact-status:empty{min-height:0}"
+    },
+    {
+      "name": "Mobile terminal separator",
+      "kind": "custom",
+      "refersTo": "terminal-separator",
+      "description": "Draggable and keyboard-operable grip for the lower terminal split, with a full-height toggle.",
+      "html": "<section class=\"ds-mobile-terminal\"><div class=\"ds-mobile-title\"><button class=\"ds-expand\" type=\"button\" aria-label=\"Expand terminal\" aria-expanded=\"false\">^</button><span>omar — ~</span><div class=\"ds-separator\" role=\"separator\" tabindex=\"0\" aria-label=\"Resize terminal\" aria-orientation=\"horizontal\" aria-valuemin=\"0\" aria-valuemax=\"100\" aria-valuenow=\"34\"><span></span></div></div><p class=\"ds-mobile-prompt\">omar:~$ <span>help</span></p></section>",
+      "css": ".ds-mobile-terminal{max-width:370px;overflow:hidden;border:1px solid var(--line,#39475b);border-radius:8px;background:var(--surface,#0c1421);color:var(--ink,#eeeae5);font-family:\"Geist Mono\",monospace}.ds-mobile-title{position:relative;display:flex;align-items:center;justify-content:center;height:52px;padding:12px 12px 0;background:var(--chrome,#182231);border-bottom:1px solid var(--line-quiet,#253246);font-size:11px;color:#b9c5d8}.ds-separator{position:absolute;top:0;left:calc(50% - 72px);display:flex;justify-content:center;align-items:flex-start;width:144px;height:44px;padding-top:6px;touch-action:none;cursor:row-resize}.ds-separator span{width:38px;height:3px;border-radius:2px;background:var(--muted,#a3afc3)}.ds-separator:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:-3px}.ds-expand{position:absolute;top:7px;left:7px;width:44px;height:44px;padding:0;border:0;background:none;color:var(--orange,#ff9852);font:inherit;font-size:18px;cursor:pointer}.ds-expand:focus-visible{outline:2px solid var(--orange,#ff9852);outline-offset:4px}.ds-mobile-prompt{margin:10px 14px 16px;font-size:16px;line-height:29px;color:var(--lilac,#c39af4)}.ds-mobile-prompt span{color:#8b98ad}"
     }
   ],
   "narrative": {
     "northStar": "A Small Personal Development Environment",
-    "overview": "The workspace is a quiet, working desktop: deep ink outside, opaque blue-black windows inside, warm chalk text and a small handwritten signature behind the windows. A generous background terminal carries the real ASCII lettering, prompt and file paths. About and Contact start open in front of it, with About active.\n\nWindow chrome is restrained and familiar. Orange identifies the current path, focus and selected task; lilac distinguishes the prompt and directories. The layout leaves room around a centered welcome, then becomes denser when commands produce useful output. Markdown documents share the same visual language and overlap the terminal as working windows.",
+    "overview": "The workspace is a quiet, working desktop: deep ink outside, opaque blue-black windows inside, warm chalk text and a small handwritten signature behind the windows. A generous background terminal carries the real ASCII lettering, prompt and file paths. About and Contact start open in front of it, with About active.\n\nWindow chrome is restrained and familiar. Orange identifies the current path, focus and selected task; lilac distinguishes the prompt and directories. The desktop composition stays centered as the viewport widens. The layout leaves room around a centered welcome, then becomes denser as command results and the next prompt follow one another in a single transcript. Markdown documents overlap the terminal on desktop; compact screens keep a document above a persistent lower terminal.",
     "keyCharacteristics": [
       "Real character-based identity and navigation.",
       "Opaque, bordered windows on a deep ink desktop.",
       "Warm chalk reading text with orange activity and lilac prompts.",
       "A small script signature reserved for the desktop background.",
-      "Recoverable windows and one active surface on compact screens."
+      "Recoverable windows and a persistent, expandable terminal below compact document views."
     ],
     "rules": [
       {
@@ -340,11 +358,25 @@
       },
       {
         "name": "The Recoverable Workspace Rule.",
-        "body": "Keep the task strip and Reset accessible as windows move, close or minimize; compact screens show one active window at a time.",
+        "body": "Keep the task strip and Reset accessible as windows move, close or minimize; compact screens retain the terminal below the selected document or allow it to expand fully.",
         "section": "layout"
       }
     ],
-    "dos": [],
-    "donts": []
+    "dos": [
+      "Do keep the ASCII identity as selectable, preformatted character text in the same monospaced family as the terminal.",
+      "Do keep window interiors opaque and use borders, title bars and the structural shadow to separate layers.",
+      "Do use orange for activity and focus, lilac for prompt identity and directories, and Link Blue for file and document links.",
+      "Do preserve visible keyboard focus and equivalent click access to files and help.",
+      "Do retain the persistent task strip and Reset, with the compact terminal available below documents or expanded to full height.",
+      "Do keep the handwritten signature small, behind the windows and out of the interaction path."
+    ],
+    "donts": [
+      "Don't stretch or replace the ASCII lettering with a raster imitation.",
+      "Don't introduce glass or blur into the opaque window surfaces.",
+      "Don't spread the script face into commands, documents or interface labels.",
+      "Don't use the window-control coral, gold and green as unrelated content accents.",
+      "Don't hide document text overflow; scroll it inside the window and keep the outer desktop stable.",
+      "Don't require motion to understand focus, window state or navigation."
+    ]
   }
 }

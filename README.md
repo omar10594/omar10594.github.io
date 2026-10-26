@@ -49,11 +49,29 @@ Start with `help`, `ls`, `ll`, `cd cv`, `cat experience.md`, `..` or
 and paths; the up/down arrows browse command history. `info` prints the
 welcome again and `reset` restores the initial desktop.
 
+The prompt follows the previous response in one scrolling transcript. Results
+appear in a rapid sequence lasting at most 750 ms, with immediate output for
+reduced-motion preferences. Clear, Reset or another command cancels an older
+sequence. A faint local command/path suggestion can be accepted with Tab or
+the tappable Tab action, then run with Enter; an empty prompt suggests `help`.
+
 Windows support dragging, resizing, minimize, maximize, close and restoration
 from the taskbar. Focus a title bar to move with arrow keys, resize with
 Shift+arrows, maximize/restore with Enter, or center with Home. About and Contact
-start open in front of the terminal, with About active. Mobile uses one view
-at a time, initially About, with Contact and Terminal available in the taskbar.
+start open in front of the terminal, with About active. The startup composition
+is centered and capped at 1320 px so wide screens keep the windows together.
+
+Mobile starts with About above a persistent terminal using roughly 34% of the
+available work area. Drag the separator to resize the split or expand the
+terminal fully. Its expand button also toggles the split; opening a document
+from a full terminal brings that document back above it. The separator supports
+Up/Down, Home/Escape for the default split, End for full height and Enter/Space
+to toggle. Terminal close/minimize controls are hidden in this mode.
+
+The mobile input uses 16 px text, and visual-viewport resizing adapts the work
+area to available keyboard space. Short work areas prioritize a usable prompt;
+below 150 px of available height, the terminal temporarily takes the full area.
+The on-screen keyboard still needs a check on a physical phone.
 
 Edit the public copy in `src/data/workspace/`. These are real Markdown files;
 the `cv/` subfolder holds experience, education and skills from the prior site.

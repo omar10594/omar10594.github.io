@@ -77,6 +77,11 @@ components:
     rounded: "{rounded.input}"
     padding: "0"
     height: "29px"
+  terminal-separator:
+    textColor: "{colors.muted}"
+    width: "144px"
+    height: "44px"
+    padding: "6px 0 0"
   window-controls:
     rounded: "{rounded.control}"
     size: "12px"
@@ -107,7 +112,7 @@ components:
 
 The workspace is a quiet, working desktop: deep ink outside, opaque blue-black windows inside, warm chalk text and a small handwritten signature behind the windows. A generous background terminal carries the real ASCII lettering, prompt and file paths. About and Contact start open in front of it, with About active.
 
-Window chrome is restrained and familiar. Orange identifies the current path, focus and selected task; lilac distinguishes the prompt and directories. The layout leaves room around a centered welcome, then becomes denser when commands produce useful output. Markdown documents share the same visual language and overlap the terminal as working windows.
+Window chrome is restrained and familiar. Orange identifies the current path, focus and selected task; lilac distinguishes the prompt and directories. The desktop composition stays centered as the viewport widens. The layout leaves room around a centered welcome, then becomes denser as command results and the next prompt follow one another in a single transcript. Markdown documents overlap the terminal on desktop; compact screens keep a document above a persistent lower terminal.
 
 **Key Characteristics:**
 
@@ -115,7 +120,7 @@ Window chrome is restrained and familiar. Orange identifies the current path, fo
 - Opaque, bordered windows on a deep ink desktop.
 - Warm chalk reading text with orange activity and lilac prompts.
 - A small script signature reserved for the desktop background.
-- Recoverable windows and one active surface on compact screens.
+- Recoverable windows and a persistent, expandable terminal below compact document views.
 
 ## Colors
 
@@ -162,19 +167,23 @@ The monospaced family connects the actual character artwork, terminal, file path
 
 ## Layout
 
-The desktop fills the viewport (100dvh). The page itself does not scroll; terminal output and document content scroll within their windows. A top metadata line, window area, background signature and persistent bottom task strip define the outer frame.
+The desktop fills the viewport (100dvh). On compact screens, the available visual viewport height can replace that value as the keyboard changes the visible area. The page itself does not scroll; the terminal transcript and document content scroll within their windows. A top metadata line, window area, background signature and persistent bottom task strip define the outer frame.
 
 The default window area has insets (52px top, 24px sides, 105px bottom). Startup and Reset open the terminal behind About and Contact at every desktop width. About is active and sits above Contact, which sits above the terminal. Window bounds enforce a desktop minimum (300 × 180px), limited by the available area, and keep the whole window within that area. Newly opened documents start near the center with a small stagger; their preferred size is (590 × 500px), bounded to available space.
 
-The startup model anchors the terminal at the area's top-left, with a preferred width (78% of area width, clamped between 920px and 1040px) and height (area height minus 20px). About and Contact are inset from the right edge (20px), visibly overlapping the terminal. About starts near the top (12px), with a preferred width (40%, clamped between 440px and 520px). Contact starts near the bottom (12px), with a preferred width (31%, clamped between 390px and 420px). Contact's preferred height is (43% of area height, clamped between 180px and 280px); About uses the remaining height minus a gap allowance (52px), clamped between (180px and 400px). All rectangles are fitted to the available area. This shared startup model replaces the former wide-only column arrangement.
+The startup model centers one composition with a maximum width (1320px) and equal outer horizontal margins. The terminal starts at the composition's left edge, with a preferred width (78% of composition width, clamped between 920px and 1040px) and height (area height minus 20px). About and Contact align to the composition's right edge and visibly overlap the terminal. About starts near the top (12px), with a preferred width (40%, clamped between 440px and 520px). Contact starts near the bottom (12px), with a preferred width (31%, clamped between 390px and 420px). Contact's preferred height is (43% of area height, clamped between 180px and 280px); About uses the remaining height minus a gap allowance (52px), clamped between (180px and 400px). All rectangles are fitted to the available area, so ultrawide monitors add outside space rather than separating the windows.
 
-At widths (700px or below), only the active window is visible, and it fills the window area. About is shown initially; Terminal and Contact remain open in state and reachable from the task strip. Compact insets are (44px top, 10px sides, 99px bottom); the taskbar grows from (54px) to (58px), plus the device safe-area inset. Dragging, resizing and maximizing are unavailable; the maximize control and resize corner disappear. Task buttons remain visible and horizontally scroll when necessary. The secondary top label and taskbar prefix disappear, while Reset remains available.
+At widths (700px or below), one document occupies the upper part of the window area and the terminal remains visible below it. About is the initial document; Contact and other documents replace that upper view through the task strip or file actions. The terminal starts at roughly one third of a normal work area (34%), separated from the document by a gap (8px). In short areas, the terminal minimum is the smaller of (150px) and (70% of available height); the document minimum is the smaller of (100px) and (25%). These usable heights take priority over the requested proportion, and the gap can reduce. Below an available height (150px), the terminal fills the work area instead of leaving an unusable split. The terminal can also expand manually to full height. Opening a document from a manually expanded state restores the split, and no remaining document means a full-height terminal.
+
+Compact insets are (44px top, 10px sides, 99px bottom); the taskbar grows from (54px) to (58px), plus the device safe-area inset. General window dragging, resizing and maximizing are unavailable. The terminal instead has a dedicated draggable separator and expand control; its close and minimize dots are hidden so the lower console remains recoverable. Task buttons remain visible and horizontally scroll when necessary. The secondary top label and taskbar prefix disappear, while Reset remains available. The visual-viewport height adjustment supports keyboard-constrained work areas; the on-screen keyboard still needs a check on a physical phone.
 
 At short viewport heights (660px or below), the area uses top and bottom insets (40px and 87px), and the welcome's spacing compresses. A terminal container height (610px or below) also compacts the ASCII, headline and navigation independently of viewport width. The ASCII size then caps at (16px), the headline becomes (13px), and path rows have a minimum height (28px). In compact layouts outside that container rule, the ASCII cap is (17px), the headline is (12px), and path rows retain their minimum height (36px).
 
-The rhythm is deliberately local: narrow gaps for controls, moderate gaps between text actions, and generous interior space around the welcome. Terminal padding is (22px 28px 15px), changing to (16px 16px 10px) on compact screens. Document padding is (23px 25px 28px), changing to (22px) on compact screens. Contact has its own denser reading treatment (16px 20px 20px padding; line height 1.7) so its email action stays near the top of the short startup panel.
+When a compact terminal is particularly short (190px or below), its title bar reduces to (44px), the status footer disappears and docked interior padding becomes (6px 12px). This reserves more of a keyboard-constrained pane for the transcript and prompt.
 
-**The Recoverable Workspace Rule.** Keep the task strip and Reset accessible as windows move, close or minimize; compact screens show one active window at a time.
+The rhythm is deliberately local: narrow gaps for controls, moderate gaps between text actions, and generous interior space around the welcome. Terminal padding is (22px 28px 15px), changing to (16px 16px 10px) on compact screens and (10px 14px) in the lower split. That docked console reduces the welcome to its useful command hint; expanding it reveals the full ASCII welcome and navigation. Document padding is (23px 25px 28px), changing to (22px) on compact screens. Contact has its own denser reading treatment (16px 20px 20px padding; line height 1.7) so its email action stays near the top of the short startup panel.
+
+**The Recoverable Workspace Rule.** Keep the task strip and Reset accessible as windows move, close or minimize; compact screens retain the terminal below the selected document or allow it to expand fully.
 
 ## Elevation & Depth
 
@@ -183,6 +192,7 @@ Depth comes from an opaque window surface, a lighter title bar, thin borders and
 - **Window shadow:** (`0 22px 62px #01040a70`) separates each window from the desktop.
 - **Active perimeter:** a brighter slate border (`#63728a`) identifies the active window; inactive documents use Quiet Line.
 - **Arrival:** a brief brightness animation (240ms, `cubic-bezier(.16, 1, .3, 1)`) runs only when the user has no reduced-motion preference. Window movement and resizing follow direct input.
+- **Terminal response:** results appear in a rapid row sequence with a maximum insertion budget (750ms), and each arriving row has a short fade (140ms, `ease-out`). Reduced-motion preferences make insertion immediate and omit the fade. A new command, Clear or Reset cancels an earlier insertion sequence before it can append stale output.
 
 ## Shapes
 
@@ -198,13 +208,17 @@ File paths are plain text actions, arranged vertically. The primary path carries
 
 ### Command input
 
-The prompt and borderless input share a baseline. Lilac identifies the user, a lighter lilac identifies the current path, and muted punctuation separates them. The caret is orange; focus places an orange rule beneath the entire input row. Tab completes entered commands or paths, arrow keys traverse command history, and output remains selectable text.
+The prompt and borderless input share a baseline. Lilac identifies the user, a lighter lilac identifies the current path, and muted punctuation separates them. The caret is orange; focus places an orange rule beneath the entire input row. Output and the current prompt use one scrolling transcript: submitting a command prints that line, inserts its response, then reveals the next prompt directly after the result. The input is not pinned to the window bottom. Output remains selectable text, and arrow keys traverse command history.
+
+A faint continuation suggests a local command or path without becoming submitted text. An empty prompt suggests `help`. Tab or the visible Tab action accepts the continuation; Enter runs the entered command. Suggestions come from the local command list and virtual filesystem, with no AI request. The prompt, input and prediction use a larger compact size (16px) to avoid automatic mobile input zoom.
 
 ### Windows and title bars
 
 Terminal and document windows share opaque surfaces, thin borders and titlebar controls. The titlebar is a three-column grid: controls at left, truncated title at center, and a small help action or file type at right. Close, minimize and maximize have accessible labels. The task strip reopens or restores windows; Reset restores the initial arrangement.
 
 On desktop, dragging the titlebar moves a window and dragging the lower-right corner resizes it. Double-clicking the titlebar or pressing Enter while it is focused maximizes or restores it. Focused titlebars also support arrow-key movement, Shift plus arrow-key resizing, and Home to center. Movement and resize steps are (16px). These controls preserve the bounds described in Layout.
+
+The compact terminal's top separator changes the split directly as it is dragged. It has a large interaction area (144 × 44px) around a small grip, a separator role and a current-size announcement. Focus it and use Up/Down to change height, Home or Escape to restore the default split, End to expand fully, and Enter or Space to toggle expansion. The separate expand control and double-clicking the separator provide the same full-height toggle. Terminal window dots stay hidden in this compact mode; document controls remain available.
 
 ### Markdown documents and terminal results
 
@@ -214,7 +228,7 @@ Clickable directory results use lilac; file results use Link Blue and an underli
 
 ### Task navigation
 
-The bottom strip is a stable, dark band with a thin top border. Initial tasks retain the Terminal, about.md and contact.md labels, with About selected. New document tasks use readable document titles such as CV and Experience, distinguishing documents that share a filename. The active task gains warm text and a short orange underline. Minimized windows use muted text. Keyboard focus retains the shared orange outline. A separated Reset action anchors the right edge and restores About as the active window.
+The bottom strip is a stable, dark band with a thin top border. Initial tasks retain the Terminal, about.md and contact.md labels, with About selected. New document tasks use readable document titles such as CV and Experience, distinguishing documents that share a filename. The active task gains warm text and a short orange underline. Minimized windows use muted text. On compact screens, choosing a document changes the upper pane and brings it back above an expanded terminal. Keyboard focus retains the shared orange outline. A separated Reset action anchors the right edge and restores About as the active window and the default terminal split.
 
 ### Contact action
 
@@ -228,7 +242,7 @@ Reveal email, the revealed address and Copy use orange underlined text, with war
 - Do keep window interiors opaque and use borders, title bars and the structural shadow to separate layers.
 - Do use orange for activity and focus, lilac for prompt identity and directories, and Link Blue for file and document links.
 - Do preserve visible keyboard focus and equivalent click access to files and help.
-- Do retain the persistent task strip and Reset, including the compact single-window layout.
+- Do retain the persistent task strip and Reset, with the compact terminal available below documents or expanded to full height.
 - Do keep the handwritten signature small, behind the windows and out of the interaction path.
 
 ### Don't:

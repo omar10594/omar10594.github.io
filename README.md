@@ -68,7 +68,11 @@ from a full terminal brings that document back above it. The separator supports
 Up/Down, Home/Escape for the default split, End for full height and Enter/Space
 to toggle. Terminal close/minimize controls are hidden in this mode.
 
-The mobile input uses 16 px text, and visual-viewport resizing adapts the work
+The mobile prompt, input, prediction and command echoes share 12 px text.
+The desktop signature is hidden on mobile, leaving an 8 px gap above the taskbar.
+Document task buttons update the URL along with the selected document, so reload
+restores the visible file. The plain site URL starts with About.
+Visual-viewport resizing adapts the work
 area to available keyboard space. Short work areas prioritize a usable prompt;
 below 150 px of available height, the terminal temporarily takes the full area.
 The on-screen keyboard still needs a check on a physical phone.

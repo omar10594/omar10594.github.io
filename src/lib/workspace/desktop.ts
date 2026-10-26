@@ -539,7 +539,9 @@ export function initializeDesktop(): void {
     const task = target.closest<HTMLElement>('[data-task]');
     if (task) {
       const id = task.dataset.task!;
-      if (windows.has(id)) focusWindow(id, true);
+      const existing = windows.get(id);
+      if (existing?.path) openDocument(existing.path, true);
+      else if (existing) focusWindow(id, true);
       else {
         const doc = documents.find((item) => idFor(item.path) === id);
         if (doc) openDocument(doc.path);

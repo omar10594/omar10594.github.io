@@ -68,6 +68,11 @@ from a full terminal brings that document back above it. The separator supports
 Up/Down, Home/Escape for the default split, End for full height and Enter/Space
 to toggle. Terminal close/minimize controls are hidden in this mode.
 
+`info` keeps the ASCII name, full identity, description and four file actions
+visible in the lower console. Its compact layout places the lettering beside
+the name and the actions in one row; expanding restores the larger welcome.
+Only the redundant welcome hint and status footer are omitted in the dock.
+
 The mobile prompt, input, prediction and command echoes share 12 px text.
 The desktop signature is hidden on mobile, leaving an 8 px gap above the taskbar.
 Document task buttons update the URL along with the selected document, so reload

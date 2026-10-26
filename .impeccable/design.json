@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-25T18:34:09.200624-07:00",
+  "generatedAt": "2026-10-26T02:15:27.2974803Z",
   "title": "Design System: Guillermo Omar — Personal Workspace",
   "extensions": {
     "colorMeta": {
@@ -337,7 +337,7 @@
   ],
   "narrative": {
     "northStar": "A Small Personal Development Environment",
-    "overview": "The workspace is a quiet, working desktop: deep ink outside, opaque blue-black windows inside, warm chalk text and a small handwritten signature behind the windows. A generous background terminal carries the real ASCII lettering, prompt and file paths. About and Contact start open in front of it, with About active.\n\nWindow chrome is restrained and familiar. Orange identifies the current path, focus and selected task; lilac distinguishes the prompt and directories. The desktop composition stays centered as the viewport widens. The layout leaves room around a centered welcome, then becomes denser as command results and the next prompt follow one another in a single transcript. Markdown documents overlap the terminal on desktop; compact screens keep a document above a persistent lower terminal.",
+    "overview": "The workspace is a quiet, working desktop: deep ink outside, opaque blue-black windows inside, warm chalk text and a small handwritten signature behind the windows. A generous background terminal carries the real ASCII lettering, prompt and file paths. About and Contact start open in front of it, with About active.\n\nWindow chrome is restrained and familiar. Orange identifies the current path, focus and selected task; lilac distinguishes the prompt and directories. The desktop composition stays centered as the viewport widens. The layout leaves room around a centered welcome, then becomes denser as command results and the next prompt follow one another in a single transcript. Markdown documents overlap the terminal on desktop; compact screens keep a document above a persistent lower terminal. The mobile dock retains the ASCII identity, full name, description and four inline file actions in a compact welcome.",
     "keyCharacteristics": [
       "Real character-based identity and navigation.",
       "Opaque, bordered windows on a deep ink desktop.",

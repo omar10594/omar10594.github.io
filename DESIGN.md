@@ -181,7 +181,7 @@ At short viewport heights (660px or below), the top inset becomes (40px) and the
 
 When a compact terminal is particularly short (190px or below), its title bar reduces to (44px), the status footer disappears and docked interior padding becomes (6px 12px). This reserves more of a keyboard-constrained pane for the transcript and prompt.
 
-The rhythm is deliberately local: narrow gaps for controls, moderate gaps between text actions, and generous interior space around the welcome. Terminal padding is (22px 28px 15px), changing to (16px 16px 10px) on compact screens and (10px 14px) in the lower split. That docked console reduces the welcome to its useful command hint; expanding it reveals the full ASCII welcome and navigation. Document padding is (23px 25px 28px), changing to (22px) on compact screens. Contact has its own denser reading treatment (16px 20px 20px padding; line height 1.7) so its email action stays near the top of the short startup panel.
+The rhythm is deliberately local: narrow gaps for controls, moderate gaps between text actions, and generous interior space around the welcome. Terminal padding is (22px 28px 15px), changing to (16px 16px 10px) on compact screens and (8px 12px 6px) in the lower split. The docked console retains the ASCII identity, full name, description and all four file actions in a compact composition; its redundant welcome hint and status footer disappear. Expanding restores the larger welcome and status treatment. Document padding is (23px 25px 28px), changing to (22px) on compact screens. Contact has its own denser reading treatment (16px 20px 20px padding; line height 1.7) so its email action stays near the top of the short startup panel.
 
 **The Recoverable Workspace Rule.** Keep the task strip and Reset accessible as windows move, close or minimize; compact screens retain the terminal below the selected document or allow it to expand fully.
 
@@ -205,6 +205,8 @@ The three window controls are circular, with a larger invisible interaction area
 ### Welcome paths and inline actions
 
 File paths are plain text actions, arranged vertically. The primary path carries an orange chevron; other rows reserve that same alignment space. The `cv/` path opens the CV directory listing, whose Markdown files open through the same file actions as the rest of the workspace. Hover and keyboard focus add a faint orange background and orange text. The `help` action is underlined within the hint. Keep labels as useful filenames or commands rather than promotional button copy.
+
+In the mobile dock, the four-line ASCII mark sits beside the full name and description in a two-column identity row. The lettering scales between (7px and 9px), while the balanced name scales between (10px and 11px) and the description uses (10px). File actions become four equal columns in one row, with a minimum height (44px) and text between (10px and 11px). Reserved chevrons and the small project-status annotation are omitted in this compact navigation; each file action keeps its existing command. The initial command echo stays part of the transcript. Narrow or short consoles can scroll and expand without clipping their content.
 
 ### Command input
 

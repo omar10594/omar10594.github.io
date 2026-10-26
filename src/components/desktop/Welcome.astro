@@ -8,9 +8,13 @@ const lettering = [
 const slash = ['    /', '   / ', '  /  ', ' /   '].join('\n');
 ---
 <div class="terminal-welcome">
-  <div class="ascii-mark" aria-hidden="true"><pre>{lettering}</pre><pre class="ascii-slash">{slash}</pre></div>
-  <h1>Guillermo Omar López López</h1>
-  <p class="welcome-line">I build for the web.</p>
+  <div class="welcome-identity">
+    <div class="ascii-mark" aria-hidden="true"><pre>{lettering}</pre><pre class="ascii-slash">{slash}</pre></div>
+    <div class="welcome-copy">
+      <h1>Guillermo Omar López López</h1>
+      <p class="welcome-line">I build for the web.</p>
+    </div>
+  </div>
   <nav class="welcome-paths" aria-label="Explore the workspace">
     <button class="path-link primary-path" type="button" data-command="open ~/about.md"><span aria-hidden="true">&gt;</span> about.md</button>
     <button class="path-link" type="button" data-command="cd ~/cv"><span aria-hidden="true">&gt;</span> cv/</button>

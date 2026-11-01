@@ -116,6 +116,11 @@ npm run check
 npm run audit
 ```
 
+The production build also checks every generated HTML page for scripts/styles
+that would be blocked by the site's CSP. Small scripts remain external. To test
+the compiled site with Cloudflare's actual header handling, use
+`npm exec -- wrangler dev --local --ip 127.0.0.1 --port 8788` after building.
+
 `check` validates TypeScript modules, runs the command/window tests and builds
 the site. TypeScript's checker does not check `.astro` templates; Astro validates
 their compilation during the build. The audit covers development and deployment

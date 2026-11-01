@@ -283,7 +283,7 @@ Responsive rules follow document viewport width, including narrow desktop frames
 | Horarios | 940, 560, 360px | Hero and story stack at 940px; smaller navigation, scenarios and calendar typography support narrow screens. |
 | Roomies | 900, 560, 360px | Hero/device stack at 900px; navigation, story padding and balance rows tighten on smaller screens. |
 
-Horarios and Roomies retain the shared device preview. Hardware width is `min(100%, 366px)`; screen height is `clamp(480px, 62vh, 606px)`, changing at 430px to `clamp(450px, 66vh, 560px)`. Preview content scrolls inside the device screen while the surrounding standalone document scrolls normally.
+Horarios and Roomies retain the shared device preview. Hardware width is `min(100%, 366px)` with an outer aspect ratio of `9 / 19.5` (366 × 793px at full width). `min-height: 0` and `flex: none` prevent content or a short window from distorting it. The screen fills the hardware; content and the surrounding page scroll independently. Do not compress the silhouette to fit viewport height.
 
 ## Elevation & Depth
 
@@ -369,3 +369,8 @@ Shared reveal motion is `600ms cubic-bezier(.16,1,.3,1)` from `translateY(12px)`
 - Don't use the window-control coral, gold and green as unrelated content accents.
 - Don't hide document text overflow; scroll it inside the window and keep the outer desktop stable.
 - Don't require motion to understand focus, window state or navigation.
+
+
+### Miss Luciana author invitation — refinement 2026-10-31
+
+The hero pairs a transparent teacher-penguin derivative with a prominent Meet Luciana link to `https://soy.missluciana.com/`, repeated in her authorship section. Keep the person and her classroom expertise explicit. The cutout is a decorative brand illustration, not a portrait of Luciana. Source is `src/assets/projects/penguin-teacher-cutout.png` with prompt/origin metadata; Astro Image emits an optimized WebP. Display width is 150–210px on desktop and 156px on compact screens, capped to 52% of its row. Preserve alpha, natural proportions and the warm cream surface; no blue square thumbnail.

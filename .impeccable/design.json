@@ -646,6 +646,19 @@
           "bodyRef": "typography.roomies-body"
         }
       ]
+    },
+    "projectDeviceGeometry": {
+      "source": "src/features/projects/shared/DeviceFrame.astro",
+      "hardwareWidth": "min(100%, 366px)",
+      "hardwareAspectRatio": "9 / 19.5",
+      "heightPolicy": "Independent of viewport height; min-height 0 and flex none; preview scrolls internally."
+    },
+    "missLucianaMascot": {
+      "source": "src/assets/projects/penguin-teacher-cutout.png",
+      "displayWidth": "clamp(150px, 16vw, 210px); compact 156px; max-width 52%",
+      "background": "transparent",
+      "delivery": "Astro Image optimized WebP",
+      "authorProfile": "https://soy.missluciana.com/"
     }
   },
   "components": [

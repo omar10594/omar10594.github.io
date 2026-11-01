@@ -1,6 +1,8 @@
 ---
 import ProjectLayout from '../shared/ProjectLayout.astro';
 import { projectById } from '../registry';
+import { Image } from 'astro:assets';
+import penguin from '../../../assets/projects/penguin-teacher-cutout.png';
 
 const project = projectById('miss-luciana')!;
 ---
@@ -44,8 +46,14 @@ const project = projectById('miss-luciana')!;
             <p class="ml-lede">Tools shaped by a teacher’s real classroom needs.</p>
             <p class="ml-credit">Teaching insight by Luciana. Product and engineering by Omar.</p>
             <div class="ml-mascot-row">
-              <img class="ml-mascot" src="/projects/miss-luciana/penguin-teacher.png" alt="Miss Luciana penguin teacher mascot" />
-              <p>Built with a teacher, for teachers.</p>
+              <Image class="ml-mascot" src={penguin} width={440} format="webp" quality={85} loading="eager" alt="Miss Luciana's friendly teacher penguin" />
+              <div class="ml-meet">
+                <a href="https://soy.missluciana.com/" target="_blank" rel="noopener noreferrer">
+                  Meet Luciana
+                  <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h7v7M13 3 5 11M11 9v4H3V5h4" /></svg>
+                </a>
+                <p>The teacher whose classroom experience shaped this project.</p>
+              </div>
             </div>
           </div>
 
@@ -149,6 +157,7 @@ const project = projectById('miss-luciana')!;
               <article>
                 <p class="ml-credit-role">Luciana</p>
                 <p>Teaching knowledge, classroom ideas, workflow requirements and the documents the product needed to support.</p>
+                <a class="ml-profile-link" href="https://soy.missluciana.com/" target="_blank" rel="noopener noreferrer">Get to know Luciana</a>
               </article>
               <article>
                 <p class="ml-credit-role">Omar</p>
@@ -427,25 +436,28 @@ const project = projectById('miss-luciana')!;
   .ml-mascot-row {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 18px;
     margin-top: clamp(26px, 4vw, 40px);
-    padding-top: 18px;
-    border-top: 1px solid var(--ml-line);
   }
 
   .ml-mascot {
     flex: 0 0 auto;
-    width: 88px;
+    width: clamp(150px, 16vw, 210px);
+    max-width: 52%;
     height: auto;
-    filter: drop-shadow(0 8px 16px rgba(26, 26, 46, 0.08));
   }
 
   .ml-mascot-row p {
     max-width: 24ch;
     color: var(--ml-muted);
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.55;
   }
+
+  .ml-meet { flex: 1; min-width: 0; }
+  .ml-meet a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--ml-teal-deep); font-size: 17px; font-weight: 800; text-decoration-thickness: 1px; }
+  .ml-meet a:hover, .ml-profile-link:hover { color: var(--ml-ink); }
+  .ml-profile-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 8px; color: var(--ml-teal-deep); font-size: 14px; font-weight: 700; }
 
   .ml-artifact {
     padding: clamp(16px, 2.4vw, 24px);
@@ -1190,12 +1202,12 @@ const project = projectById('miss-luciana')!;
     }
 
     .ml-mascot {
-      width: 64px;
+      width: 156px;
     }
 
     .ml-mascot-row p {
       max-width: 26ch;
-      font-size: 11.5px;
+      font-size: 13px;
     }
 
     .ml-export {

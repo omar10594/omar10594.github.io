@@ -45,6 +45,12 @@ const hasCaption = Astro.slots.has('caption');
   .device-hardware {
     position: relative;
     width: min(100%, 366px);
+    /* Keep the phone silhouette, even inside a short desktop window. */
+    aspect-ratio: 9 / 19.5;
+    min-height: 0;
+    flex: none;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr);
     padding: 9px;
     border-radius: 34px;
     background: linear-gradient(160deg, #232b38 0%, #0b0f16 55%, #1a212b 100%);
@@ -62,7 +68,7 @@ const hasCaption = Astro.slots.has('caption');
   .device-screen {
     position: relative;
     overflow: hidden;
-    height: clamp(480px, 62vh, 606px);
+    min-height: 0;
     display: flex;
     flex-direction: column;
     border-radius: 26px;
@@ -139,7 +145,6 @@ const hasCaption = Astro.slots.has('caption');
     }
 
     .device-screen {
-      height: clamp(450px, 66vh, 560px);
       border-radius: 21px;
     }
 

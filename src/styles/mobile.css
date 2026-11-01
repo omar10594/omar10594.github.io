@@ -39,10 +39,15 @@
 }
 
 .mobile-titlebar {
+  --mobile-titlebar-height: 44px;
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr) 56px;
+  grid-template-rows: minmax(0, 1fr);
   align-items: center;
-  flex: 0 0 44px;
+  /* A definite height lets Safari center the grid row inside this flex item. */
+  height: var(--mobile-titlebar-height);
+  min-height: var(--mobile-titlebar-height);
+  flex: 0 0 var(--mobile-titlebar-height);
   padding: 0 12px;
   background: var(--chrome, #182231);
   border-bottom: 1px solid var(--line-quiet, #253246);
@@ -385,7 +390,7 @@
     padding-top: calc(4px + env(safe-area-inset-top, 0px));
     padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
   }
-  .mobile-titlebar { flex-basis: 38px; }
+  .mobile-titlebar { --mobile-titlebar-height: 38px; }
   .mobile-nav { min-height: 48px; }
   .mobile-view { padding-top: 12px; padding-bottom: 20px; }
   .mobile-home { gap: 9px; }

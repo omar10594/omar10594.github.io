@@ -1,0 +1,1716 @@
+---
+import ProjectLayout from '../shared/ProjectLayout.astro';
+import { projectById } from '../registry';
+
+const project = projectById('playbusiness')!;
+---
+
+<ProjectLayout project={project} font="rubik" theme="light">
+  <div class="pb-page" id="top">
+    <header class="pb-header">
+      <div class="pb-wrap pb-header-inner">
+        <a class="pb-brand" href="#top" aria-label="PlayBusiness case study — back to top">
+          <img class="pb-logo" src="/projects/playbusiness/logo.svg" alt="PlayBusiness" />
+          <span class="pb-brand-tag">Case study</span>
+        </a>
+        <nav class="pb-nav" aria-label="PlayBusiness case study">
+          <a href="#story">Story</a>
+          <a href="#build-notes">Build notes</a>
+          <a class="pb-nav-visit" href="https://playbusiness.mx/" target="_blank" rel="noopener noreferrer">
+            Visit site
+            <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 3h7v7" />
+              <path d="M13 3 5 11" />
+              <path d="M11 9v4H3V5h4" />
+            </svg>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="pb-hero" aria-labelledby="pb-title">
+        <div class="pb-wrap">
+          <h1 class="pb-title" id="pb-title">The engineering behind <span class="pb-title-accent">PlayBusiness.</span></h1>
+          <div class="pb-hero-meta">
+            <p class="pb-lede">An investment platform, and the business behind it.</p>
+            <div class="pb-role">
+              <span class="pb-role-label">Role</span>
+              <p class="pb-role-track">
+                <span>Full-stack developer</span>
+                <span class="pb-role-arrow" aria-hidden="true">→</span>
+                <span>CTO / COO</span>
+                <span class="pb-role-arrow" aria-hidden="true">→</span>
+                <span>Infrastructure consultant</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pb-demo-section" aria-label="Portfolio reconstruction demonstration">
+        <div class="pb-wrap">
+          <div class="pb-artifact" data-pb-artifact>
+            <div class="pb-artifact-head">
+              <div class="pb-artifact-title">
+                <h2 id="pb-artifact-title">Three sample positions, one clear view.</h2>
+                <p class="pb-artifact-sub">A portfolio view built around the questions an investor actually asks.</p>
+              </div>
+              <span class="pb-demo-badge"><span class="pb-badge-dot" aria-hidden="true"></span>Demo data</span>
+            </div>
+
+            <div class="pb-tabs-wrap">
+              <div class="pb-tabs" role="tablist" aria-label="Portfolio views">
+                <button type="button" role="tab" id="pb-tab-summary" aria-selected="true" aria-controls="pb-panel-summary" tabindex="0">Summary</button>
+                <button type="button" role="tab" id="pb-tab-followup" aria-selected="false" aria-controls="pb-panel-followup" tabindex="-1">Follow-up</button>
+                <button type="button" role="tab" id="pb-tab-history" aria-selected="false" aria-controls="pb-panel-history" tabindex="-1">History</button>
+              </div>
+            </div>
+
+            <div class="pb-panels">
+              <section class="pb-panel" role="tabpanel" id="pb-panel-summary" aria-labelledby="pb-tab-summary" tabindex="0">
+                <div class="pb-panel-top">
+                  <p class="pb-panel-label">Sample positions</p>
+                  <p class="pb-panel-meta">3 fictional companies</p>
+                </div>
+
+                <div class="pb-table-head" aria-hidden="true">
+                  <span>Company</span>
+                  <span>Amount</span>
+                  <span>Status</span>
+                  <span>Details</span>
+                </div>
+
+                <ul class="pb-positions">
+                  <li class="pb-position">
+                    <div class="pb-position-row">
+                      <div class="pb-company">
+                        <span class="pb-avatar" aria-hidden="true">NS</span>
+                        <span class="pb-company-text">
+                          <strong>North Studio</strong>
+                          <span>Revenue-share note</span>
+                        </span>
+                      </div>
+                      <div class="pb-cell pb-cell-amount">
+                        <span class="pb-cell-label">Amount</span>
+                        <strong class="pb-money">MX$24,000</strong>
+                      </div>
+                      <div class="pb-cell pb-cell-status">
+                        <span class="pb-cell-label">Status</span>
+                        <span class="pb-status pb-status-active"><span class="pb-dot" aria-hidden="true"></span>Active</span>
+                      </div>
+                      <div class="pb-cell pb-cell-action">
+                        <button class="pb-details-button" type="button" aria-expanded="false" aria-controls="pb-details-north" data-details-toggle>
+                          <span data-details-label>View details</span>
+                          <svg class="pb-chevron" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 5 5 5-5" /></svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="pb-details" id="pb-details-north" hidden>
+                      <div class="pb-details-grid">
+                        <div class="pb-detail"><span>Instrument</span><strong>Revenue-share note</strong></div>
+                        <div class="pb-detail"><span>Sample amount</span><strong>MX$24,000</strong></div>
+                        <div class="pb-detail"><span>Update cadence</span><strong>Quarterly</strong></div>
+                        <div class="pb-detail"><span>Next action</span><strong>Review sample update</strong></div>
+                      </div>
+                      <p class="pb-detail-copy">North Studio is a fictional two-person creative studio. This sample position shows a working-capital note with a quarterly update and one open question for review.</p>
+                    </div>
+                  </li>
+
+                  <li class="pb-position">
+                    <div class="pb-position-row">
+                      <div class="pb-company">
+                        <span class="pb-avatar" aria-hidden="true">CF</span>
+                        <span class="pb-company-text">
+                          <strong>Cedar Foods</strong>
+                          <span>Working-capital note</span>
+                        </span>
+                      </div>
+                      <div class="pb-cell pb-cell-amount">
+                        <span class="pb-cell-label">Amount</span>
+                        <strong class="pb-money">MX$18,500</strong>
+                      </div>
+                      <div class="pb-cell pb-cell-status">
+                        <span class="pb-cell-label">Status</span>
+                        <span class="pb-status pb-status-active"><span class="pb-dot" aria-hidden="true"></span>Active</span>
+                      </div>
+                      <div class="pb-cell pb-cell-action">
+                        <button class="pb-details-button" type="button" aria-expanded="false" aria-controls="pb-details-cedar" data-details-toggle>
+                          <span data-details-label>View details</span>
+                          <svg class="pb-chevron" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 5 5 5-5" /></svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="pb-details" id="pb-details-cedar" hidden>
+                      <div class="pb-details-grid">
+                        <div class="pb-detail"><span>Instrument</span><strong>Working-capital note</strong></div>
+                        <div class="pb-detail"><span>Sample amount</span><strong>MX$18,500</strong></div>
+                        <div class="pb-detail"><span>Update cadence</span><strong>Monthly</strong></div>
+                        <div class="pb-detail"><span>Next action</span><strong>Check sample follow-up</strong></div>
+                      </div>
+                      <p class="pb-detail-copy">Cedar Foods is a fictional food producer. The sample position tracks inventory spending ahead of a seasonal push, with the follow-up focused on whether the note still fits.</p>
+                    </div>
+                  </li>
+
+                  <li class="pb-position">
+                    <div class="pb-position-row">
+                      <div class="pb-company">
+                        <span class="pb-avatar" aria-hidden="true">AW</span>
+                        <span class="pb-company-text">
+                          <strong>Atlas Works</strong>
+                          <span>Equipment note</span>
+                        </span>
+                      </div>
+                      <div class="pb-cell pb-cell-amount">
+                        <span class="pb-cell-label">Amount</span>
+                        <strong class="pb-money">MX$9,750</strong>
+                      </div>
+                      <div class="pb-cell pb-cell-status">
+                        <span class="pb-cell-label">Status</span>
+                        <span class="pb-status pb-status-complete"><span class="pb-dot" aria-hidden="true"></span>Completed</span>
+                      </div>
+                      <div class="pb-cell pb-cell-action">
+                        <button class="pb-details-button" type="button" aria-expanded="false" aria-controls="pb-details-atlas" data-details-toggle>
+                          <span data-details-label>View details</span>
+                          <svg class="pb-chevron" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 5 5 5-5" /></svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="pb-details" id="pb-details-atlas" hidden>
+                      <div class="pb-details-grid">
+                        <div class="pb-detail"><span>Instrument</span><strong>Equipment note</strong></div>
+                        <div class="pb-detail"><span>Sample amount</span><strong>MX$9,750</strong></div>
+                        <div class="pb-detail"><span>Update cadence</span><strong>One-time</strong></div>
+                        <div class="pb-detail"><span>Next action</span><strong>Confirm sample closing</strong></div>
+                      </div>
+                      <p class="pb-detail-copy">Atlas Works is a fictional fabrication shop. Its sample position has ended; the remaining task is to confirm the closing statement before archiving the record.</p>
+                    </div>
+                  </li>
+                </ul>
+
+                <p class="pb-panel-note">Fictional positions with sample amounts in MXN. Nothing here is connected to a real account.</p>
+              </section>
+
+              <section class="pb-panel" role="tabpanel" id="pb-panel-followup" aria-labelledby="pb-tab-followup" tabindex="0" hidden>
+                <div class="pb-panel-top">
+                  <p class="pb-panel-label">Review queue</p>
+                  <p class="pb-panel-meta" aria-live="polite"><span data-reviewed-count>1</span> of 3 reviewed</p>
+                </div>
+
+                <ul class="pb-updates">
+                  <li class="pb-update" data-update data-reviewed="false">
+                    <div class="pb-update-head">
+                      <span class="pb-update-company">North Studio</span>
+                      <span class="pb-update-tag">Quarterly update</span>
+                    </div>
+                    <p>The studio’s next quarterly summary is ready for a sample review. Check whether the note still matches the original working-capital purpose.</p>
+                    <button class="pb-review" type="button" data-review aria-pressed="false">
+                      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 8.5 3.5 3.5 7.5-8" /></svg>
+                      <span data-review-label>Mark reviewed</span>
+                    </button>
+                  </li>
+
+                  <li class="pb-update" data-update data-reviewed="true">
+                    <div class="pb-update-head">
+                      <span class="pb-update-company">Cedar Foods</span>
+                      <span class="pb-update-tag">Inventory note</span>
+                    </div>
+                    <p>Inventory costs moved ahead of the seasonal push. The sample update asks whether the follow-up should move to the next review window.</p>
+                    <button class="pb-review" type="button" data-review aria-pressed="true">
+                      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 8.5 3.5 3.5 7.5-8" /></svg>
+                      <span data-review-label>Reviewed</span>
+                    </button>
+                  </li>
+
+                  <li class="pb-update" data-update data-reviewed="false">
+                    <div class="pb-update-head">
+                      <span class="pb-update-company">Atlas Works</span>
+                      <span class="pb-update-tag">Closing record</span>
+                    </div>
+                    <p>The sample term has ended. Confirm the closing statement is attached before archiving the position and removing it from the queue.</p>
+                    <button class="pb-review" type="button" data-review aria-pressed="false">
+                      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 8.5 3.5 3.5 7.5-8" /></svg>
+                      <span data-review-label>Mark reviewed</span>
+                    </button>
+                  </li>
+                </ul>
+
+                <p class="pb-panel-note">A sample review queue. Marking an item reviewed only changes the state of this demonstration.</p>
+              </section>
+
+              <section class="pb-panel" role="tabpanel" id="pb-panel-history" aria-labelledby="pb-tab-history" tabindex="0" hidden>
+                <div class="pb-history-toolbar">
+                  <div class="pb-filter">
+                    <label for="pb-history-filter">Show activity</label>
+                    <select id="pb-history-filter" data-history-filter>
+                      <option value="all">All activity</option>
+                      <option value="contribution">Contributions</option>
+                      <option value="statement">Statements</option>
+                    </select>
+                  </div>
+                  <p class="pb-panel-meta" aria-live="polite" data-history-count>5 entries</p>
+                </div>
+
+                <ul class="pb-activity">
+                  <li class="pb-activity-row" data-kind="contribution">
+                    <span class="pb-activity-icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10" /><path d="M3 8h10" /></svg>
+                    </span>
+                    <span class="pb-activity-copy"><strong>Contribution · North Studio</strong><span>Sample transfer to position</span></span>
+                    <span class="pb-money">MX$2,000</span>
+                  </li>
+                  <li class="pb-activity-row" data-kind="statement">
+                    <span class="pb-activity-icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z" /><path d="M9 2v3h3" /></svg>
+                    </span>
+                    <span class="pb-activity-copy"><strong>Statement · North Studio</strong><span>Quarterly sample statement</span></span>
+                    <span class="pb-money">Document</span>
+                  </li>
+                  <li class="pb-activity-row" data-kind="contribution">
+                    <span class="pb-activity-icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10" /><path d="M3 8h10" /></svg>
+                    </span>
+                    <span class="pb-activity-copy"><strong>Contribution · Cedar Foods</strong><span>Sample transfer to position</span></span>
+                    <span class="pb-money">MX$1,500</span>
+                  </li>
+                  <li class="pb-activity-row" data-kind="contribution">
+                    <span class="pb-activity-icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10" /><path d="M3 8h10" /></svg>
+                    </span>
+                    <span class="pb-activity-copy"><strong>Contribution · Atlas Works</strong><span>Sample transfer to position</span></span>
+                    <span class="pb-money">MX$750</span>
+                  </li>
+                  <li class="pb-activity-row" data-kind="statement">
+                    <span class="pb-activity-icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z" /><path d="M9 2v3h3" /></svg>
+                    </span>
+                    <span class="pb-activity-copy"><strong>Statement · Cedar Foods</strong><span>Sample follow-up statement</span></span>
+                    <span class="pb-money">Document</span>
+                  </li>
+                </ul>
+
+                <p class="pb-empty" data-history-empty hidden>No sample entries in this view.</p>
+                <p class="pb-panel-note">Synthetic activity only. Filtering happens locally in this page.</p>
+              </section>
+            </div>
+
+            <p class="pb-artifact-foot">
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="10" height="7" rx="1" /><path d="M5 7V5a3 3 0 0 1 6 0v2" /></svg>
+              <span>Interactive reconstruction with fictional companies and amounts. No real account is connected.</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pb-story" id="story" aria-labelledby="pb-story-title" data-reveal>
+        <div class="pb-wrap pb-story-grid">
+          <div class="pb-section-intro">
+            <h2 id="pb-story-title">Understanding the work changed the engineering.</h2>
+          </div>
+          <div class="pb-story-body">
+            <p class="pb-story-lead">I joined PlayBusiness as a developer and eventually became its CTO. The move into leadership made the job broader, but what changed my work most was getting involved beyond the code.</p>
+            <p>When a request came from legal, accounting or another team, I wanted to understand how they worked and why the change mattered. That curiosity grew into responsibility for systems supporting significant financial operations, and a much broader understanding of the business.</p>
+            <p>I still work with the team today, helping with technology decisions and better ways of working, even though I am no longer there full time.</p>
+            <p class="pb-story-callout">The code was one part of the job. The rest was learning how the business actually worked.</p>
+            <div class="pb-learned">
+              <p class="pb-learned-label">What the work taught me</p>
+              <ul>
+                <li>
+                  <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 8.5 3.5 3.5 7.5-8" /></svg>
+                  Fintech legal questions and why careful wording matters
+                </li>
+                <li>
+                  <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 8.5 3.5 3.5 7.5-8" /></svg>
+                  Accounting, reporting and the people who depend on both
+                </li>
+                <li>
+                  <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 8.5 3.5 3.5 7.5-8" /></svg>
+                  Operations across teams, and how technology decisions land
+                </li>
+              </ul>
+            </div>
+            <p class="pb-credit-note">PlayBusiness is the work of a team; this is my account of the part I played.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pb-notes" id="build-notes" aria-labelledby="pb-notes-title" data-reveal>
+        <div class="pb-wrap">
+          <div class="pb-notes-head">
+            <div>
+              <h2 id="pb-notes-title">Clarity for the domain. Discipline for the money.</h2>
+            </div>
+            <p class="pb-notes-lede">My work connected application development, technology leadership and the day-to-day operation of a financial platform.</p>
+          </div>
+
+          <div class="pb-notes-grid">
+            <article>
+              <h3>Start with the domain</h3>
+              <p>Understanding legal, accounting and operations helped me turn requests into changes that made sense for the people using the platform.</p>
+            </article>
+            <article>
+              <h3>Reliability is a product decision</h3>
+              <p>In financial workflows, a status is not decoration. That responsibility extends beyond features to the systems and processes that support the business.</p>
+            </article>
+            <article>
+              <h3>Stay close to the code</h3>
+              <p>I led Rails and Ruby upgrades, worked with PostgreSQL, Redis and Sidekiq, and introduced Shape Up. Today I continue supporting infrastructure and technology decisions.</p>
+            </article>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <footer class="pb-footer">
+      <div class="pb-wrap pb-footer-inner">
+        <p><strong>PlayBusiness</strong> · Case study by Omar</p>
+        <div class="pb-footer-links">
+          <a href="#top">Back to top</a>
+          <a href="https://playbusiness.mx/" target="_blank" rel="noopener noreferrer">
+            Visit site
+            <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h7v7" /><path d="M13 3 5 11" /><path d="M11 9v4H3V5h4" /></svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</ProjectLayout>
+
+<style>
+  .pb-page {
+    --pb-navy: #1a4460;
+    --pb-navy-deep: #123246;
+    --pb-ink: #122b3b;
+    --pb-lime: #a5d239;
+    --pb-lime-soft: #eef7d8;
+    --pb-paper: #ffffff;
+    --pb-mist: #f5f8f2;
+    --pb-line: rgba(26, 68, 96, 0.16);
+    --pb-muted: #526b79;
+    background: #fbfcf8;
+    color: var(--pb-ink);
+    min-height: 100vh;
+    overflow-x: clip;
+  }
+
+  .pb-page [hidden] {
+    display: none !important;
+  }
+
+  .pb-page :focus-visible {
+    outline-color: var(--pb-navy);
+  }
+
+  .pb-page h1,
+  .pb-page h2,
+  .pb-page h3,
+  .pb-page h4,
+  .pb-page p {
+    margin: 0;
+  }
+
+  .pb-page h1,
+  .pb-page h2,
+  .pb-page h3,
+  .pb-page h4 {
+    font-family: var(--project-heading-font);
+  }
+
+  .pb-page ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pb-wrap {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding-left: clamp(16px, 4.5vw, 48px);
+    padding-right: clamp(16px, 4.5vw, 48px);
+  }
+
+  .pb-header {
+    background: var(--pb-paper);
+    border-bottom: 1px solid var(--pb-line);
+  }
+
+  .pb-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    min-height: 74px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .pb-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 44px;
+    text-decoration: none;
+  }
+
+  .pb-logo {
+    display: block;
+    width: auto;
+    height: 28px;
+  }
+
+  .pb-brand-tag {
+    border-left: 1px solid var(--pb-line);
+    padding-left: 14px;
+    color: var(--pb-muted);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .pb-nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-wrap: wrap;
+  }
+
+  .pb-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 44px;
+    padding: 10px 12px;
+    border-radius: 3px;
+    color: var(--pb-navy);
+    font-size: 13.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.16s ease, color 0.16s ease;
+  }
+
+  .pb-nav a:hover {
+    background: var(--pb-mist);
+  }
+
+  .pb-nav .pb-nav-visit {
+    margin-left: 4px;
+    padding: 10px 15px;
+    background: var(--pb-navy);
+    color: #fff;
+  }
+
+  .pb-nav .pb-nav-visit:hover {
+    background: var(--pb-navy-deep);
+  }
+
+  .pb-hero {
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcf8 100%);
+    padding-top: clamp(24px, 3vw, 38px);
+    padding-bottom: clamp(24px, 3vw, 36px);
+  }
+
+  .pb-kicker {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--pb-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+  }
+
+  .pb-kicker-mark {
+    width: 8px;
+    height: 8px;
+    border-radius: 1px;
+    background: var(--pb-lime);
+    flex: 0 0 auto;
+  }
+
+  .pb-title {
+    margin-top: 20px !important;
+    max-width: 1050px;
+    color: var(--pb-navy);
+    font-size: clamp(2.2rem, 4.5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 0.94;
+    overflow-wrap: break-word;
+  }
+
+  .pb-title-accent {
+    background: linear-gradient(transparent 74%, rgba(165, 210, 57, 0.55) 74%, rgba(165, 210, 57, 0.55) 92%, transparent 92%);
+  }
+
+  .pb-hero-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(20px, 4vw, 56px);
+    align-items: end;
+    margin-top: 24px;
+    padding-top: 22px;
+    border-top: 1px solid var(--pb-line);
+  }
+
+  .pb-lede {
+    max-width: 34ch;
+    color: var(--pb-navy);
+    font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+    line-height: 1.45;
+  }
+
+  .pb-role {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 14px;
+  }
+
+  .pb-role-label {
+    padding-top: 4px;
+    color: var(--pb-muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .pb-role-track {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--pb-navy);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .pb-role-arrow {
+    flex: 0 0 auto;
+    color: var(--pb-muted);
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  .pb-demo-section {
+    padding-bottom: clamp(48px, 7vw, 96px);
+  }
+
+  .pb-artifact {
+    background: var(--pb-paper);
+    border: 1px solid var(--pb-line);
+    border-radius: 4px;
+    box-shadow: 0 24px 60px rgba(18, 43, 59, 0.07);
+  }
+
+  .pb-artifact-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    padding: clamp(20px, 3.2vw, 32px);
+    border-radius: 4px 4px 0 0;
+    background: var(--pb-navy);
+    color: #fff;
+  }
+
+  .pb-artifact-eyebrow {
+    color: var(--pb-lime);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .pb-artifact-title h2 {
+    margin-top: 8px !important;
+    max-width: 28ch;
+    color: #fff;
+    font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+
+  .pb-artifact-sub {
+    max-width: 54ch;
+    margin-top: 10px !important;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .pb-demo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    flex: 0 0 auto;
+    padding: 6px 10px;
+    border-radius: 2px;
+    background: var(--pb-lime);
+    color: var(--pb-navy);
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .pb-badge-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--pb-navy);
+  }
+
+  .pb-tabs-wrap {
+    background: var(--pb-mist);
+    border-bottom: 1px solid var(--pb-line);
+  }
+
+  .pb-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .pb-tabs button {
+    min-height: 52px;
+    padding: 12px 10px;
+    border: 0;
+    border-right: 1px solid var(--pb-line);
+    background: transparent;
+    color: var(--pb-muted);
+    font-family: var(--project-heading-font);
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    transition: background-color 0.16s ease, color 0.16s ease;
+  }
+
+  .pb-tabs button:last-child {
+    border-right: 0;
+  }
+
+  .pb-tabs button:hover {
+    background: rgba(255, 255, 255, 0.6);
+    color: var(--pb-navy);
+  }
+
+  .pb-tabs button[aria-selected="true"] {
+    background: #fff;
+    box-shadow: inset 0 3px 0 var(--pb-lime);
+    color: var(--pb-navy);
+  }
+
+  .pb-panels {
+    padding: clamp(16px, 3vw, 28px);
+  }
+
+  .pb-panel:focus-visible {
+    outline: 3px solid var(--pb-navy);
+    outline-offset: 6px;
+  }
+
+  .pb-panel-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .pb-panel-label {
+    color: var(--pb-navy);
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .pb-panel-meta {
+    color: var(--pb-muted);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .pb-table-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.85fr) minmax(0, 0.8fr) auto;
+    gap: 16px;
+    padding: 0 14px 9px;
+    border-bottom: 1px solid var(--pb-line);
+    color: var(--pb-muted);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .pb-table-head span:last-child {
+    min-width: 112px;
+    text-align: right;
+  }
+
+  .pb-position {
+    border-bottom: 1px solid var(--pb-line);
+  }
+
+  .pb-position:last-child {
+    border-bottom: 0;
+  }
+
+  .pb-position-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.85fr) minmax(0, 0.8fr) auto;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 14px;
+    transition: background-color 0.16s ease;
+  }
+
+  .pb-position-row:hover {
+    background: #fafcf7;
+  }
+
+  .pb-company {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+  }
+
+  .pb-avatar {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--pb-line);
+    background: var(--pb-mist);
+    color: var(--pb-navy);
+    font-family: var(--project-heading-font);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  .pb-company-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .pb-company-text strong {
+    color: var(--pb-ink);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .pb-company-text span {
+    color: var(--pb-muted);
+    font-size: 12.5px;
+    line-height: 1.35;
+  }
+
+  .pb-cell {
+    min-width: 0;
+  }
+
+  .pb-cell-label {
+    display: none;
+  }
+
+  .pb-money {
+    color: var(--pb-ink);
+    font-size: 15px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .pb-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 9px;
+    border-radius: 2px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .pb-status-active {
+    border: 1px solid rgba(96, 130, 20, 0.24);
+    background: var(--pb-lime-soft);
+    color: #2f4a05;
+  }
+
+  .pb-status-complete {
+    border: 1px solid var(--pb-line);
+    background: #f2f4f5;
+    color: #445b68;
+  }
+
+  .pb-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.75;
+  }
+
+  .pb-cell-action {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .pb-details-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 44px;
+    padding: 9px 12px;
+    border: 1px solid var(--pb-line);
+    border-radius: 2px;
+    background: #fff;
+    color: var(--pb-navy);
+    font-size: 12.5px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+  }
+
+  .pb-details-button:hover,
+  .pb-details-button[aria-expanded="true"] {
+    border-color: var(--pb-navy);
+    background: var(--pb-navy);
+    color: #fff;
+  }
+
+  .pb-chevron {
+    transition: transform 0.18s ease;
+  }
+
+  .pb-details-button[aria-expanded="true"] .pb-chevron {
+    transform: rotate(180deg);
+  }
+
+  .pb-details {
+    padding: 18px 14px 20px;
+    border-top: 1px solid var(--pb-line);
+    background: #f8faf5;
+  }
+
+  .pb-details-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .pb-detail span {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--pb-muted);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .pb-detail strong {
+    display: block;
+    color: var(--pb-ink);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .pb-detail-copy {
+    max-width: 82ch;
+    margin-top: 14px !important;
+    color: var(--pb-muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .pb-panel-note {
+    margin-top: 14px !important;
+    color: var(--pb-muted);
+    font-size: 11.5px;
+    line-height: 1.55;
+  }
+
+  .pb-updates {
+    display: grid;
+    gap: 10px;
+  }
+
+  .pb-update {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 18px;
+    padding: 16px;
+    border: 1px solid var(--pb-line);
+    border-left: 1px solid #c8d3d8;
+    background: #fff;
+    transition: background-color 0.18s ease, border-color 0.18s ease;
+  }
+
+  .pb-update[data-reviewed="true"] {
+    border-left-color: var(--pb-lime);
+    background: #f8fbf1;
+  }
+
+  .pb-update-head {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .pb-update-company {
+    color: var(--pb-navy);
+    font-family: var(--project-heading-font);
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+
+  .pb-update-tag {
+    padding: 3px 7px;
+    border: 1px solid var(--pb-line);
+    background: var(--pb-mist);
+    color: var(--pb-muted);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .pb-update > p {
+    align-self: center;
+    max-width: 72ch;
+    color: #334d5c;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+
+  .pb-review {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    align-self: center;
+    min-height: 44px;
+    padding: 9px 13px;
+    border: 1px solid var(--pb-line);
+    border-radius: 2px;
+    background: #fff;
+    color: var(--pb-navy);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+  }
+
+  .pb-review:hover {
+    border-color: var(--pb-navy);
+  }
+
+  .pb-review[aria-pressed="true"] {
+    border-color: var(--pb-lime);
+    background: var(--pb-lime);
+    color: #223d00;
+  }
+
+  .pb-review svg {
+    flex: 0 0 auto;
+  }
+
+  .pb-history-toolbar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .pb-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .pb-filter label {
+    color: var(--pb-muted);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .pb-filter select {
+    min-height: 44px;
+    max-width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--pb-line);
+    border-radius: 2px;
+    background: #fff;
+    color: var(--pb-ink);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .pb-activity-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 2px;
+    border-bottom: 1px solid var(--pb-line);
+  }
+
+  .pb-activity-row:last-child {
+    border-bottom: 0;
+  }
+
+  .pb-activity-icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--pb-line);
+    background: var(--pb-mist);
+    color: var(--pb-navy);
+  }
+
+  .pb-activity-copy {
+    min-width: 0;
+  }
+
+  .pb-activity-copy strong {
+    display: block;
+    color: var(--pb-ink);
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+
+  .pb-activity-copy span {
+    display: block;
+    margin-top: 2px;
+    color: var(--pb-muted);
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .pb-activity-row .pb-money {
+    font-size: 13.5px;
+  }
+
+  .pb-activity-row[data-kind="statement"] .pb-money {
+    color: var(--pb-muted);
+    font-weight: 600;
+  }
+
+  .pb-empty {
+    padding: 18px 0;
+    color: var(--pb-muted);
+    font-size: 13px;
+  }
+
+  .pb-artifact-foot {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px clamp(16px, 3vw, 28px);
+    border-top: 1px solid var(--pb-line);
+    border-radius: 0 0 4px 4px;
+    background: #f3f6ee;
+    color: var(--pb-muted);
+    font-size: 11.5px;
+    line-height: 1.5;
+  }
+
+  .pb-artifact-foot svg {
+    flex: 0 0 auto;
+    margin-top: 1px;
+  }
+
+  .pb-story {
+    padding: clamp(48px, 7vw, 96px) 0;
+    border-top: 1px solid var(--pb-line);
+    border-bottom: 1px solid var(--pb-line);
+    background: #fff;
+    scroll-margin-top: 24px;
+  }
+
+  .pb-story-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(28px, 6vw, 80px);
+    align-items: start;
+  }
+
+  .pb-section-intro h2 {
+    max-width: 15ch;
+    margin-top: 14px !important;
+    color: var(--pb-navy);
+    font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+  }
+
+  .pb-story-body {
+    max-width: 66ch;
+    color: #2b4655;
+    font-size: 16.5px;
+    line-height: 1.72;
+  }
+
+  .pb-story-body p + p {
+    margin-top: 16px;
+  }
+
+  .pb-story-lead {
+    color: var(--pb-navy);
+    font-size: clamp(1.15rem, 2vw, 1.35rem) !important;
+    font-weight: 500;
+    line-height: 1.55 !important;
+  }
+
+  .pb-story-callout {
+    margin: 28px 0 !important;
+    padding: 4px 0 4px 18px;
+    border-left: 1px solid var(--pb-lime);
+    color: var(--pb-navy);
+    font-family: var(--project-heading-font);
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    letter-spacing: -0.015em;
+    line-height: 1.35;
+  }
+
+  .pb-learned {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--pb-line);
+  }
+
+  .pb-learned-label {
+    margin-bottom: 12px !important;
+    color: var(--pb-muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .pb-learned ul {
+    display: grid;
+    gap: 9px;
+  }
+
+  .pb-learned li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    color: #334d5c;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
+  .pb-learned svg {
+    flex: 0 0 auto;
+    margin-top: 2px;
+    color: #5c7f12;
+  }
+
+  .pb-credit-note {
+    margin-top: 24px !important;
+    padding-top: 14px;
+    border-top: 1px dashed var(--pb-line);
+    color: var(--pb-muted);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .pb-notes {
+    padding: clamp(48px, 7vw, 96px) 0;
+    background: var(--pb-navy);
+    color: #e8eef1;
+    scroll-margin-top: 24px;
+  }
+
+  .pb-kicker-lime {
+    color: var(--pb-lime);
+  }
+
+  .pb-notes-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(20px, 4vw, 56px);
+    align-items: end;
+    margin-bottom: clamp(28px, 4vw, 44px);
+  }
+
+  .pb-notes h2 {
+    max-width: 20ch;
+    margin-top: 14px !important;
+    color: #fff;
+    font-size: clamp(1.8rem, 3.6vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+  }
+
+  .pb-notes-lede {
+    justify-self: end;
+    max-width: 48ch;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .pb-notes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .pb-notes-grid article {
+    padding: 24px 22px 28px;
+    background: var(--pb-navy);
+  }
+
+  .pb-notes-num {
+    color: var(--pb-lime);
+    font-family: var(--project-heading-font);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+  }
+
+  .pb-notes h3 {
+    margin: 10px 0 8px !important;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  .pb-notes-grid p {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+
+  .pb-limits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(24px, 5vw, 64px);
+    margin-top: clamp(28px, 4vw, 40px);
+    padding-top: 28px;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .pb-limits h3 {
+    margin-bottom: 12px !important;
+    color: var(--pb-lime);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  .pb-limits ul {
+    display: grid;
+    gap: 8px;
+  }
+
+  .pb-limits li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .pb-limits svg {
+    flex: 0 0 auto;
+    margin-top: 2px;
+  }
+
+  .pb-limits .pb-no svg {
+    color: rgba(255, 255, 255, 0.42);
+  }
+
+  .pb-evidence {
+    margin-top: 28px !important;
+    padding: 16px 18px;
+    border: 1px solid rgba(165, 210, 57, 0.35);
+    background: rgba(165, 210, 57, 0.1);
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 12.5px;
+    line-height: 1.65;
+  }
+
+  .pb-evidence strong {
+    color: var(--pb-lime);
+  }
+
+  .pb-footer {
+    padding: 22px 0;
+    background: var(--pb-navy-deep);
+    color: rgba(255, 255, 255, 0.64);
+  }
+
+  .pb-footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12.5px;
+  }
+
+  .pb-footer strong {
+    color: #fff;
+    font-family: var(--project-heading-font);
+    font-size: 13px;
+  }
+
+  .pb-footer-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .pb-footer a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 8px 10px;
+    border-bottom: 1px solid transparent;
+    color: #fff;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .pb-footer a:hover {
+    border-bottom-color: var(--pb-lime);
+  }
+
+  .pb-footer :focus-visible {
+    outline-color: var(--pb-lime);
+  }
+
+  @media (max-width: 900px) {
+    .pb-story-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pb-section-intro h2 {
+      max-width: 22ch;
+    }
+
+    .pb-notes-head {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .pb-notes-lede {
+      justify-self: start;
+    }
+
+    .pb-notes-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pb-limits {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .pb-hero-meta {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .pb-role {
+      justify-content: flex-start;
+    }
+
+    .pb-table-head {
+      display: none;
+    }
+
+    .pb-position-row {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      padding: 18px 14px;
+    }
+
+    .pb-company {
+      grid-column: 1 / -1;
+    }
+
+    .pb-cell-amount {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: center;
+    }
+
+    .pb-cell-status {
+      grid-column: 2;
+      grid-row: 2;
+      justify-self: end;
+      align-self: center;
+    }
+
+    .pb-cell-action {
+      grid-column: 1 / -1;
+      grid-row: 3;
+    }
+
+    .pb-details-button {
+      width: 100%;
+    }
+
+    .pb-cell-label {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--pb-muted);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .pb-avatar {
+      width: 38px;
+      height: 38px;
+    }
+
+    .pb-details-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pb-update {
+      grid-template-columns: 1fr;
+    }
+
+    .pb-review {
+      grid-column: 1;
+      grid-row: auto;
+      justify-self: start;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .pb-header-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      padding-top: 12px;
+      padding-bottom: 8px;
+    }
+
+    .pb-nav {
+      width: 100%;
+      gap: 0;
+    }
+
+    .pb-nav a {
+      padding-left: 8px;
+      padding-right: 8px;
+      font-size: 13px;
+    }
+
+    .pb-nav .pb-nav-visit {
+      margin-left: auto;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .pb-artifact-head {
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .pb-role {
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .pb-role-label {
+      padding-top: 0;
+    }
+  }
+
+  @media (max-width: 440px) {
+    .pb-details-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pb-panels {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .pb-position-row {
+      padding-left: 2px;
+      padding-right: 2px;
+    }
+
+    .pb-details {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .pb-panel-top {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pb-activity-row {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .pb-activity-row .pb-money {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-pb-artifact]');
+
+  if (root) {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+
+    const selectTab = (tab: HTMLButtonElement) => {
+      for (const candidate of tabs) {
+        const selected = candidate === tab;
+        candidate.setAttribute('aria-selected', String(selected));
+        candidate.tabIndex = selected ? 0 : -1;
+
+        const panelId = candidate.getAttribute('aria-controls');
+        const panel = panelId ? root.querySelector<HTMLElement>(`#${panelId}`) : null;
+        if (panel) panel.hidden = !selected;
+      }
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => selectTab(tab));
+
+      tab.addEventListener('keydown', (event) => {
+        let nextIndex: number | null = null;
+
+        if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+        if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = tabs.length - 1;
+
+        if (nextIndex !== null) {
+          event.preventDefault();
+          const next = tabs[nextIndex];
+          if (next) {
+            selectTab(next);
+            next.focus();
+          }
+        }
+      });
+    });
+
+    const selectedTab = tabs.find((tab) => tab.getAttribute('aria-selected') === 'true');
+    if (selectedTab) selectTab(selectedTab);
+
+    for (const button of root.querySelectorAll<HTMLButtonElement>('[data-details-toggle]')) {
+      button.addEventListener('click', () => {
+        const panelId = button.getAttribute('aria-controls');
+        const panel = panelId ? root.querySelector<HTMLElement>(`#${panelId}`) : null;
+        if (!panel) return;
+
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!expanded));
+        panel.hidden = expanded;
+
+        const label = button.querySelector<HTMLElement>('[data-details-label]');
+        if (label) label.textContent = expanded ? 'View details' : 'Hide details';
+      });
+    }
+
+    const updates = Array.from(root.querySelectorAll<HTMLElement>('[data-update]'));
+    const reviewedCount = root.querySelector<HTMLElement>('[data-reviewed-count]');
+
+    const syncReviews = () => {
+      const reviewed = updates.filter((update) => update.dataset.reviewed === 'true').length;
+      if (reviewedCount) reviewedCount.textContent = String(reviewed);
+    };
+
+    for (const button of root.querySelectorAll<HTMLButtonElement>('[data-review]')) {
+      const update = button.closest<HTMLElement>('[data-update]');
+      const label = button.querySelector<HTMLElement>('[data-review-label]');
+
+      const setReviewed = (reviewed: boolean) => {
+        button.setAttribute('aria-pressed', String(reviewed));
+        if (update) update.dataset.reviewed = String(reviewed);
+        if (label) label.textContent = reviewed ? 'Reviewed' : 'Mark reviewed';
+      };
+
+      setReviewed(button.getAttribute('aria-pressed') === 'true');
+
+      button.addEventListener('click', () => {
+        setReviewed(button.getAttribute('aria-pressed') !== 'true');
+        syncReviews();
+      });
+    }
+
+    syncReviews();
+
+    const filter = root.querySelector<HTMLSelectElement>('[data-history-filter]');
+    const activityRows = Array.from(root.querySelectorAll<HTMLElement>('[data-kind]'));
+    const historyCount = root.querySelector<HTMLElement>('[data-history-count]');
+    const historyEmpty = root.querySelector<HTMLElement>('[data-history-empty]');
+
+    const applyFilter = () => {
+      const value = filter?.value ?? 'all';
+      let visible = 0;
+
+      for (const row of activityRows) {
+        const show = value === 'all' || row.dataset.kind === value;
+        row.hidden = !show;
+        if (show) visible += 1;
+      }
+
+      if (historyCount) historyCount.textContent = `${visible} ${visible === 1 ? 'entry' : 'entries'}`;
+      if (historyEmpty) historyEmpty.hidden = visible !== 0;
+    };
+
+    filter?.addEventListener('change', applyFilter);
+    applyFilter();
+  }
+</script>

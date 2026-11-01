@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-26T02:15:27.2974803Z",
+  "generatedAt": "2026-11-01T03:25:51.106217+00:00",
   "title": "Design System: Guillermo Omar — Personal Workspace",
   "extensions": {
     "colorMeta": {
@@ -185,6 +185,211 @@
           "oklch(84% 0.1261 149.35)",
           "oklch(95% 0.1261 149.35)"
         ]
+      },
+      "pb-navy": {
+        "displayName": "PlayBusiness / pb-navy",
+        "purpose": "Isolated playbusiness document; source CSS --pb-navy.",
+        "role": "neutral"
+      },
+      "pb-navy-deep": {
+        "displayName": "PlayBusiness / pb-navy-deep",
+        "purpose": "Isolated playbusiness document; source CSS --pb-navy-deep.",
+        "role": "neutral"
+      },
+      "pb-ink": {
+        "displayName": "PlayBusiness / pb-ink",
+        "purpose": "Isolated playbusiness document; source CSS --pb-ink.",
+        "role": "neutral"
+      },
+      "pb-lime": {
+        "displayName": "PlayBusiness / pb-lime",
+        "purpose": "Isolated playbusiness document; source CSS --pb-lime.",
+        "role": "primary"
+      },
+      "pb-lime-soft": {
+        "displayName": "PlayBusiness / pb-lime-soft",
+        "purpose": "Isolated playbusiness document; source CSS --pb-lime-soft.",
+        "role": "primary"
+      },
+      "pb-paper": {
+        "displayName": "PlayBusiness / pb-paper",
+        "purpose": "Isolated playbusiness document; source CSS --pb-paper.",
+        "role": "neutral"
+      },
+      "pb-mist": {
+        "displayName": "PlayBusiness / pb-mist",
+        "purpose": "Isolated playbusiness document; source CSS --pb-mist.",
+        "role": "neutral"
+      },
+      "pb-line": {
+        "displayName": "PlayBusiness / pb-line",
+        "purpose": "Isolated playbusiness document; source CSS --pb-line.",
+        "role": "neutral"
+      },
+      "pb-muted": {
+        "displayName": "PlayBusiness / pb-muted",
+        "purpose": "Isolated playbusiness document; source CSS --pb-muted.",
+        "role": "neutral"
+      },
+      "ss-pink": {
+        "displayName": "SoSimple / ss-pink",
+        "purpose": "Isolated sosimple document; source CSS --ss-pink.",
+        "role": "primary"
+      },
+      "ss-lilac": {
+        "displayName": "SoSimple / ss-lilac",
+        "purpose": "Isolated sosimple document; source CSS --ss-lilac.",
+        "role": "neutral"
+      },
+      "ss-mint": {
+        "displayName": "SoSimple / ss-mint",
+        "purpose": "Isolated sosimple document; source CSS --ss-mint.",
+        "role": "neutral"
+      },
+      "ss-text": {
+        "displayName": "SoSimple / ss-text",
+        "purpose": "Isolated sosimple document; source CSS --ss-text.",
+        "role": "neutral"
+      },
+      "ss-muted": {
+        "displayName": "SoSimple / ss-muted",
+        "purpose": "Isolated sosimple document; source CSS --ss-muted.",
+        "role": "neutral"
+      },
+      "ss-panel": {
+        "displayName": "SoSimple / ss-panel",
+        "purpose": "Isolated sosimple document; source CSS --ss-panel.",
+        "role": "neutral"
+      },
+      "ss-panel-2": {
+        "displayName": "SoSimple / ss-panel-2",
+        "purpose": "Isolated sosimple document; source CSS --ss-panel-2.",
+        "role": "neutral"
+      },
+      "ss-line": {
+        "displayName": "SoSimple / ss-line",
+        "purpose": "Isolated sosimple document; source CSS --ss-line.",
+        "role": "neutral"
+      },
+      "ss-background": {
+        "displayName": "SoSimple / Dark background",
+        "role": "neutral",
+        "purpose": "Shared ProjectLayout dark theme, used by SoSimple."
+      },
+      "ml-cream": {
+        "displayName": "Miss Luciana / ml-cream",
+        "purpose": "Isolated miss-luciana document; source CSS --ml-cream.",
+        "role": "neutral"
+      },
+      "ml-ink": {
+        "displayName": "Miss Luciana / ml-ink",
+        "purpose": "Isolated miss-luciana document; source CSS --ml-ink.",
+        "role": "neutral"
+      },
+      "ml-teal": {
+        "displayName": "Miss Luciana / ml-teal",
+        "purpose": "Isolated miss-luciana document; source CSS --ml-teal.",
+        "role": "primary"
+      },
+      "ml-teal-deep": {
+        "displayName": "Miss Luciana / ml-teal-deep",
+        "purpose": "Isolated miss-luciana document; source CSS --ml-teal-deep.",
+        "role": "primary"
+      },
+      "ml-teal-soft": {
+        "displayName": "Miss Luciana / ml-teal-soft",
+        "purpose": "Isolated miss-luciana document; source CSS --ml-teal-soft.",
+        "role": "primary"
+      },
+      "ml-amber": {
+        "displayName": "Miss Luciana / ml-amber",
+        "purpose": "Isolated miss-luciana document; source CSS --ml-amber.",
+        "role": "neutral"
+      },
+      "ml-amber-soft": {
+        "displayName": "Miss Luciana / ml-amber-soft",
+        "purpose": "Isolated miss-luciana document; source CSS --ml-amber-soft.",
+        "role": "neutral"
+      },
+      "ml-paper": {
+        "displayName": "Miss Luciana / ml-paper",
+        "purpose": "Isolated miss-luciana document; source CSS --ml-paper.",
+        "role": "neutral"
+      },
+      "ml-line": {
+        "displayName": "Miss Luciana / ml-line",
+        "purpose": "Isolated miss-luciana document; source CSS --ml-line.",
+        "role": "neutral"
+      },
+      "ml-muted": {
+        "displayName": "Miss Luciana / ml-muted",
+        "purpose": "Isolated miss-luciana document; source CSS --ml-muted.",
+        "role": "neutral"
+      },
+      "horarios-pale": {
+        "displayName": "Horarios / pale",
+        "purpose": "Isolated horarios document; source CSS --pale.",
+        "role": "neutral"
+      },
+      "horarios-ink": {
+        "displayName": "Horarios / ink",
+        "purpose": "Isolated horarios document; source CSS --ink.",
+        "role": "neutral"
+      },
+      "horarios-body": {
+        "displayName": "Horarios / body",
+        "purpose": "Isolated horarios document; source CSS --body.",
+        "role": "neutral"
+      },
+      "horarios-muted": {
+        "displayName": "Horarios / muted",
+        "purpose": "Isolated horarios document; source CSS --muted.",
+        "role": "neutral"
+      },
+      "horarios-line": {
+        "displayName": "Horarios / line",
+        "purpose": "Isolated horarios document; source CSS --line.",
+        "role": "neutral"
+      },
+      "horarios-card": {
+        "displayName": "Horarios / card",
+        "purpose": "Isolated horarios document; source CSS --card.",
+        "role": "neutral"
+      },
+      "horarios-blue": {
+        "displayName": "Horarios / blue",
+        "purpose": "Isolated horarios document; source CSS --blue.",
+        "role": "primary"
+      },
+      "roomies-sage": {
+        "displayName": "Roomies / sage",
+        "purpose": "Isolated roomies document; source CSS --sage.",
+        "role": "neutral"
+      },
+      "roomies-sage-deep": {
+        "displayName": "Roomies / sage-deep",
+        "purpose": "Isolated roomies document; source CSS --sage-deep.",
+        "role": "neutral"
+      },
+      "roomies-green": {
+        "displayName": "Roomies / green",
+        "purpose": "Isolated roomies document; source CSS --green.",
+        "role": "primary"
+      },
+      "roomies-body": {
+        "displayName": "Roomies / body",
+        "purpose": "Isolated roomies document; source CSS --body.",
+        "role": "neutral"
+      },
+      "roomies-muted": {
+        "displayName": "Roomies / muted",
+        "purpose": "Isolated roomies document; source CSS --muted.",
+        "role": "neutral"
+      },
+      "roomies-line": {
+        "displayName": "Roomies / line",
+        "purpose": "Isolated roomies document; source CSS --line.",
+        "role": "neutral"
       }
     },
     "typographyMeta": {
@@ -215,6 +420,46 @@
       "signature": {
         "displayName": "Desktop Signature",
         "purpose": "Small background signature only."
+      },
+      "pb-heading": {
+        "displayName": "PlayBusiness heading",
+        "purpose": "Only inside the playbusiness project document. Heading size records its main hero title."
+      },
+      "pb-body": {
+        "displayName": "PlayBusiness body",
+        "purpose": "Only inside the playbusiness project document. Heading size records its main hero title."
+      },
+      "ss-heading": {
+        "displayName": "SoSimple heading",
+        "purpose": "Only inside the sosimple project document. Heading size records its main hero title."
+      },
+      "ss-body": {
+        "displayName": "SoSimple body",
+        "purpose": "Only inside the sosimple project document. Heading size records its main hero title."
+      },
+      "ml-heading": {
+        "displayName": "Miss Luciana heading",
+        "purpose": "Only inside the miss-luciana project document. Heading size records its main hero title."
+      },
+      "ml-body": {
+        "displayName": "Miss Luciana body",
+        "purpose": "Only inside the miss-luciana project document. Heading size records its main hero title."
+      },
+      "horarios-heading": {
+        "displayName": "Horarios heading",
+        "purpose": "Only inside the horarios project document. Heading size records its main hero title."
+      },
+      "horarios-body": {
+        "displayName": "Horarios body",
+        "purpose": "Only inside the horarios project document. Heading size records its main hero title."
+      },
+      "roomies-heading": {
+        "displayName": "Roomies heading",
+        "purpose": "Only inside the roomies project document. Heading size records its main hero title."
+      },
+      "roomies-body": {
+        "displayName": "Roomies body",
+        "purpose": "Only inside the roomies project document. Heading size records its main hero title."
       }
     },
     "shadows": [
@@ -244,6 +489,21 @@
         "name": "terminal-output-sequence",
         "value": "750ms",
         "purpose": "Maximum row-insertion sequence budget, with intervals up to 75ms. Reduced motion inserts immediately; a new command, Clear or Reset cancels a previous sequence."
+      },
+      {
+        "name": "project-reveal",
+        "value": "600ms cubic-bezier(.16,1,.3,1)",
+        "purpose": "ProjectLayout reveal from translateY(12px), intersection threshold .12; content visible before reveal."
+      },
+      {
+        "name": "sosimple-task-arrive",
+        "value": "340ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "SoSimple local task insertion."
+      },
+      {
+        "name": "project-reduced-motion",
+        "value": "(prefers-reduced-motion: reduce)",
+        "purpose": "ProjectLayout disables all animations/transitions and smooth scrolling."
       }
     ],
     "breakpoints": [
@@ -258,8 +518,135 @@
       {
         "name": "short-terminal-container",
         "value": "terminal (max-height: 610px)"
+      },
+      {
+        "name": "playbusiness-900",
+        "value": "(max-width: 900px)",
+        "purpose": "playbusiness document viewport, including iframe width."
+      },
+      {
+        "name": "playbusiness-820",
+        "value": "(max-width: 820px)",
+        "purpose": "playbusiness document viewport, including iframe width."
+      },
+      {
+        "name": "playbusiness-640",
+        "value": "(max-width: 640px)",
+        "purpose": "playbusiness document viewport, including iframe width."
+      },
+      {
+        "name": "playbusiness-440",
+        "value": "(max-width: 440px)",
+        "purpose": "playbusiness document viewport, including iframe width."
+      },
+      {
+        "name": "sosimple-820",
+        "value": "(max-width: 820px)",
+        "purpose": "sosimple document viewport, including iframe width."
+      },
+      {
+        "name": "sosimple-480",
+        "value": "(max-width: 480px)",
+        "purpose": "sosimple document viewport, including iframe width."
+      },
+      {
+        "name": "miss-luciana-980",
+        "value": "(max-width: 980px)",
+        "purpose": "miss-luciana document viewport, including iframe width."
+      },
+      {
+        "name": "miss-luciana-720",
+        "value": "(max-width: 720px)",
+        "purpose": "miss-luciana document viewport, including iframe width."
+      },
+      {
+        "name": "miss-luciana-600",
+        "value": "(max-width: 600px)",
+        "purpose": "miss-luciana document viewport, including iframe width."
+      },
+      {
+        "name": "miss-luciana-440",
+        "value": "(max-width: 440px)",
+        "purpose": "miss-luciana document viewport, including iframe width."
+      },
+      {
+        "name": "horarios-940",
+        "value": "(max-width: 940px)",
+        "purpose": "horarios document viewport, including iframe width."
+      },
+      {
+        "name": "horarios-560",
+        "value": "(max-width: 560px)",
+        "purpose": "horarios document viewport, including iframe width."
+      },
+      {
+        "name": "horarios-360",
+        "value": "(max-width: 360px)",
+        "purpose": "horarios document viewport, including iframe width."
+      },
+      {
+        "name": "roomies-900",
+        "value": "(max-width: 900px)",
+        "purpose": "roomies document viewport, including iframe width."
+      },
+      {
+        "name": "roomies-560",
+        "value": "(max-width: 560px)",
+        "purpose": "roomies document viewport, including iframe width."
+      },
+      {
+        "name": "roomies-360",
+        "value": "(max-width: 360px)",
+        "purpose": "roomies document viewport, including iframe width."
+      },
+      {
+        "name": "project-device-compact",
+        "value": "(max-width: 430px)",
+        "purpose": "Shared project device frame only."
       }
-    ]
+    ],
+    "projectBrandCapture": {
+      "capturedAt": "2026-10-31",
+      "scope": "Additive capture of the five implemented project documents; existing desktop world and preexisting metadata are preserved.",
+      "architecture": "ProjectLayout documents embedded on desktop, direct responsive routes on mobile; registry plus route glob discovery.",
+      "worlds": [
+        {
+          "id": "playbusiness",
+          "source": "src/features/projects/playbusiness/Project.astro",
+          "colorPrefix": "pb-",
+          "headingRef": "typography.pb-heading",
+          "bodyRef": "typography.pb-body"
+        },
+        {
+          "id": "sosimple",
+          "source": "src/features/projects/sosimple/Project.astro",
+          "colorPrefix": "ss-",
+          "headingRef": "typography.ss-heading",
+          "bodyRef": "typography.ss-body"
+        },
+        {
+          "id": "miss-luciana",
+          "source": "src/features/projects/miss-luciana/Project.astro",
+          "colorPrefix": "ml-",
+          "headingRef": "typography.ml-heading",
+          "bodyRef": "typography.ml-body"
+        },
+        {
+          "id": "horarios",
+          "source": "src/features/projects/horarios/Project.astro",
+          "colorPrefix": "horarios-",
+          "headingRef": "typography.horarios-heading",
+          "bodyRef": "typography.horarios-body"
+        },
+        {
+          "id": "roomies",
+          "source": "src/features/projects/roomies/Project.astro",
+          "colorPrefix": "roomies-",
+          "headingRef": "typography.roomies-heading",
+          "bodyRef": "typography.roomies-body"
+        }
+      ]
+    }
   },
   "components": [
     {

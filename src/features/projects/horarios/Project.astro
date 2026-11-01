@@ -1,0 +1,1418 @@
+---
+import ProjectLayout from '../shared/ProjectLayout.astro';
+import DeviceFrame from '../shared/DeviceFrame.astro';
+import { projectById } from '../registry';
+
+const longDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const longMonths = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
+type Tone = 'working' | 'short' | 'off' | 'outside';
+
+interface DayCell {
+  key: string;
+  label: string;
+  day: number;
+  tone: Tone;
+  today: boolean;
+}
+
+const monthCells: DayCell[] = [];
+for (let i = 0; i < 35; i += 1) {
+  const cellDate = new Date(Date.UTC(2026, 8, 28 + i));
+  const weekday = cellDate.getUTCDay();
+  const dayOfMonth = cellDate.getUTCDate();
+  const outside = cellDate.getUTCMonth() !== 9;
+  const today = !outside && dayOfMonth === 27;
+  const tone: Tone = outside
+    ? 'outside'
+    : dayOfMonth === 28 || weekday === 0
+      ? 'off'
+      : weekday === 6
+        ? 'short'
+        : 'working';
+  const state =
+    tone === 'outside'
+      ? 'outside this month'
+      : tone === 'off'
+        ? 'day off'
+        : tone === 'short'
+          ? 'shorter shift, 12:00 to 18:00'
+          : today
+            ? 'working day, 09:00 to 17:00, today'
+            : 'working day, 09:00 to 17:00';
+  monthCells.push({
+    key: `${cellDate.getUTCFullYear()}-${cellDate.getUTCMonth()}-${dayOfMonth}`,
+    label: `${longDays[weekday]}, ${longMonths[cellDate.getUTCMonth()]} ${dayOfMonth}, ${cellDate.getUTCFullYear()} — ${state}`,
+    day: dayOfMonth,
+    tone,
+    today,
+  });
+}
+
+const calendarWeeks = Array.from({ length: 5 }, (_, week) => monthCells.slice(week * 7, week * 7 + 7));
+---
+
+<ProjectLayout project={projectById('horarios')!} theme="light" font="inter">
+  <div class="page" data-horarios-root>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#demo" aria-label="Horarios — go to the demo">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="5" width="18" height="16" rx="4"></rect>
+              <path d="M3 9h18M8 3v4M16 3v4"></path>
+              <path d="M12 12v3l2 1.5"></path>
+            </svg>
+          </span>
+          <span class="brand-word">Horarios</span>
+        </a>
+        <nav class="site-nav" aria-label="Project sections">
+          <a href="#demo">Demo</a>
+          <a href="#story">Story</a>
+          <a href="#build-notes">Build notes</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="demo" aria-labelledby="hz-title">
+        <div class="hero-copy">
+          <h1 id="hz-title">Your next shift, at a glance.</h1>
+          <p class="lede">Tomorrow's start time, your week and the details that matter to you.</p>
+          <p class="contribution">A schedule tool designed for the person working the shift.</p>
+
+          <div class="scenarios">
+            <p class="scenario-label" id="hz-scenario-label">Try a sample day</p>
+            <div class="scenario-group" role="group" aria-labelledby="hz-scenario-label">
+              <button type="button" class="scenario" data-scenario="workday" aria-pressed="true">Workday</button>
+              <button type="button" class="scenario" data-scenario="off" aria-pressed="false">Day off</button>
+              <button type="button" class="scenario" data-scenario="split" aria-pressed="false">Split shift</button>
+            </div>
+            <p class="scenario-hint">Changes the sample shift, countdown and week row. Every record here is synthetic.</p>
+          </div>
+
+          <div class="jump-links">
+            <a href="#story">Read the story</a>
+            <a href="#build-notes">How it is built</a>
+          </div>
+        </div>
+
+        <div class="hero-device">
+          <DeviceFrame variant="android" label="Horarios shift preview with a fixed synthetic demo clock">
+            <div slot="status" class="status-bar" aria-hidden="true">
+              <span class="status-time">08:12</span>
+              <span class="status-icons">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M2 9.5a14 14 0 0 1 20 0l-1.6 1.9a11.5 11.5 0 0 0-16.8 0zM6.1 13.6a8.6 8.6 0 0 1 11.8 0l-1.7 2a6.1 6.1 0 0 0-8.4 0zM10 17.7a3.2 3.2 0 0 1 4 0L12 20z"></path></svg>
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 17V9M9 17V6M14 17v-4M19 17V4"></path></svg>
+                <svg viewBox="0 0 24 14" width="18" height="11" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1" y="1.5" width="17" height="11" rx="2.5"></rect><path d="M21 5v4" stroke-linecap="round"></path><rect x="3.5" y="4" width="9" height="6" rx="1" fill="currentColor" stroke="none"></rect></svg>
+              </span>
+            </div>
+
+            <div class="screen">
+              <div class="screen-top">
+                <div>
+                  <p class="screen-brand">
+                    <span class="screen-mark" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"></circle><path d="M12 8v4l2.5 1.8"></path></svg>
+                    </span>
+                    Horarios
+                  </p>
+                  <p class="screen-sub">Synthetic demo</p>
+                </div>
+                <span class="demo-badge">Demo</span>
+              </div>
+
+              <div class="view-tabs" role="tablist" aria-label="Schedule views">
+                <button type="button" class="view-tab" role="tab" id="hz-tab-day" aria-controls="hz-panel-day" aria-selected="true" tabindex="0">Working Day</button>
+                <button type="button" class="view-tab" role="tab" id="hz-tab-week" aria-controls="hz-panel-week" aria-selected="false" tabindex="-1">Week</button>
+                <button type="button" class="view-tab" role="tab" id="hz-tab-month" aria-controls="hz-panel-month" aria-selected="false" tabindex="-1">Month</button>
+              </div>
+
+              <div class="panel" role="tabpanel" id="hz-panel-day" aria-labelledby="hz-tab-day" tabindex="0">
+                <div class="shift-head">
+                  <p class="kicker">Today</p>
+                  <h2 class="shift-date">Tuesday, October 27, 2026</h2>
+                </div>
+
+                <div class="shift-card">
+                  <div class="shift-top">
+                    <p class="shift-label" data-shift-label>Working day</p>
+                    <span class="status-chip" data-status-chip>Starts soon</span>
+                  </div>
+                  <p class="shift-time" data-shift-time>09:00 – 17:00</p>
+                  <p class="countdown">
+                    <strong data-countdown-value>48 min</strong>
+                    <span data-countdown-text>until your shift starts</span>
+                  </p>
+                  <p class="shift-meta" data-shift-meta>Ends in 8 h 48 min · 8 h scheduled</p>
+                  <p class="clock-line">
+                    <span class="clock-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"></circle><path d="M12 8v4l2.5 1.8"></path></svg>
+                    </span>
+                    Demo clock <strong>08:12</strong>
+                    <span class="clock-tag">fixed sample</span>
+                  </p>
+                </div>
+
+                <div class="detail-card">
+                  <p class="detail-title">Shared shift <span>fictional coworker</span></p>
+                  <p class="detail-body" data-coworker>Sam Ortega · 10:00–16:00 overlap</p>
+                </div>
+
+                <p class="next-shift" data-next-shift>Next shift: Thursday, October 29 · 09:00–17:00</p>
+              </div>
+
+              <div class="panel" role="tabpanel" id="hz-panel-week" aria-labelledby="hz-tab-week" tabindex="0" hidden>
+                <div class="shift-head">
+                  <p class="kicker">Week of</p>
+                  <h2 class="shift-date">October 26 – November 1, 2026</h2>
+                </div>
+                <table class="week-table">
+                  <caption class="visually-hidden">Synthetic shifts for Monday, October 26 to Sunday, November 1, 2026</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Day</th>
+                      <th scope="col">Shift</th>
+                      <th scope="col">Hours</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Mon 26</th>
+                      <td>09:00–17:00</td>
+                      <td>8 h</td>
+                    </tr>
+                    <tr class="is-today">
+                      <th scope="row">Tue 27 <span class="today-tag">Today</span></th>
+                      <td data-week-shift>09:00–17:00</td>
+                      <td data-week-hours>8 h</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Wed 28</th>
+                      <td>Day off</td>
+                      <td>—</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Thu 29</th>
+                      <td>09:00–17:00</td>
+                      <td>8 h</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Fri 30</th>
+                      <td>09:00–17:00</td>
+                      <td>8 h</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Sat 31</th>
+                      <td>12:00–18:00</td>
+                      <td>6 h</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Sun 1</th>
+                      <td>Day off</td>
+                      <td>—</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th scope="row" colspan="2">Scheduled this week</th>
+                      <td data-week-total>38 h</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+
+              <div class="panel" role="tabpanel" id="hz-panel-month" aria-labelledby="hz-tab-month" tabindex="0" hidden>
+                <div class="shift-head">
+                  <p class="kicker">Month</p>
+                  <h2 class="shift-date">October 2026</h2>
+                </div>
+                <table class="month-table">
+                  <caption class="visually-hidden">Synthetic shift calendar for October 2026</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col"><span aria-hidden="true">M</span><span class="visually-hidden">Monday</span></th>
+                      <th scope="col"><span aria-hidden="true">T</span><span class="visually-hidden">Tuesday</span></th>
+                      <th scope="col"><span aria-hidden="true">W</span><span class="visually-hidden">Wednesday</span></th>
+                      <th scope="col"><span aria-hidden="true">T</span><span class="visually-hidden">Thursday</span></th>
+                      <th scope="col"><span aria-hidden="true">F</span><span class="visually-hidden">Friday</span></th>
+                      <th scope="col"><span aria-hidden="true">S</span><span class="visually-hidden">Saturday</span></th>
+                      <th scope="col"><span aria-hidden="true">S</span><span class="visually-hidden">Sunday</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {calendarWeeks.map((week) => (
+                      <tr>
+                        {week.map((cell) => (
+                          <td
+                            class:list={['cal-cell', `tone-${cell.tone}`, cell.today && 'is-today']}
+                            aria-label={cell.label}
+                            aria-current={cell.today ? 'date' : undefined}
+                            data-today-cell={cell.today ? 'true' : undefined}
+                          >
+                            <span class="cal-num">{cell.day}</span>
+                            {cell.today && <span class="cal-dot" aria-hidden="true"></span>}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <ul class="legend">
+                  <li><span class="swatch swatch-working" aria-hidden="true"></span>Working day</li>
+                  <li><span class="swatch swatch-short" aria-hidden="true"></span>Shorter shift</li>
+                  <li><span class="swatch swatch-off" aria-hidden="true"></span>Day off</li>
+                </ul>
+              </div>
+
+              <p class="screen-foot">Synthetic sample · fixed demo clock 08:12</p>
+            </div>
+
+            <span slot="caption">Web app preview · Android-style outline · synthetic schedule</span>
+          </DeviceFrame>
+        </div>
+      </section>
+
+      <section class="story" id="story" aria-labelledby="hz-story-title">
+        <div class="section-head">
+          <h2 id="hz-story-title">Built for the person working the shift.</h2>
+        </div>
+        <div class="story-body">
+          <p>A schedule spreadsheet can contain everything you need and still make you work to find the answer. Horarios puts the personal questions first: when do I start tomorrow, how much time is left, and what does my week look like?</p>
+          <p>I built it for the person working the shift. It is a small way to take one routine worry off their mind, with different views and useful details close at hand.</p>
+          <p class="stance">Horarios is for your own planning. It is not an attendance, absence or break-monitoring tool.</p>
+          <ul class="questions" aria-label="Questions Horarios answers">
+            <li>
+              <span class="q-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"></circle><path d="M12 8v4l2.5 1.8"></path></svg>
+              </span>
+              How long until my shift starts or ends?
+            </li>
+            <li>
+              <span class="q-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 9h18M8 3v4M16 3v4"></path></svg>
+              </span>
+              What does my week and month look like?
+            </li>
+            <li>
+              <span class="q-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"></circle><path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 5.5a3 3 0 0 1 0 5.8M18 19a5 5 0 0 0-2.5-4.3"></path></svg>
+              </span>
+              Who shares the shift with me?
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="notes" id="build-notes" aria-labelledby="hz-notes-title">
+        <div class="section-head">
+          <h2 id="hz-notes-title">A useful layer over a familiar source.</h2>
+        </div>
+        <div class="notes-grid">
+          <article class="note-card">
+            <h3>From spreadsheet to personal view</h3>
+            <p>Schedule data can originate in a spreadsheet. The useful part is presentation: the same records arranged around the employee's immediate questions instead of the source grid. </p>
+          </article>
+          <article class="note-card">
+            <h3>A schedule you can keep with you</h3>
+            <p>The original web app supports offline schedule access and changes between published snapshots. Different views make the same information useful in different moments.</p>
+          </article>
+          <article class="note-card">
+            <h3>A useful point of view</h3>
+            <p>A day view answers the immediate question. Week and month views make it easier to plan ahead. Shared-shift details help people see where their schedules overlap.</p>
+          </article>
+        </div>
+        <p class="synthetic-note">Every shift, date and person on this page is fictional. Horarios is shown here as a product concept for employees, not as an attendance system.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Horarios · Portfolio preview with synthetic data</p>
+      <a href="#demo">Back to the demo</a>
+    </footer>
+  </div>
+</ProjectLayout>
+
+<script>
+    const root = document.querySelector<HTMLElement>('[data-horarios-root]');
+
+    if (root) {
+      const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+      const panels = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+
+      const activateTab = (next: HTMLButtonElement, moveFocus = false) => {
+        tabs.forEach((tab) => {
+          const selected = tab === next;
+          tab.setAttribute('aria-selected', String(selected));
+          tab.tabIndex = selected ? 0 : -1;
+        });
+        panels.forEach((panel) => {
+          panel.hidden = panel.id !== next.getAttribute('aria-controls');
+        });
+        if (moveFocus) next.focus();
+      };
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => activateTab(tab));
+        tab.addEventListener('keydown', (event) => {
+          let targetIndex = index;
+          if (event.key === 'ArrowRight') targetIndex = (index + 1) % tabs.length;
+          else if (event.key === 'ArrowLeft') targetIndex = (index - 1 + tabs.length) % tabs.length;
+          else if (event.key === 'Home') targetIndex = 0;
+          else if (event.key === 'End') targetIndex = tabs.length - 1;
+          else return;
+          event.preventDefault();
+          const target = tabs[targetIndex];
+          if (target) activateTab(target, true);
+        });
+      });
+
+      interface ScenarioState {
+        label: string;
+        chip: string;
+        time: string;
+        countdownValue: string;
+        countdownText: string;
+        meta: string;
+        coworker: string;
+        nextShift: string;
+        weekShift: string;
+        weekHours: string;
+        weekTotal: string;
+        monthTone: 'working' | 'short' | 'off';
+        monthLabel: string;
+      }
+
+      const scenarios: Record<string, ScenarioState> = {
+        workday: {
+          label: 'Working day',
+          chip: 'Starts soon',
+          time: '09:00 – 17:00',
+          countdownValue: '48 min',
+          countdownText: 'until your shift starts',
+          meta: 'Ends in 8 h 48 min · 8 h scheduled',
+          coworker: 'Sam Ortega · 10:00–16:00 overlap',
+          nextShift: 'Next shift: Thursday, October 29 · 09:00–17:00',
+          weekShift: '09:00–17:00',
+          weekHours: '8 h',
+          weekTotal: '38 h',
+          monthTone: 'working',
+          monthLabel: 'Tuesday, October 27, 2026 — working day, 09:00 to 17:00, today',
+        },
+        off: {
+          label: 'Day off',
+          chip: 'Rest day',
+          time: 'No shift today',
+          countdownValue: 'Next shift',
+          countdownText: 'Thursday, October 29 · 09:00',
+          meta: 'Rest day · nothing scheduled today',
+          coworker: 'No shared shift today',
+          nextShift: 'Next shift: Thursday, October 29 · 09:00–17:00',
+          weekShift: 'Day off',
+          weekHours: '—',
+          weekTotal: '30 h',
+          monthTone: 'off',
+          monthLabel: 'Tuesday, October 27, 2026 — day off, today',
+        },
+        split: {
+          label: 'Split shift',
+          chip: '2 segments',
+          time: '09:00–13:00 · 17:00–21:00',
+          countdownValue: '48 min',
+          countdownText: 'until your first segment',
+          meta: 'Ends in 12 h 48 min · 8 h across two segments',
+          coworker: 'Sam Ortega · 10:00–13:00 overlap',
+          nextShift: 'Next shift: Thursday, October 29 · 09:00–17:00',
+          weekShift: '09:00–13:00 · 17:00–21:00',
+          weekHours: '8 h',
+          weekTotal: '38 h',
+          monthTone: 'working',
+          monthLabel: 'Tuesday, October 27, 2026 — split shift, 09:00 to 13:00 and 17:00 to 21:00, today',
+        },
+      };
+
+      const setText = (selector: string, value: string) => {
+        const node = root.querySelector<HTMLElement>(selector);
+        if (node) node.textContent = value;
+      };
+
+      const applyScenario = (key: string) => {
+        const state = scenarios[key];
+        if (!state) return;
+        setText('[data-shift-label]', state.label);
+        setText('[data-status-chip]', state.chip);
+        setText('[data-shift-time]', state.time);
+        setText('[data-countdown-value]', state.countdownValue);
+        setText('[data-countdown-text]', state.countdownText);
+        setText('[data-shift-meta]', state.meta);
+        setText('[data-coworker]', state.coworker);
+        setText('[data-next-shift]', state.nextShift);
+        setText('[data-week-shift]', state.weekShift);
+        setText('[data-week-hours]', state.weekHours);
+        setText('[data-week-total]', state.weekTotal);
+
+        const todayCell = root.querySelector<HTMLElement>('[data-today-cell]');
+        if (todayCell) {
+          todayCell.classList.remove('tone-working', 'tone-short', 'tone-off', 'tone-outside');
+          todayCell.classList.add(`tone-${state.monthTone}`);
+          todayCell.setAttribute('aria-label', state.monthLabel);
+        }
+
+        root.querySelectorAll<HTMLButtonElement>('[data-scenario]').forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.scenario === key));
+        });
+      };
+
+      root.querySelectorAll<HTMLButtonElement>('[data-scenario]').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (button.dataset.scenario) applyScenario(button.dataset.scenario);
+        });
+      });
+    }
+  </script>
+
+<style>
+  .page {
+    --pale: #f6f7fa;
+    --ink: #00295a;
+    --body: #24364f;
+    --muted: #55657d;
+    --line: #d9e1ec;
+    --card: #ffffff;
+    --blue: #0b57a4;
+    min-height: 100vh;
+    background: var(--pale);
+    color: var(--body);
+    font-family: inherit;
+    overflow-x: clip;
+  }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(246, 247, 250, 0.94);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(10px);
+  }
+
+  .header-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0.3rem clamp(1rem, 4vw, 2.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 44px;
+    color: var(--ink);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: var(--ink);
+    color: #fff;
+  }
+
+  .brand-word {
+    font-size: 1rem;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    flex-wrap: wrap;
+  }
+
+  .site-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.7rem;
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .site-nav a:hover {
+    color: var(--ink);
+    background: #e8edf5;
+  }
+
+  main {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
+  }
+
+  #demo,
+  #story,
+  #build-notes {
+    scroll-margin-top: 76px;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 388px);
+    align-items: center;
+    gap: clamp(1.5rem, 5vw, 4.5rem);
+    padding: clamp(1.6rem, 4.5vw, 4rem) 0 clamp(2rem, 5vw, 4rem);
+  }
+
+  .hero-copy {
+    min-width: 0;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 1rem;
+    color: var(--blue);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow-mark {
+    display: inline-flex;
+  }
+
+  h1 {
+    margin: 0 0 1rem;
+    color: var(--ink);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+    max-width: 12ch;
+  }
+
+  .lede {
+    margin: 0 0 0.75rem;
+    max-width: 34ch;
+    color: var(--body);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.55;
+  }
+
+  .contribution {
+    margin: 0 0 1.9rem;
+    max-width: 36ch;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .scenarios {
+    max-width: 420px;
+    margin-bottom: 1.6rem;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--card);
+    box-shadow: 0 12px 30px -26px rgba(0, 41, 90, 0.5);
+  }
+
+  .scenario-label {
+    margin: 0 0 0.6rem;
+    color: var(--ink);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .scenario-group {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.3rem;
+    padding: 0.25rem;
+    border-radius: 12px;
+    background: #eef2f8;
+  }
+
+  .scenario {
+    min-height: 44px;
+    padding: 0.45rem 0.35rem;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: background-color 0.18s ease, color 0.18s ease;
+  }
+
+  .scenario:hover {
+    color: var(--ink);
+    background: #e2e9f3;
+  }
+
+  .scenario[aria-pressed='true'] {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  .scenario-hint {
+    margin: 0.7rem 0 0;
+    color: var(--muted);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .jump-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.3rem;
+  }
+
+  .jump-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--blue);
+    font-size: 0.86rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .jump-links a:hover {
+    text-decoration: underline;
+  }
+
+  .hero-device {
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Device screen: Android-like status bar */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 34px;
+    padding: 6px 1rem 0;
+    color: #1c2a3a;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .status-time {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+
+  .status-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    opacity: 0.8;
+  }
+
+  .screen {
+    padding: 0.15rem 1rem 1rem;
+    min-height: 100%;
+    color: #16283d;
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+
+  .screen-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.35rem 0 0.8rem;
+  }
+
+  .screen-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0;
+    color: var(--ink);
+    font-size: 0.98rem;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+  }
+
+  .screen-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    background: var(--ink);
+    color: #fff;
+  }
+
+  .screen-sub {
+    margin: 0.15rem 0 0;
+    color: #6a7a8e;
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+  }
+
+  .demo-badge {
+    flex: none;
+    padding: 0.18rem 0.45rem;
+    border: 1px solid #d7e0ec;
+    border-radius: 999px;
+    color: #5d6e83;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .view-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.2rem;
+    padding: 0.2rem;
+    border-radius: 11px;
+    background: #eef2f7;
+    margin-bottom: 1rem;
+  }
+
+  .view-tab {
+    min-height: 44px;
+    padding: 0.3rem 0.2rem;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #5a6b80;
+    font-size: 0.73rem;
+    font-weight: 600;
+    line-height: 1.2;
+    transition: background-color 0.18s ease, color 0.18s ease;
+  }
+
+  .view-tab[aria-selected='true'] {
+    background: #fff;
+    color: var(--ink);
+    box-shadow: 0 1px 2px rgba(16, 37, 63, 0.12);
+  }
+
+  .panel {
+    outline-offset: 6px;
+  }
+
+  .panel[hidden] {
+    display: none;
+  }
+
+  .shift-head {
+    margin-bottom: 0.65rem;
+  }
+
+  .kicker {
+    margin: 0 0 0.1rem;
+    color: #6a7a8e;
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .shift-date {
+    margin: 0;
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .shift-card {
+    padding: 0.9rem;
+    border-radius: 16px;
+    background: var(--ink);
+    color: #eaf1fb;
+  }
+
+  .shift-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .shift-label {
+    margin: 0;
+    color: #b9cde6;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .status-chip {
+    padding: 0.14rem 0.48rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .shift-time {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.28rem, 4.8vw, 1.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .countdown {
+    margin: 0 0 0.2rem;
+    font-size: 0.8rem;
+    color: #cfe0f5;
+  }
+
+  .countdown strong {
+    color: #fff;
+    font-size: 1rem;
+  }
+
+  .shift-meta {
+    margin: 0;
+    color: #a9c0db;
+    font-size: 0.72rem;
+  }
+
+  .clock-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin: 0.85rem 0 0;
+    padding-top: 0.65rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    color: #b9cde6;
+    font-size: 0.68rem;
+  }
+
+  .clock-line strong {
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .clock-icon {
+    display: inline-flex;
+  }
+
+  .clock-tag {
+    margin-left: auto;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #d7e5f6;
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+  }
+
+  .detail-card {
+    margin-top: 0.65rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid #dfe6f0;
+    border-radius: 12px;
+    background: #f8fafd;
+  }
+
+  .detail-title {
+    margin: 0 0 0.15rem;
+    color: var(--ink);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .detail-title span {
+    color: #7a8a9e;
+    font-weight: 500;
+  }
+
+  .detail-body {
+    margin: 0;
+    color: #45586f;
+    font-size: 0.75rem;
+  }
+
+  .next-shift {
+    margin: 0.65rem 0 0;
+    color: #5d6e83;
+    font-size: 0.71rem;
+  }
+
+  .week-table,
+  .month-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #2a3c52;
+    font-size: 0.74rem;
+  }
+
+  .week-table th,
+  .week-table td {
+    padding: 0.42rem 0.25rem;
+    text-align: left;
+    border-bottom: 1px solid #e7ecf3;
+  }
+
+  .week-table thead th {
+    color: #74839a;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .week-table tbody th {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .week-table tbody td {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .week-table tbody td:last-child,
+  .week-table thead th:last-child {
+    text-align: right;
+  }
+
+  .week-table tr.is-today th,
+  .week-table tr.is-today td {
+    background: #edf3fb;
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .week-table tr.is-today th:first-child {
+    border-radius: 8px 0 0 8px;
+  }
+
+  .week-table tr.is-today td:last-child {
+    border-radius: 0 8px 8px 0;
+  }
+
+  .today-tag {
+    display: inline-block;
+    margin-left: 0.15rem;
+    padding: 0.04rem 0.28rem;
+    border-radius: 4px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    vertical-align: 1px;
+  }
+
+  .week-table tfoot th,
+  .week-table tfoot td {
+    padding-top: 0.6rem;
+    border-bottom: 0;
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.72rem;
+  }
+
+  .week-table tfoot td {
+    text-align: right;
+  }
+
+  .month-table {
+    table-layout: fixed;
+  }
+
+  .month-table th,
+  .month-table td {
+    text-align: center;
+    padding: 0.15rem 0;
+    border-radius: 7px;
+  }
+
+  .month-table thead th {
+    padding-bottom: 0.3rem;
+    color: #74839a;
+    font-size: 0.62rem;
+    font-weight: 700;
+  }
+
+  .cal-cell {
+    height: 38px;
+    vertical-align: middle;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #31445b;
+  }
+
+  .cal-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .tone-working .cal-num {
+    background: #eaf1fb;
+    color: var(--ink);
+  }
+
+  .tone-short .cal-num {
+    background: #fdf3e2;
+    color: #7a4b00;
+  }
+
+  .tone-off .cal-num {
+    color: #8b98aa;
+  }
+
+  .tone-outside .cal-num {
+    color: #c1cad6;
+  }
+
+  .cal-cell.is-today .cal-num {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  .cal-cell.is-today.tone-off .cal-num {
+    background: #fff;
+    color: #6a7789;
+    box-shadow: inset 0 0 0 2px var(--ink);
+  }
+
+  .cal-dot {
+    display: block;
+    width: 3px;
+    height: 3px;
+    margin: 1px auto 0;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.8rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+    color: #66768c;
+    font-size: 0.64rem;
+  }
+
+  .legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+  }
+
+  .swatch {
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+  }
+
+  .swatch-working {
+    background: #eaf1fb;
+    border: 1px solid #c6d8ee;
+  }
+
+  .swatch-short {
+    background: #fdf3e2;
+    border: 1px solid #edcf9c;
+  }
+
+  .swatch-off {
+    border: 1px solid #cdd5e0;
+  }
+
+  .screen-foot {
+    margin: 0.9rem 0 0;
+    padding-top: 0.65rem;
+    border-top: 1px solid #e7ecf3;
+    color: #8290a3;
+    font-size: 0.63rem;
+    text-align: center;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .story,
+  .notes {
+    padding: clamp(2rem, 5vw, 3.5rem) 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .section-head {
+    max-width: 46rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .section-head .eyebrow {
+    margin-bottom: 0.55rem;
+  }
+
+  .section-head h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .story-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 1.2rem clamp(1.5rem, 4vw, 3rem);
+    max-width: 62rem;
+  }
+
+  .story-body > p {
+    margin: 0;
+    max-width: 46ch;
+    color: #33465e;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .story-body .stance {
+    grid-column: 1 / -1;
+    max-width: 52ch;
+    padding-left: 0.9rem;
+    border-left: 1px solid var(--ink);
+    color: var(--ink);
+    font-size: 0.9rem;
+  }
+
+  .questions {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.6rem;
+    margin: 0.2rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .questions li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    padding: 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+    color: #2c4059;
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  .q-icon {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: #eaf1fb;
+    color: var(--blue);
+  }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0.9rem;
+  }
+
+  .note-card {
+    padding: 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  .note-card h3 {
+    margin: 0 0 0.5rem;
+    color: var(--ink);
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .note-card p {
+    margin: 0;
+    color: #4a5c73;
+    font-size: 0.83rem;
+    line-height: 1.6;
+  }
+
+  .synthetic-note {
+    margin: 1.4rem 0 0;
+    color: var(--muted);
+    font-size: 0.78rem;
+    max-width: 60ch;
+  }
+
+  .site-footer {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 1.5rem clamp(1rem, 4vw, 2.5rem) 2.5rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    color: var(--muted);
+    font-size: 0.76rem;
+  }
+
+  .site-footer p {
+    margin: 0;
+  }
+
+  .site-footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--blue);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .site-footer a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 940px) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
+      padding-top: 1.8rem;
+    }
+
+    .hero-copy {
+      max-width: 36rem;
+    }
+
+    .hero-device {
+      order: 2;
+    }
+
+    h1 {
+      max-width: 16ch;
+    }
+
+    .story-body {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .story-body .stance,
+    .questions {
+      grid-column: auto;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .header-inner {
+      padding-block: 0.2rem;
+    }
+
+    .site-nav a {
+      padding: 0 0.5rem;
+      font-size: 0.78rem;
+    }
+
+    .hero {
+      padding-top: 1.4rem;
+      padding-bottom: 1.6rem;
+    }
+
+    h1 {
+      font-size: clamp(2.1rem, 10vw, 2.7rem);
+    }
+
+    .scenarios {
+      padding: 0.8rem;
+    }
+
+    .scenario {
+      font-size: 0.76rem;
+      padding-inline: 0.15rem;
+    }
+
+    .story-body > p {
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .site-nav a {
+      padding: 0 0.38rem;
+      font-size: 0.73rem;
+    }
+
+    .shift-time {
+      font-size: 1.16rem;
+    }
+
+    .week-table,
+    .month-table {
+      font-size: 0.68rem;
+    }
+
+    .cal-cell {
+      height: 34px;
+    }
+
+    .cal-num {
+      width: 26px;
+      height: 26px;
+    }
+  }
+</style>

@@ -15,6 +15,47 @@ colors:
   control-close: "#ff706b"
   control-minimize: "#eac463"
   control-maximize: "#69bd7b"
+  pb-navy: "#1a4460"
+  pb-navy-deep: "#123246"
+  pb-ink: "#122b3b"
+  pb-lime: "#a5d239"
+  pb-lime-soft: "#eef7d8"
+  pb-paper: "#ffffff"
+  pb-mist: "#f5f8f2"
+  pb-line: "rgba(26, 68, 96, 0.16)"
+  pb-muted: "#526b79"
+  ss-pink: "#ff9dc7"
+  ss-lilac: "#c3b5ff"
+  ss-mint: "#9fe3c4"
+  ss-text: "#f6f6f6"
+  ss-muted: "#9aa7b4"
+  ss-panel: "#0d121a"
+  ss-panel-2: "#111826"
+  ss-line: "rgba(246, 246, 246, 0.1)"
+  ss-background: "#080b10"
+  ml-cream: "#f8f6f2"
+  ml-ink: "#1a1a2e"
+  ml-teal: "#0f766e"
+  ml-teal-deep: "#0b5f58"
+  ml-teal-soft: "#e6f2ef"
+  ml-amber: "#f59e0b"
+  ml-amber-soft: "#fdf1dc"
+  ml-paper: "#fffdf8"
+  ml-line: "#e5ded2"
+  ml-muted: "#66616c"
+  horarios-pale: "#f6f7fa"
+  horarios-ink: "#00295a"
+  horarios-body: "#24364f"
+  horarios-muted: "#55657d"
+  horarios-line: "#d9e1ec"
+  horarios-card: "#ffffff"
+  horarios-blue: "#0b57a4"
+  roomies-sage: "#edf2ea"
+  roomies-sage-deep: "#dfe7db"
+  roomies-green: "#003633"
+  roomies-body: "#2c403c"
+  roomies-muted: "#5a6b65"
+  roomies-line: "#d3ded1"
 typography:
   display:
     fontFamily: "Geist Mono, monospace"
@@ -50,6 +91,31 @@ typography:
     fontSize: "29px"
     fontWeight: 400
     lineHeight: 1
+  pb-heading:
+    fontFamily: "ProjectRubik, system-ui, sans-serif"
+    fontSize: "clamp(2.2rem, 4.5vw, 4rem)"
+  pb-body:
+    fontFamily: "ProjectLato, system-ui, sans-serif"
+  ss-heading:
+    fontFamily: "ProjectInter, system-ui, sans-serif"
+    fontSize: "clamp(2.15rem, 6.4vw, 3.9rem)"
+  ss-body:
+    fontFamily: "ProjectInter, system-ui, sans-serif"
+  ml-heading:
+    fontFamily: "ProjectHanken, system-ui, sans-serif"
+    fontSize: "clamp(2.35rem, 4.9vw, 4.1rem)"
+  ml-body:
+    fontFamily: "ProjectHanken, system-ui, sans-serif"
+  horarios-heading:
+    fontFamily: "ProjectInter, system-ui, sans-serif"
+    fontSize: "clamp(2.4rem, 5vw, 4rem)"
+  horarios-body:
+    fontFamily: "ProjectInter, system-ui, sans-serif"
+  roomies-heading:
+    fontFamily: "ProjectInter, system-ui, sans-serif"
+    fontSize: "clamp(2.5rem, 5vw, 3.9rem)"
+  roomies-body:
+    fontFamily: "ProjectInter, system-ui, sans-serif"
 rounded:
   window: "10px"
   window-compact: "8px"
@@ -122,6 +188,12 @@ Window chrome is restrained and familiar. Orange identifies the current path, fo
 - A small script signature reserved for the desktop background.
 - Recoverable windows and a persistent, expandable terminal below compact document views.
 
+### Independent project worlds - captured 2026-10-31
+
+The five approved project views are deliberately separate visual worlds. Desktop tokens above continue to govern the workspace and its window chrome. Project-prefixed frontmatter tokens govern only their respective documents. PlayBusiness uses navy and lime; SoSimple uses a dark Inter interface with pink; Miss Luciana uses cream, teal and amber; Horarios uses navy on pale surfaces; Roomies uses sage and deep green. These are portfolio representations with deterministic fictional demonstrations.
+
+This is an additive capture of the implemented project views, not a general refresh of older desktop documentation or sidecar metadata.
+
 ## Colors
 
 The palette combines cool, layered blue-black surfaces with warm text and selective bright state colors. The frontmatter contains the normative values; names below describe their use.
@@ -147,6 +219,12 @@ Close, minimize and maximize retain their conventional coral, gold and green con
 
 **The Activity Rule.** Use orange to identify an action, current state or focus; retain warm chalk for sustained reading.
 
+### Project palettes
+
+The exact project colors are the prefixed frontmatter entries. `pb-*`, `ss-*` and `ml-*` retain their source custom-property names. `horarios-*` and `roomies-*` namespace local generic names such as `--ink` and `--green` for this document only; no CSS rename is implied. Their authoritative source is each `src/features/projects/<id>/Project.astro`; `ss-background` comes from the shared dark theme.
+
+Use PlayBusiness lime for key actions against navy; SoSimple pink for primary emphasis with lilac and mint supporting its workflow states; Miss Luciana teal for actions and amber for teaching emphasis; Horarios navy for hierarchy with blue actions; Roomies deep green for hierarchy against sage. Keep these palettes out of desktop chrome and out of each other's demos.
+
 ## Typography
 
 **Display, body and interface font:** Geist Mono, with a monospace fallback. The variable font is self-hosted with weights (100–900); the current interface uses regular and medium text, with bold control symbols.
@@ -164,6 +242,10 @@ The monospaced family connects the actual character artwork, terminal, file path
 - **Signature:** handwritten name at the lower-left of the background; it remains behind the windows and does not intercept input.
 
 **The Character Integrity Rule.** Render the identity as preformatted text in Geist Mono; preserve the character grid as the terminal changes size.
+
+### Project typography
+
+Project font faces are self-hosted by `shared/ProjectLayout.astro` with `font-display: swap`: ProjectInter (Inter, weights 100-900), ProjectHanken (Hanken Grotesk, 100-900), ProjectRubik (Rubik, 300-900), and ProjectLato (Lato, 400). PlayBusiness pairs Rubik headings with Lato body text; Miss Luciana uses Hanken for both; SoSimple, Horarios and Roomies use Inter. Each stack falls back to `system-ui, sans-serif`. The prefixed heading tokens record the actual fluid hero title sizes, independent of the desktop ASCII type scale. Shared paragraphs use line-height 1.65, with project-specific overrides retained.
 
 ## Layout
 
@@ -185,6 +267,24 @@ The rhythm is deliberately local: narrow gaps for controls, moderate gaps betwee
 
 **The Recoverable Workspace Rule.** Keep the task strip and Reset accessible as windows move, close or minimize; compact screens retain the terminal below the selected document or allow it to expand fully.
 
+### Project documents and responsive behavior
+
+`shared/ProjectLayout.astro` supplies a complete independent HTML document, metadata, font selection, return navigation, visible keyboard focus and reduced motion. Desktop opens the route in a project iframe inside workspace window chrome. Mobile navigates to that same responsive route directly. This isolation is intentional: do not inject project styles into the desktop or turn shared layout into a global brand stylesheet. The return link is hidden only when embedded. The existing mobile workspace shell remains outside this project-page exception.
+
+The registry supplies project identity and virtual filesystem discovery; `src/pages/projects/[slug].astro` discovers `*/Project.astro` through its route glob. New project views follow that contract rather than adding per-project terminal behavior.
+
+Responsive rules follow document viewport width, including narrow desktop frames:
+
+| World | Implemented max-width breakpoints | Main adaptation |
+| --- | --- | --- |
+| PlayBusiness | 900, 820, 640, 440px | Progressively reflows the case study, demonstration and narrow navigation. |
+| SoSimple | 820, 480px | Workflow panes stack at 820px; actions and choices become full width at 480px. |
+| Miss Luciana | 980, 720, 600, 440px | Hero and story grids stack at 980px; paper controls and export reflow at 720px; header stacks at 600px. |
+| Horarios | 940, 560, 360px | Hero and story stack at 940px; smaller navigation, scenarios and calendar typography support narrow screens. |
+| Roomies | 900, 560, 360px | Hero/device stack at 900px; navigation, story padding and balance rows tighten on smaller screens. |
+
+Horarios and Roomies retain the shared device preview. Hardware width is `min(100%, 366px)`; screen height is `clamp(480px, 62vh, 606px)`, changing at 430px to `clamp(450px, 66vh, 560px)`. Preview content scrolls inside the device screen while the surrounding standalone document scrolls normally.
+
 ## Elevation & Depth
 
 Depth comes from an opaque window surface, a lighter title bar, thin borders and a structural ambient shadow. The desktop alone has a subtle radial blue-black gradient. Windows use neither translucent interiors nor backdrop blur. Focus raises the window in the stack and strengthens its perimeter; it does not recolor the document surface.
@@ -194,11 +294,19 @@ Depth comes from an opaque window surface, a lighter title bar, thin borders and
 - **Arrival:** a brief brightness animation (240ms, `cubic-bezier(.16, 1, .3, 1)`) runs only when the user has no reduced-motion preference. Window movement and resizing follow direct input.
 - **Terminal response:** results appear in a rapid row sequence with a maximum insertion budget (750ms), and each arriving row has a short fade (140ms, `ease-out`). Reduced-motion preferences make insertion immediate and omit the fade. A new command, Clear or Reset cancels an earlier insertion sequence before it can append stale output.
 
+### Project depth
+
+Project depth remains local. Miss Luciana's paper uses `0 24px 60px rgba(66, 52, 28, 0.08)`; SoSimple separates dark panes with tonal surfaces and its quiet rule. The shared device uses an inset highlight and structural shadow: `0 1px 0 rgba(255, 255, 255, 0.18) inset, 0 26px 48px -24px rgba(6, 20, 40, 0.55), 0 2px 6px rgba(6, 20, 40, 0.2)`. These do not replace the workspace window shadow.
+
 ## Shapes
 
 Windows are simple rectangles with modest corners; use the window radius from the frontmatter, with the smaller compact radius on narrow screens. Thin borders define their silhouette. Title bars follow the top edge and content is clipped inside the window. Small path actions have subtle corners; the command input remains square and visually integrated into its prompt row.
 
 The three window controls are circular, with a larger invisible interaction area around each colored dot. Their symbols become visible on control-group hover or keyboard focus. A small right-angle mark identifies the resize corner on desktop.
+
+### Project shapes
+
+Keep each world's implemented forms: Miss Luciana's paper and fields use small 2px corners, while Roomies' compact story retains its 16px radius. Device hardware uses 34px corners (46px for the iOS variant); screens use 26px (37px for iOS). At 430px hardware becomes 26px/36px and screens 21px/30px. Do not impose the desktop window's 10px radius on project content.
 
 ## Components
 
@@ -235,6 +343,12 @@ The bottom strip is a stable, dark band with a thin top border. Initial tasks re
 ### Contact action
 
 Reveal email, the revealed address and Copy use orange underlined text, with warm-chalk hover. The action appears before the social links. Supporting status appears below in muted small type and reserves no height while empty. In the short Contact panel, tighter heading and paragraph margins keep the action visible; social links form a wrapping horizontal row without list markers. Keep these controls visually consistent with document links.
+
+### Project interactions and motion
+
+The case-study demos remain local and deterministic: PlayBusiness investment/account scenarios, SoSimple's workflow selection and task sequence, Miss Luciana's teaching-material preparation, Horarios' schedule scenarios and Roomies' rent/payment scenarios. Their controls and focus stay in their own document; only the known same-origin iframe focus message crosses to the desktop. Public product links are limited to the registry's approved PlayBusiness, SoSimple and Miss Luciana entries. Horarios and Roomies expose no production links; omit absent repository links.
+
+Shared reveal motion is `600ms cubic-bezier(.16,1,.3,1)` from `translateY(12px)` to zero when a `[data-reveal]` element intersects at threshold `.12`. Content is visible before the reveal; motion does not gate reading. SoSimple tasks arrive in `340ms cubic-bezier(0.16, 1, 0.3, 1)`. State transitions remain restrained: PlayBusiness 160-180ms ease, Miss Luciana 150-160ms ease, SoSimple 160-220ms ease, Horarios and Roomies 180ms ease. Under `prefers-reduced-motion: reduce`, shared layout disables all animations/transitions and uses automatic scrolling; SoSimple also explicitly disables task animation.
 
 ## Do's and Don'ts
 

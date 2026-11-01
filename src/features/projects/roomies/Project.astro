@@ -1,0 +1,1172 @@
+---
+import ProjectLayout from '../shared/ProjectLayout.astro';
+import DeviceFrame from '../shared/DeviceFrame.astro';
+import { projectById } from '../registry';
+
+type StatusTone = 'paid' | 'pending' | 'overdue';
+
+interface Payment {
+  date: string;
+  label: string;
+  amount: string;
+  status: string;
+  tone: StatusTone;
+}
+
+const historySets: Record<'current' | 'pending' | 'overdue', Payment[]> = {
+  current: [
+    { date: 'October 1, 2026', label: 'Rent — October', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+    { date: 'September 1, 2026', label: 'Rent — September', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+    { date: 'August 1, 2026', label: 'Rent — August', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+    { date: 'July 1, 2026', label: 'Rent — July', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+    { date: 'June 1, 2026', label: 'Rent — June', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+  ],
+  pending: [
+    { date: 'October 22, 2026', label: 'Rent — November', amount: '$4,800 MXN', status: 'Pending', tone: 'pending' },
+    { date: 'October 1, 2026', label: 'Rent — October', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+    { date: 'September 1, 2026', label: 'Rent — September', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+    { date: 'August 1, 2026', label: 'Rent — August', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+    { date: 'July 1, 2026', label: 'Rent — July', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+  ],
+  overdue: [
+    { date: 'October 1, 2026', label: 'Rent — October', amount: '$4,800 MXN', status: 'Overdue', tone: 'overdue' },
+    { date: 'September 1, 2026', label: 'Rent — September', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+    { date: 'August 1, 2026', label: 'Rent — August', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+    { date: 'July 1, 2026', label: 'Rent — July', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+    { date: 'June 1, 2026', label: 'Rent — June', amount: '$4,800 MXN', status: 'Paid', tone: 'paid' },
+  ],
+};
+
+const historyKeys = ['current', 'pending', 'overdue'] as const;
+---
+
+<ProjectLayout project={projectById('roomies')!} theme="light" font="inter">
+  <div class="page" data-roomies-root>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#demo" aria-label="Roomies — go to the demo">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 11.5 12 4l8 7.5"></path>
+              <path d="M6.5 10.5V20h11v-9.5"></path>
+              <circle cx="12" cy="14.5" r="1.6"></circle>
+              <path d="M12 16.1V18"></path>
+            </svg>
+          </span>
+          <span class="brand-word">Roomies</span>
+        </a>
+        <nav class="site-nav" aria-label="Project sections">
+          <a href="#demo">Demo</a>
+          <a href="#story">Story</a>
+          <a href="#build-notes">Build notes</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="demo" aria-labelledby="rm-title">
+        <div class="hero-copy">
+          <h1 id="rm-title">A clear view of rent.</h1>
+          <p class="lede">What is due, what is paid and what comes next, together.</p>
+          <p class="scope">A small tenant statement and rent-status view. <span>Not a payment processor.</span></p>
+
+          <div class="scenarios">
+            <p class="scenario-label" id="rm-scenario-label">Sample rent status</p>
+            <div class="scenario-group" role="group" aria-labelledby="rm-scenario-label">
+              <button type="button" class="scenario" data-scenario="current" aria-pressed="true">Current</button>
+              <button type="button" class="scenario" data-scenario="pending" aria-pressed="false">Pending</button>
+              <button type="button" class="scenario" data-scenario="overdue" aria-pressed="false">Overdue</button>
+            </div>
+            <p class="scenario-hint">Synthetic demo account · fixed sample date Friday, October 23, 2026.</p>
+          </div>
+
+          <div class="jump-links">
+            <a href="#story">Read the story</a>
+            <a href="#build-notes">Build notes</a>
+          </div>
+        </div>
+
+        <div class="hero-device">
+          <DeviceFrame variant="ios" label="Roomies rent statement for a synthetic demo account">
+            <div slot="status" class="ios-status" aria-hidden="true">
+              <span class="ios-time">9:41</span>
+              <span class="ios-icons">
+                <svg viewBox="0 0 24 14" width="16" height="10" fill="currentColor"><rect x="0" y="8" width="3" height="6" rx="1"></rect><rect x="5" y="5" width="3" height="9" rx="1"></rect><rect x="10" y="2.5" width="3" height="11.5" rx="1"></rect><rect x="15" y="0" width="3" height="14" rx="1"></rect></svg>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M2 9.5a14 14 0 0 1 20 0l-1.6 1.9a11.5 11.5 0 0 0-16.8 0zM6.1 13.6a8.6 8.6 0 0 1 11.8 0l-1.7 2a6.1 6.1 0 0 0-8.4 0zM10 17.7a3.2 3.2 0 0 1 4 0L12 20z"></path></svg>
+                <svg viewBox="0 0 24 14" width="19" height="11" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1" y="1.5" width="17" height="11" rx="3"></rect><path d="M21 5v4" stroke-linecap="round"></path><rect x="3.5" y="4" width="11" height="6" rx="1.2" fill="currentColor" stroke="none"></rect></svg>
+              </span>
+            </div>
+
+            <div class="roomies-app">
+              <div class="phone-head">
+                <div>
+                  <p class="phone-word">Roomies</p>
+                  <p class="phone-account">Demo account · Apt 3</p>
+                </div>
+                <span class="demo-chip">Synthetic</span>
+              </div>
+
+              <div class="phone-tabs" role="tablist" aria-label="Roomies statement views">
+                <button type="button" class="phone-tab" role="tab" id="rm-tab-statement" aria-controls="rm-panel-statement" aria-selected="true" tabindex="0">Statement</button>
+                <button type="button" class="phone-tab" role="tab" id="rm-tab-history" aria-controls="rm-panel-history" aria-selected="false" tabindex="-1">History</button>
+                <button type="button" class="phone-tab" role="tab" id="rm-tab-details" aria-controls="rm-panel-details" aria-selected="false" tabindex="-1">Details</button>
+              </div>
+
+              <div class="phone-body">
+                <section class="panel" role="tabpanel" id="rm-panel-statement" aria-labelledby="rm-tab-statement" tabindex="0">
+                  <p class="screen-date">Friday, October 23, 2026</p>
+
+                  <div class="balance-card">
+                    <div class="balance-head">
+                      <p class="balance-label" data-balance-label>Balance · November</p>
+                      <span class="pill pill--current" data-status-pill>Current</span>
+                    </div>
+                    <p class="balance-amount"><span class="currency">$</span>4,800 <span class="mxn">MXN</span></p>
+                    <p class="balance-meta" data-due-meta>Due in 9 days · no payment pending</p>
+                  </div>
+
+                  <dl class="facts">
+                    <div>
+                      <dt data-due-label>Upcoming due date</dt>
+                      <dd data-due-date>Sunday, November 1, 2026</dd>
+                    </div>
+                    <div>
+                      <dt>Rent</dt>
+                      <dd>$4,800 MXN · due on the 1st</dd>
+                    </div>
+                  </dl>
+
+                  <div class="payment-block">
+                    <p class="block-title">Recent payments</p>
+                    {historyKeys.map((key) => (
+                      <div class="payment-set" data-history={key} hidden={key !== 'current'}>
+                        {historySets[key].slice(0, 3).map((payment) => (
+                          <div class="payment-row">
+                            <div>
+                              <p class="payment-label">{payment.label}</p>
+                              <p class="payment-date">{payment.date}</p>
+                            </div>
+                            <div class="payment-figures">
+                              <p class="payment-amount">{payment.amount}</p>
+                              <p class:list={['payment-status', `is-${payment.tone}`]}>{payment.status}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+
+                  <p class="screen-note">Synthetic statement · no payment connection</p>
+                </section>
+
+                <section class="panel" role="tabpanel" id="rm-panel-history" aria-labelledby="rm-tab-history" tabindex="0" hidden>
+                  <h2 class="panel-title">Payment history</h2>
+                  <p class="panel-sub">June–October 2026 · synthetic records</p>
+
+                  {historyKeys.map((key) => (
+                    <div class="payment-set payment-set--full" data-history={key} hidden={key !== 'current'}>
+                      {historySets[key].map((payment) => (
+                        <div class="payment-row">
+                          <div>
+                            <p class="payment-label">{payment.label}</p>
+                            <p class="payment-date">{payment.date}</p>
+                          </div>
+                          <div class="payment-figures">
+                            <p class="payment-amount">{payment.amount}</p>
+                            <p class:list={['payment-status', `is-${payment.tone}`]}>{payment.status}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+
+                  <p class="screen-note">Illustrative history for a fictional tenant.</p>
+                </section>
+
+                <section class="panel" role="tabpanel" id="rm-panel-details" aria-labelledby="rm-tab-details" tabindex="0" hidden>
+                  <h2 class="panel-title">Payment details</h2>
+                  <p class="panel-sub">Demo details only. Nothing here can receive a real payment.</p>
+
+                  <code class="demo-code">DEMO ACCOUNT — NOT FOR PAYMENT<br />Reference: ROOMIES-DEMO-0000</code>
+                  <button type="button" class="copy-button" data-copy-details>Copy demo details</button>
+                  <p class="copy-status" data-copy-status role="status" aria-live="polite"></p>
+
+                  <dl class="facts">
+                    <div>
+                      <dt>Due day</dt>
+                      <dd>1st of each month</dd>
+                    </div>
+                    <div>
+                      <dt>Monthly rent</dt>
+                      <dd>$4,800 MXN</dd>
+                    </div>
+                    <div>
+                      <dt>Statement</dt>
+                      <dd>Demo account · Apt 3</dd>
+                    </div>
+                  </dl>
+
+                  <p class="screen-note">No payment processing, bank connection or stored card details.</p>
+                </section>
+              </div>
+            </div>
+
+            <span slot="caption">Web app preview · iOS-style outline · synthetic account</span>
+          </DeviceFrame>
+        </div>
+      </section>
+
+      <section class="story" id="story" aria-labelledby="rm-story-title">
+        <div class="story-inner">
+          <div class="section-head">
+            <h2 id="rm-story-title">Built around a tenant's questions.</h2>
+          </div>
+          <div class="story-body">
+            <p>Roomies started with a small, specific need. The information could live in a spreadsheet. The useful part was making it immediately clear to the person who needed it.</p>
+            <p>A balance, a payment history, or a quick way to copy payment details is a small thing on its own. Put them together and the routine becomes easier. I built Roomies to help the people using it, rather than to turn it into a business.</p>
+            <p class="stance">A spreadsheet can hold the same information. Roomies arranges it around the tenant's everyday questions instead of the grid.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="notes" id="build-notes" aria-labelledby="rm-notes-title">
+        <div class="section-head">
+          <h2 id="rm-notes-title">Small details, less friction.</h2>
+        </div>
+        <div class="notes-grid">
+          <article class="note-card">
+            <h3>The source is familiar</h3>
+            <p>The same rent and payment information can live in a spreadsheet. The product adds a focused reading of it: current balance, status, due date and a short payment history for the tenant.</p>
+          </article>
+          <article class="note-card">
+            <h3>Affordances, not overhead</h3>
+            <p>Statement, history and details sit in one place. Copying the demo payment text removes a small search through a sheet. Small actions belong beside the information they relate to.</p>
+          </article>
+          <article class="note-card">
+            <h3>Clear rent states</h3>
+            <p>Current, pending and overdue mean different things. The statement keeps the balance, due date and payment history together so a tenant can understand their situation quickly.</p>
+          </article>
+        </div>
+        <p class="synthetic-note">The demo account, balance, due date and history are authored sample data. The copy button only places a clearly non-operational demo string on the clipboard.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Roomies · Portfolio preview with synthetic data</p>
+      <a href="#demo">Back to the demo</a>
+    </footer>
+  </div>
+</ProjectLayout>
+
+<script>
+    const root = document.querySelector<HTMLElement>('[data-roomies-root]');
+
+    if (root) {
+      const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+      const panels = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+
+      const activateTab = (next: HTMLButtonElement, moveFocus = false) => {
+        tabs.forEach((tab) => {
+          const selected = tab === next;
+          tab.setAttribute('aria-selected', String(selected));
+          tab.tabIndex = selected ? 0 : -1;
+        });
+        panels.forEach((panel) => {
+          panel.hidden = panel.id !== next.getAttribute('aria-controls');
+        });
+        if (moveFocus) next.focus();
+      };
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => activateTab(tab));
+        tab.addEventListener('keydown', (event) => {
+          let targetIndex = index;
+          if (event.key === 'ArrowRight') targetIndex = (index + 1) % tabs.length;
+          else if (event.key === 'ArrowLeft') targetIndex = (index - 1 + tabs.length) % tabs.length;
+          else if (event.key === 'Home') targetIndex = 0;
+          else if (event.key === 'End') targetIndex = tabs.length - 1;
+          else return;
+          event.preventDefault();
+          const target = tabs[targetIndex];
+          if (target) activateTab(target, true);
+        });
+      });
+
+      interface RentScenario {
+        pill: string;
+        pillClass: string;
+        balanceLabel: string;
+        dueLabel: string;
+        dueDate: string;
+        dueMeta: string;
+      }
+
+      const scenarios: Record<string, RentScenario> = {
+        current: {
+          pill: 'Current',
+          pillClass: 'pill--current',
+          balanceLabel: 'Balance · November',
+          dueLabel: 'Upcoming due date',
+          dueDate: 'Sunday, November 1, 2026',
+          dueMeta: 'Due in 9 days · no payment pending',
+        },
+        pending: {
+          pill: 'Pending',
+          pillClass: 'pill--pending',
+          balanceLabel: 'Balance · November',
+          dueLabel: 'Upcoming due date',
+          dueDate: 'Sunday, November 1, 2026',
+          dueMeta: 'Sent October 22 · awaiting confirmation',
+        },
+        overdue: {
+          pill: 'Overdue',
+          pillClass: 'pill--overdue',
+          balanceLabel: 'Balance · past due',
+          dueLabel: 'Overdue since',
+          dueDate: 'Thursday, October 1, 2026',
+          dueMeta: '22 days overdue · review with the household',
+        },
+      };
+
+      const applyScenario = (key: string) => {
+        const state = scenarios[key];
+        if (!state) return;
+
+        const pill = root.querySelector<HTMLElement>('[data-status-pill]');
+        if (pill) {
+          pill.textContent = state.pill;
+          pill.classList.remove('pill--current', 'pill--pending', 'pill--overdue');
+          pill.classList.add(state.pillClass);
+        }
+
+        const dueDate = root.querySelector<HTMLElement>('[data-due-date]');
+        if (dueDate) dueDate.textContent = state.dueDate;
+
+        const dueMeta = root.querySelector<HTMLElement>('[data-due-meta]');
+        if (dueMeta) dueMeta.textContent = state.dueMeta;
+
+        const balanceLabel = root.querySelector<HTMLElement>('[data-balance-label]');
+        if (balanceLabel) balanceLabel.textContent = state.balanceLabel;
+
+        const dueLabel = root.querySelector<HTMLElement>('[data-due-label]');
+        if (dueLabel) dueLabel.textContent = state.dueLabel;
+
+        root.querySelectorAll<HTMLElement>('[data-history]').forEach((set) => {
+          set.hidden = set.dataset.history !== key;
+        });
+
+        root.querySelectorAll<HTMLButtonElement>('[data-scenario]').forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.scenario === key));
+        });
+      };
+
+      root.querySelectorAll<HTMLButtonElement>('[data-scenario]').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (button.dataset.scenario) applyScenario(button.dataset.scenario);
+        });
+      });
+
+      const copyButton = root.querySelector<HTMLButtonElement>('[data-copy-details]');
+      const copyStatus = root.querySelector<HTMLElement>('[data-copy-status]');
+
+      copyButton?.addEventListener('click', async () => {
+        const demoText = 'DEMO ACCOUNT — NOT FOR PAYMENT\nReference: ROOMIES-DEMO-0000';
+        if (!copyStatus) return;
+        copyStatus.textContent = '';
+        copyStatus.removeAttribute('data-state');
+
+        try {
+          if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') {
+            throw new Error('Clipboard unavailable');
+          }
+          await navigator.clipboard.writeText(demoText);
+          copyStatus.textContent = 'Demo text copied — it is not a real account.';
+          copyStatus.dataset.state = 'success';
+        } catch {
+          copyStatus.textContent = 'Copy failed. Select the demo text above and copy it manually.';
+          copyStatus.dataset.state = 'error';
+        }
+      });
+    }
+  </script>
+
+<style>
+  .page {
+    --sage: #edf2ea;
+    --sage-deep: #dfe7db;
+    --green: #003633;
+    --body: #2c403c;
+    --muted: #5a6b65;
+    --line: #d3ded1;
+    min-height: 100vh;
+    background: var(--sage);
+    color: var(--body);
+    font-family: inherit;
+    overflow-x: clip;
+  }
+
+  .site-header {
+    position: relative;
+    z-index: 10;
+    border-bottom: 1px solid rgba(0, 54, 51, 0.12);
+  }
+
+  .header-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0.55rem clamp(1rem, 4vw, 2.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    color: var(--green);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(0, 54, 51, 0.25);
+    border-radius: 50%;
+    color: var(--green);
+  }
+
+  .brand-word {
+    font-size: 1rem;
+  }
+
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1rem;
+  }
+
+  .site-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.65rem;
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .site-nav a:hover {
+    background: var(--sage-deep);
+    color: var(--green);
+  }
+
+  main {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(300px, 388px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    padding: clamp(1.5rem, 4vw, 3.4rem) 0 clamp(2rem, 5vw, 4rem);
+  }
+
+  .hero-device {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-copy {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    max-width: 31rem;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 1rem;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid rgba(0, 54, 51, 0.2);
+    border-radius: 999px;
+    color: var(--green);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0 0 1rem;
+    color: var(--green);
+    font-size: clamp(2.5rem, 5vw, 3.9rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+  }
+
+  .lede {
+    margin: 0 0 0.9rem;
+    max-width: 32ch;
+    color: var(--body);
+    font-size: clamp(1.02rem, 1.6vw, 1.18rem);
+    line-height: 1.55;
+  }
+
+  .scope {
+    margin: 0 0 1.8rem;
+    max-width: 36ch;
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+
+  .scope span {
+    display: inline-block;
+    margin-top: 0.15rem;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .scenarios {
+    max-width: 380px;
+    margin-bottom: 1.4rem;
+  }
+
+  .scenario-label {
+    margin: 0 0 0.5rem;
+    color: var(--green);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .scenario-group {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.25rem;
+    padding: 0.3rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  .scenario {
+    min-height: 44px;
+    padding: 0.35rem 0.3rem;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: background-color 0.18s ease, color 0.18s ease;
+  }
+
+  .scenario:hover {
+    background: var(--sage);
+    color: var(--green);
+  }
+
+  .scenario[aria-pressed='true'] {
+    background: var(--green);
+    color: #fff;
+  }
+
+  .scenario-hint {
+    margin: 0.6rem 0 0;
+    color: var(--muted);
+    font-size: 0.74rem;
+    line-height: 1.5;
+  }
+
+  .jump-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.2rem;
+  }
+
+  .jump-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--green);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-underline-offset: 0.25em;
+  }
+
+  /* iOS status bar inside the shared frame */
+  .ios-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 28px;
+    padding: 0 1.25rem;
+    color: #16281f;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .ios-time {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ios-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .roomies-app {
+    padding: 0.1rem 0.95rem 1rem;
+    color: var(--body);
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  .phone-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.45rem 0 0.8rem;
+  }
+
+  .phone-word {
+    margin: 0;
+    color: var(--green);
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .phone-account {
+    margin: 0.1rem 0 0;
+    color: #6d7d74;
+    font-size: 0.68rem;
+  }
+
+  .demo-chip {
+    flex: none;
+    padding: 0.16rem 0.45rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    color: #6d7d74;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .phone-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.2rem;
+    padding: 0.2rem;
+    margin-bottom: 0.9rem;
+    border-radius: 11px;
+    background: #e7ebe3;
+  }
+
+  .phone-tab {
+    min-height: 44px;
+    padding: 0.25rem 0.2rem;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #67756d;
+    font-size: 0.74rem;
+    font-weight: 600;
+    transition: background-color 0.18s ease, color 0.18s ease;
+  }
+
+  .phone-tab[aria-selected='true'] {
+    background: #fff;
+    color: var(--green);
+    box-shadow: 0 1px 2px rgba(0, 54, 51, 0.12);
+  }
+
+  .panel {
+    outline-offset: 6px;
+  }
+
+  .panel[hidden] {
+    display: none;
+  }
+
+  .screen-date {
+    margin: 0 0 0.55rem;
+    color: #6d7d74;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  .balance-card {
+    padding: 0.9rem;
+    border-radius: 16px;
+    background: var(--green);
+    color: #f2f7f3;
+  }
+
+  .balance-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .balance-label {
+    margin: 0;
+    color: #b7d0c9;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .pill {
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .pill--current {
+    background: #d6ecdf;
+    color: #104d39;
+  }
+
+  .pill--pending {
+    background: #fbeecb;
+    color: #6b4a00;
+  }
+
+  .pill--overdue {
+    background: #fbe0d9;
+    color: #7c2518;
+  }
+
+  .balance-amount {
+    margin: 0;
+    color: #fff;
+    font-size: 2.05rem;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .balance-amount .currency {
+    font-size: 1.1rem;
+    vertical-align: 0.4em;
+    margin-right: 0.05em;
+  }
+
+  .balance-amount .mxn {
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: #b7d0c9;
+  }
+
+  .balance-meta {
+    margin: 0.4rem 0 0;
+    color: #c7dbd5;
+    font-size: 0.72rem;
+  }
+
+  .facts {
+    margin: 0.6rem 0 0;
+    padding: 0.2rem 0.8rem;
+    border: 1px solid #e2e8de;
+    border-radius: 12px;
+    background: #fff;
+  }
+
+  .facts div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.8rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid #edf0e9;
+  }
+
+  .facts div:last-child {
+    border-bottom: 0;
+  }
+
+  .facts dt {
+    color: #6d7d74;
+    font-size: 0.69rem;
+    flex: none;
+  }
+
+  .facts dd {
+    margin: 0;
+    color: var(--green);
+    font-size: 0.74rem;
+    font-weight: 600;
+    text-align: right;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .payment-block {
+    margin-top: 0.8rem;
+  }
+
+  .block-title {
+    margin: 0 0 0.4rem;
+    color: #6d7d74;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .payment-set {
+    border: 1px solid #e2e8de;
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .payment-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid #edf0e9;
+  }
+
+  .payment-row:last-child {
+    border-bottom: 0;
+  }
+
+  .payment-label {
+    margin: 0;
+    color: #293b36;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .payment-date {
+    margin: 0.05rem 0 0;
+    color: #7c8b83;
+    font-size: 0.65rem;
+  }
+
+  .payment-figures {
+    flex: none;
+    text-align: right;
+  }
+
+  .payment-amount {
+    margin: 0;
+    color: #293b36;
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .payment-status {
+    margin: 0.05rem 0 0;
+    font-size: 0.64rem;
+    font-weight: 700;
+  }
+
+  .payment-status.is-paid {
+    color: #17694c;
+  }
+
+  .payment-status.is-pending {
+    color: #7a5600;
+  }
+
+  .payment-status.is-overdue {
+    color: #9b3222;
+  }
+
+  .payment-set--full .payment-row {
+    padding: 0.62rem 0.8rem;
+  }
+
+  .panel-title {
+    margin: 0 0 0.15rem;
+    color: var(--green);
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+  }
+
+  .panel-sub {
+    margin: 0 0 0.8rem;
+    color: #6d7d74;
+    font-size: 0.72rem;
+    line-height: 1.5;
+  }
+
+  .demo-code {
+    display: block;
+    padding: 0.7rem 0.8rem;
+    border: 1px dashed #a9b8a4;
+    border-radius: 10px;
+    background: #fff;
+    color: var(--green);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.7rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+    user-select: text;
+  }
+
+  .copy-button {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 0.55rem;
+    border: 0;
+    border-radius: 10px;
+    background: var(--green);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .copy-button:hover {
+    background: #07493f;
+  }
+
+  .copy-status {
+    min-height: 1.2rem;
+    margin: 0.4rem 0 0;
+    color: #17694c;
+    font-size: 0.69rem;
+    line-height: 1.5;
+  }
+
+  .copy-status:not(:empty) {
+    color: var(--green);
+  }
+
+  .copy-status[data-state='error'] {
+    color: #9b3222;
+    font-weight: 600;
+  }
+
+  .screen-note {
+    margin: 0.8rem 0 0;
+    padding-top: 0.55rem;
+    border-top: 1px solid #e2e8de;
+    color: #829087;
+    font-size: 0.64rem;
+    text-align: center;
+  }
+
+  .story {
+    border-top: 1px solid rgba(0, 54, 51, 0.14);
+    padding: clamp(2rem, 5vw, 3.5rem) 0;
+  }
+
+  .story-inner {
+    background: #fff;
+    border-radius: 22px;
+    padding: clamp(1.3rem, 4vw, 2.6rem);
+  }
+
+  .section-head {
+    max-width: 44rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .section-head .eyebrow {
+    margin-bottom: 0.8rem;
+  }
+
+  .section-head h2 {
+    margin: 0;
+    color: var(--green);
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  .story-body {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem clamp(1.5rem, 4vw, 2.8rem);
+    max-width: 64rem;
+  }
+
+  .story-body p {
+    margin: 0;
+    color: #3a4d47;
+    font-size: 0.98rem;
+    line-height: 1.7;
+    max-width: 48ch;
+  }
+
+  .story-body .stance {
+    grid-column: 1 / -1;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8de;
+    color: var(--green);
+    font-size: 0.92rem;
+    max-width: 56ch;
+  }
+
+  .notes {
+    padding: clamp(1.8rem, 5vw, 3.2rem) 0;
+  }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1rem clamp(1.2rem, 3vw, 2.2rem);
+  }
+
+  .note-card {
+    padding-top: 0.9rem;
+    border-top: 2px solid var(--green);
+  }
+
+  .note-card h3 {
+    margin: 0 0 0.45rem;
+    color: var(--green);
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .note-card p {
+    margin: 0;
+    color: #4c5f58;
+    font-size: 0.84rem;
+    line-height: 1.65;
+  }
+
+  .synthetic-note {
+    margin: 1.8rem 0 0;
+    max-width: 62ch;
+    color: var(--muted);
+    font-size: 0.77rem;
+    line-height: 1.6;
+  }
+
+  .site-footer {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 1.4rem clamp(1rem, 4vw, 2.5rem) 2.4rem;
+    border-top: 1px solid rgba(0, 54, 51, 0.14);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    color: var(--muted);
+    font-size: 0.76rem;
+  }
+
+  .site-footer p {
+    margin: 0;
+  }
+
+  .site-footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--green);
+    font-weight: 600;
+    text-underline-offset: 0.25em;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.8rem;
+      padding-top: 1.6rem;
+    }
+
+    .hero-copy {
+      grid-column: auto;
+      grid-row: auto;
+      max-width: 34rem;
+    }
+
+    .hero-device {
+      grid-column: auto;
+      grid-row: auto;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .header-inner {
+      padding-block: 0.35rem;
+    }
+
+    .site-nav a {
+      padding: 0 0.45rem;
+      font-size: 0.76rem;
+    }
+
+    .hero {
+      padding-top: 1.2rem;
+    }
+
+    h1 {
+      font-size: clamp(2.15rem, 10vw, 2.7rem);
+    }
+
+    .scenario {
+      font-size: 0.78rem;
+    }
+
+    .story-inner {
+      border-radius: 16px;
+      padding: 1.1rem;
+    }
+
+    .story-body p {
+      font-size: 0.93rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .site-nav a {
+      padding: 0 0.32rem;
+      font-size: 0.72rem;
+    }
+
+    .balance-amount {
+      font-size: 1.8rem;
+    }
+
+    .payment-row {
+      padding: 0.5rem 0.6rem;
+    }
+  }
+</style>

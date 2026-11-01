@@ -8,6 +8,7 @@ import { renderMarkdown } from './markdown';
 import { getStartupLayout, windowIdForDocumentPath, type WindowRect } from './window-model';
 import { getMobileLayout } from './mobile-layout';
 import { getInlineSuggestion } from '../terminal/suggestion';
+import { projectForDocument, projectRoute } from '../../features/projects/registry';
 
 interface WorkspaceWindow {
   id: string;
@@ -182,7 +183,9 @@ export function initializeDesktop(): void {
       const next = windows.get(activeId);
       window.history.replaceState(null, '', next?.path ? `#file=${encodeURIComponent(next.path)}` : window.location.pathname + window.location.search);
     }
-    announce(`${win.title} ${minimize ? 'minimized' : 'closed'}. Reopen it from the bottom bar.`);
+    const reopen = !minimize && !['terminal', 'about', 'contact'].includes(win.id)
+      ? 'Open it again from the workspace.' : 'Reopen it from the bottom bar.';
+    announce(`${win.title} ${minimize ? 'minimized' : 'closed'}. ${reopen}`);
   }
 
   function toggleMaximize(win: WorkspaceWindow): void {
@@ -227,6 +230,7 @@ export function initializeDesktop(): void {
   }
 
   function createDocumentWindow(doc: WorkspaceDocument): WorkspaceWindow {
+    const project = projectForDocument(doc.path);
     const id = idFor(doc.path);
     const element = document.createElement('section');
     element.id = `window-${id}`;
@@ -260,11 +264,19 @@ export function initializeDesktop(): void {
     const type = document.createElement('span');
     type.className = 'file-type';
     type.setAttribute('aria-hidden', 'true');
-    type.textContent = 'md';
+    type.textContent = project ? 'web' : 'md';
     header.append(controls, title, type);
     const article = document.createElement('article');
-    article.className = 'document-content markdown-content';
-    fillDocument(article, doc);
+    article.className = project ? 'project-content' : 'document-content markdown-content';
+    if (project) {
+      element.classList.add('project-window');
+      title.textContent = project.title;
+      const frame = document.createElement('iframe');
+      frame.src = projectRoute(project.id);
+      frame.title = `${project.title} — interactive project view`;
+      frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-downloads');
+      article.append(frame);
+    } else fillDocument(article, doc);
     const resize = document.createElement('div');
     resize.className = 'resize-handle';
     resize.dataset.resizeHandle = '';
@@ -273,7 +285,9 @@ export function initializeDesktop(): void {
     area.append(element);
     const count = windows.size - 1;
     const win: WorkspaceWindow = { id, path: doc.path, title: doc.title, element, closed: false, minimized: false, maximized: false,
-      rect: bounds({ x: Math.max(18, (area.clientWidth - 590) / 2) + count * 12, y: Math.max(15, (area.clientHeight - 500) / 2) + count * 10, width: 590, height: 500 }),
+      rect: project
+        ? bounds({ x: (area.clientWidth - 1120) / 2, y: (area.clientHeight - 740) / 2, width: 1120, height: 740 })
+        : bounds({ x: Math.max(18, (area.clientWidth - 590) / 2) + count * 12, y: Math.max(15, (area.clientHeight - 500) / 2) + count * 10, width: 590, height: 500 }),
     };
     windows.set(id, win);
     configureTitlebar(win);
@@ -284,6 +298,11 @@ export function initializeDesktop(): void {
   function openDocument(path: string, updateHash = false, moveFocus = true): void {
     const doc = documentFor(path);
     if (!doc) return;
+    const project = projectForDocument(path);
+    if (project && compact()) {
+      window.location.assign(projectRoute(project.id));
+      return;
+    }
     const win = windows.get(idFor(path)) ?? createDocumentWindow(doc);
     focusWindow(win.id, moveFocus);
     const fragment = `#file=${encodeURIComponent(path)}`;
@@ -527,6 +546,17 @@ export function initializeDesktop(): void {
     header.title = 'Drag to move. Keyboard: arrows move; Shift+arrows resize; Enter maximizes.';
   }
   windows.forEach(configureTitlebar);
+
+  window.addEventListener('message', (event: MessageEvent) => {
+    if (event.origin !== window.location.origin || event.data?.type !== 'portfolio-project-focus') return;
+    for (const win of windows.values()) {
+      const frame = win.element.querySelector('iframe');
+      if (frame && event.source === frame.contentWindow && !win.closed && !win.minimized) {
+        focusWindow(win.id, false);
+        break;
+      }
+    }
+  });
 
   desktop.addEventListener('click', async (event) => {
     const target = event.target as HTMLElement;

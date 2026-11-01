@@ -1,0 +1,161 @@
+---
+interface Props {
+  variant?: 'android' | 'ios';
+  /** Accessible name for the interactive preview inside the screen. */
+  label: string;
+  class?: string;
+}
+
+const { variant = 'android', label, class: className } = Astro.props;
+const hasCaption = Astro.slots.has('caption');
+---
+
+<figure class:list={['device', `device--${variant}`, className]}>
+  <div class="device-hardware">
+    {variant === 'ios' && <span class="device-notch" aria-hidden="true"></span>}
+    {variant === 'android' && <span class="device-speaker" aria-hidden="true"></span>}
+    <div class="device-screen" role="group" aria-label={label}>
+      <div class="device-status">
+        <slot name="status" />
+      </div>
+      <div class="device-scroll">
+        <slot />
+      </div>
+    </div>
+  </div>
+  {hasCaption && (
+    <figcaption class="device-caption">
+      <slot name="caption" />
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .device {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .device-hardware {
+    position: relative;
+    width: min(100%, 366px);
+    padding: 9px;
+    border-radius: 34px;
+    background: linear-gradient(160deg, #232b38 0%, #0b0f16 55%, #1a212b 100%);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.18) inset,
+      0 26px 48px -24px rgba(6, 20, 40, 0.55),
+      0 2px 6px rgba(6, 20, 40, 0.2);
+  }
+
+  .device--ios .device-hardware {
+    border-radius: 46px;
+    padding: 10px;
+  }
+
+  .device-screen {
+    position: relative;
+    overflow: hidden;
+    height: clamp(480px, 62vh, 606px);
+    display: flex;
+    flex-direction: column;
+    border-radius: 26px;
+    background: #ffffff;
+  }
+
+  .device--ios .device-screen {
+    border-radius: 37px;
+    background: #f7f7f4;
+  }
+
+  .device-status {
+    flex: none;
+    position: relative;
+    z-index: 2;
+  }
+
+  .device--ios .device-status {
+    padding-top: 9px;
+  }
+
+  .device-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .device-notch {
+    position: absolute;
+    z-index: 3;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92px;
+    height: 20px;
+    border-radius: 0 0 14px 14px;
+    background: #0b0f16;
+    pointer-events: none;
+  }
+
+  .device-speaker {
+    position: absolute;
+    z-index: 3;
+    top: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 34px;
+    height: 4px;
+    border-radius: 2px;
+    background: #37404f;
+    pointer-events: none;
+  }
+
+  .device-caption {
+    max-width: 366px;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    text-align: center;
+    opacity: 0.75;
+  }
+
+  @media (max-width: 430px) {
+    .device-hardware {
+      padding: 6px;
+      border-radius: 26px;
+    }
+
+    .device--ios .device-hardware {
+      padding: 7px;
+      border-radius: 36px;
+    }
+
+    .device-screen {
+      height: clamp(450px, 66vh, 560px);
+      border-radius: 21px;
+    }
+
+    .device--ios .device-screen {
+      border-radius: 30px;
+    }
+
+    .device-notch {
+      top: 7px;
+      width: 78px;
+      height: 17px;
+    }
+
+    .device-speaker {
+      top: 1.5px;
+      height: 3px;
+    }
+  }
+</style>

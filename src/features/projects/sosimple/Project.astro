@@ -1,0 +1,989 @@
+---
+import ProjectLayout from '../shared/ProjectLayout.astro';
+import { projectById } from '../registry';
+
+const visitUrl = projectById('sosimple')?.externalUrl ?? 'https://sosimple.capital/';
+---
+
+<ProjectLayout project={projectById('sosimple')!} theme="dark" font="inter">
+  <div class="ss" data-sosimple>
+    <header class="ss-top">
+      <a class="ss-brand" href="#top" aria-label="So Simple, back to top">
+        <svg class="ss-brand-mark" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+          <path d="M4 5.5h16v10.5H9.5L5 19.5V16H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+          <rect x="8.5" y="9" width="7" height="4" rx="1" fill="currentColor" />
+        </svg>
+        <span>So Simple</span>
+      </a>
+      <nav class="ss-nav" aria-label="This project">
+        <a class="ss-nav-link" href="#story">Project story</a>
+        <a class="ss-nav-link" href="#build-notes">Build notes</a>
+        <a class="ss-nav-link ss-nav-visit" href={visitUrl} target="_blank" rel="noopener noreferrer">
+          Visit site
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
+            <path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </nav>
+    </header>
+
+    <main class="ss-main">
+      <section class="ss-hero" id="top" aria-labelledby="ss-title">
+        <h1 id="ss-title" class="ss-title">From conversation to a <span class="ss-accent">working</span> interface.</h1>
+        <p class="ss-lede">AI and automation built around how people actually work.</p>
+        <p class="ss-role"><span class="ss-role-label">Role</span> Full-stack interfaces, AI integrations and reliable conversation workflows.</p>
+      </section>
+
+      <section class="ss-demo" aria-labelledby="ss-demo-title">
+        <div class="ss-demo-head">
+          <h2 id="ss-demo-title">A request, turned into something reviewable</h2>
+          <p class="ss-labels"><span class="ss-label-strong">Interactive reconstruction</span> · <span>Sample data</span> · <span>No live model connection</span></p>
+        </div>
+
+        <ol class="ss-steps" aria-label="Example progression">
+          <li class="ss-step is-active" data-step="request" aria-current="step">
+            <span class="ss-step-index" aria-hidden="true">1</span>
+            <span class="ss-step-name">Request</span>
+            <span class="ss-sr" data-step-state></span>
+          </li>
+          <li class="ss-step" data-step="tools">
+            <span class="ss-step-index" aria-hidden="true">2</span>
+            <span class="ss-step-name">Tools</span>
+            <span class="ss-sr" data-step-state></span>
+          </li>
+          <li class="ss-step" data-step="result">
+            <span class="ss-step-index" aria-hidden="true">3</span>
+            <span class="ss-step-name">Result</span>
+            <span class="ss-sr" data-step-state></span>
+          </li>
+          <li class="ss-step" data-step="review">
+            <span class="ss-step-index" aria-hidden="true">4</span>
+            <span class="ss-step-name">Review</span>
+            <span class="ss-sr" data-step-state></span>
+          </li>
+        </ol>
+
+        <fieldset class="ss-picker">
+          <legend>Choose a sample</legend>
+          <div class="ss-picker-row">
+            <label class="ss-choice">
+              <input type="radio" name="ss-sample" value="brief" checked />
+              <span>Sample brief</span>
+            </label>
+            <label class="ss-choice">
+              <input type="radio" name="ss-sample" value="notes" />
+              <span>Meeting notes</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="ss-artifact">
+          <div class="ss-rail">
+            <p class="ss-rail-label">Tools <span class="ss-rail-hint">reconstructed steps</span></p>
+            <ul class="ss-chips" data-chips></ul>
+          </div>
+
+          <div class="ss-panes">
+            <div class="ss-pane ss-pane-request">
+              <div class="ss-pane-head">
+                <h3>Request</h3>
+              </div>
+              <p class="ss-pane-meta" data-request-meta></p>
+              <div class="ss-request" data-request-body></div>
+        <div class="ss-actions">
+          <button type="button" class="ss-btn ss-btn-primary" data-run>
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
+              <path d="M5 3.5 12.5 8 5 12.5z" fill="currentColor" />
+            </svg>
+            Run the example
+          </button>
+          <button type="button" class="ss-btn" data-reset>
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
+              <path d="M13 8a5 5 0 1 1-1.7-3.75M13 2.5V5.5h-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Reset
+          </button>
+        </div>
+
+        <p class="ss-live" role="status" aria-live="polite" data-live>Pick a sample and run the example. Nothing is generated until you start.</p>
+            </div>
+
+            <div class="ss-pane ss-pane-result">
+              <div class="ss-pane-head">
+                <h3>Structured result</h3>
+                <span class="ss-badge" data-badge data-kind="idle">Awaiting run</span>
+              </div>
+              <div class="ss-result" data-result></div>
+              <div class="ss-review">
+                <label class="ss-review-label">
+                  <input type="checkbox" data-review disabled />
+                  <span>Mark the review as done</span>
+                </label>
+                <p class="ss-review-hint">Nothing here is approved automatically — you decide.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </section>
+
+      <section class="ss-story" id="story" aria-labelledby="ss-story-title">
+        <h2 id="ss-story-title">Project story</h2>
+        <div class="ss-prose">
+          <p>I joined SoSimple to work more closely with AI and to explore what it could actually make possible for different businesses.</p>
+          <p>The part I enjoy most is meeting people: sitting with how their work really runs, understanding where the day gets spent, and finding a useful way to make it lighter. I have met people in different companies and domains — education, finance and construction among them — and I approach each one the same way, with curiosity about how the work actually happens.</p>
+          <p>That interest started before AI. Whether the answer turns out to be an integration, a small automation or an agent, the goal is the same: less repetitive work, and more time for the things people value — at work, and outside it too.</p>
+        </div>
+      </section>
+
+      <section class="ss-notes" id="build-notes" aria-labelledby="ss-notes-title">
+        <h2 id="ss-notes-title">Build notes</h2>
+        <p class="ss-notes-intro">My work spans product interfaces, agents and integrations, and the reliability of the conversations connecting them.</p>
+        <dl class="ss-note-list">
+          <div class="ss-note">
+            <dt>Interfaces carry the request</dt>
+            <dd>A conversation only becomes useful once it turns into something a person can read. Each request is shaped into a structured result — a short summary, a list of actions with owners and cadence, and a note about what happens next — so the structure itself is checkable.</dd>
+          </div>
+          <div class="ss-note">
+            <dt>Integrations are context, not magic</dt>
+            <dd>When work touches spreadsheets, calendars or messaging tools, each connection stays small, explicit and easy to replace. The connection is never the point; the repetitive step it removes is.</dd>
+          </div>
+          <div class="ss-note">
+            <dt>Every result has a reviewable state</dt>
+            <dd>Drafts move through explicit states: working, ready for review, reviewed. Nothing publishes itself. A person decides when a result is good enough to leave the tool.</dd>
+          </div>
+          <div class="ss-note">
+            <dt>Conversation reliability is honest plumbing</dt>
+            <dd>Short steps, clear inputs and outputs, and predictable failure messages. When the understanding is wrong, the interface should show what was read so the person can correct it quickly instead of starting over.</dd>
+          </div>
+        </dl>
+      </section>
+    </main>
+
+    <footer class="ss-foot">
+      <p>So Simple · Interactive reconstruction with fictional sample data.</p>
+    </footer>
+  </div>
+</ProjectLayout>
+
+<script>
+  interface ScenarioTask {
+    title: string;
+    meta: string;
+  }
+
+  interface Scenario {
+    id: string;
+    controlLabel: string;
+    meta: string;
+    request: string;
+    tools: string[];
+    summary: string;
+    tasks: ScenarioTask[];
+    reviewNote: string;
+  }
+
+  type StepName = 'request' | 'tools' | 'result' | 'review';
+  type StepState = 'active' | 'done' | 'idle';
+  type BadgeKind = 'idle' | 'working' | 'ready' | 'reviewed';
+
+  const STEP_ORDER: StepName[] = ['request', 'tools', 'result', 'review'];
+
+  const CHECK_SVG =
+    '<svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><path d="M3.5 8.5 6.5 11.5 12.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  const SCENARIOS: Record<string, Scenario> = {
+    brief: {
+      id: 'brief',
+      controlLabel: 'Sample brief',
+      meta: 'Sample brief · fictional operations lead',
+      request:
+        'Every Friday I spend about an hour merging open items from three spreadsheets into one follow-up list for my team. Could something prepare the list so I only review it and send it?',
+      tools: ['Sheet aggregator (sample)', 'Duplicate check (sample)', 'List formatter (sample)'],
+      summary:
+        'A weekly follow-up list, assembled from the three sheets and held for review before anything is sent.',
+      tasks: [
+        { title: 'Collect open items from the three sheets', meta: 'Automated step · weekly, Friday' },
+        { title: 'Merge duplicates and sort by how long items have been open', meta: 'Automated step · weekly, Friday' },
+        { title: 'Prepare the follow-up list for review', meta: 'Automated step · weekly, Friday' },
+        { title: 'Send the reviewed list to the team channel', meta: 'Fictional owner: Ana · weekly, Friday' },
+      ],
+      reviewNote: 'Nothing is sent automatically. The list waits until a person approves it.',
+    },
+    notes: {
+      id: 'notes',
+      controlLabel: 'Meeting notes',
+      meta: 'Meeting notes · fictional design studio',
+      request: [
+        'Call with a small architecture studio (fictional).',
+        '',
+        '- Project updates are collected every Monday morning.',
+        '- Two invoices are usually confirmed late, close to month end.',
+        '- They want a short client update message they can approve before it goes out.',
+        '- Next step: send a sample update draft by the end of the week.',
+      ].join('\n'),
+      tools: ['Note reader (sample)', 'Action extractor (sample)', 'Message drafter (sample)'],
+      summary:
+        'Recurring follow-ups and one draft, pulled out of the notes as separate actions that can each be checked.',
+      tasks: [
+        { title: 'Collect project updates for the Monday summary', meta: 'Fictional owner: studio lead · weekly, Monday' },
+        { title: 'Confirm the two pending invoices before month end', meta: 'Fictional owner: studio lead · monthly' },
+        { title: 'Draft the short client update message', meta: 'Automated step · held for approval' },
+        { title: 'Send the sample draft by the end of the week', meta: 'Fictional owner: studio lead · one time' },
+      ],
+      reviewNote: 'The message is a draft. A person approves it before anything leaves the tool.',
+    },
+  };
+
+  const root = document.querySelector<HTMLElement>('[data-sosimple]');
+  if (root) {
+    // Runtime-created nodes must carry the component's Astro scope marker so the
+    // scoped stylesheet keeps applying to them.
+    const scopeClass = Array.from(root.classList).find((name) => name.startsWith('astro-'));
+    const scopeAttr = Array.from(root.attributes).find((attr) => attr.name.startsWith('data-astro-cid'));
+    function make<K extends keyof HTMLElementTagNameMap>(tag: K): HTMLElementTagNameMap[K] {
+      const doc: Document = document;
+      const node = doc.createElement(tag);
+      if (scopeClass) node.classList.add(scopeClass);
+      if (scopeAttr) node.setAttribute(scopeAttr.name, scopeAttr.value);
+      return node;
+    }
+
+    const chipsList = root.querySelector<HTMLElement>('[data-chips]');
+    const requestMeta = root.querySelector<HTMLElement>('[data-request-meta]');
+    const requestBody = root.querySelector<HTMLElement>('[data-request-body]');
+    const resultBody = root.querySelector<HTMLElement>('[data-result]');
+    const badge = root.querySelector<HTMLElement>('[data-badge]');
+    const live = root.querySelector<HTMLElement>('[data-live]');
+    const reviewInput = root.querySelector<HTMLInputElement>('[data-review]');
+    const runButton = root.querySelector<HTMLButtonElement>('[data-run]');
+    const resetButton = root.querySelector<HTMLButtonElement>('[data-reset]');
+    const radios = Array.from(root.querySelectorAll<HTMLInputElement>('input[name="ss-sample"]'));
+    const stepItems = new Map<StepName, HTMLElement>();
+    for (const item of Array.from(root.querySelectorAll<HTMLElement>('[data-step]'))) {
+      const name = item.dataset.step as StepName | undefined;
+      if (name) stepItems.set(name, item);
+    }
+
+    const prefersReducedMotion = (): boolean =>
+      typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Stale-timeout guard: every scheduled callback captures the current token,
+    // and any newer run, reset or sample change invalidates older tokens.
+    let runToken = 0;
+    let timers: number[] = [];
+    let currentScenario: Scenario = SCENARIOS.brief;
+
+    const clearTimers = (): void => {
+      for (const timer of timers) window.clearTimeout(timer);
+      timers = [];
+    };
+    const newToken = (): number => {
+      runToken += 1;
+      clearTimers();
+      return runToken;
+    };
+    const at = (delay: number, token: number, fn: () => void): void => {
+      if (prefersReducedMotion()) {
+        if (token === runToken) fn();
+        return;
+      }
+      timers.push(
+        window.setTimeout(() => {
+          if (token === runToken) fn();
+        }, delay),
+      );
+    };
+
+    const setStep = (name: StepName, state: StepState): void => {
+      const item = stepItems.get(name);
+      if (!item) return;
+      item.classList.toggle('is-active', state === 'active');
+      item.classList.toggle('is-done', state === 'done');
+      if (state === 'active') item.setAttribute('aria-current', 'step');
+      else item.removeAttribute('aria-current');
+      const stateText = item.querySelector<HTMLElement>('[data-step-state]');
+      if (stateText) stateText.textContent = state === 'done' ? 'done' : state === 'active' ? 'current step' : '';
+    };
+
+    const setSteps = (states: Record<StepName, StepState>): void => {
+      for (const name of STEP_ORDER) setStep(name, states[name]);
+    };
+
+    const setBadge = (text: string, kind: BadgeKind): void => {
+      if (!badge) return;
+      badge.textContent = text;
+      badge.dataset.kind = kind;
+    };
+
+    const say = (message: string): void => {
+      if (live) live.textContent = message;
+    };
+
+    const buildChip = (label: string): HTMLElement => {
+      const chip = make('li');
+      chip.className = 'ss-chip';
+      const check = make('span');
+      check.className = 'ss-chip-check';
+      check.innerHTML = CHECK_SVG;
+      const text = make('span');
+      text.textContent = label;
+      chip.append(check, text);
+      return chip;
+    };
+
+    const renderChips = (scenario: Scenario): void => {
+      if (!chipsList) return;
+      chipsList.replaceChildren(...scenario.tools.map((label) => buildChip(label)));
+    };
+
+    const markChip = (index: number): void => {
+      if (!chipsList) return;
+      const chips = chipsList.querySelectorAll<HTMLElement>('.ss-chip');
+      const chip = chips[index];
+      if (chip) chip.classList.add('is-done');
+    };
+
+    const renderRequest = (scenario: Scenario): void => {
+      if (requestMeta) requestMeta.textContent = scenario.meta;
+      if (!requestBody) return;
+      const lines = scenario.request.split('\n');
+      const nodes = lines.map((line) => {
+        const p = make('p');
+        p.textContent = line === '' ? '\u00A0' : line;
+        return p;
+      });
+      requestBody.replaceChildren(...nodes);
+    };
+
+    const showEmptyResult = (working: boolean): void => {
+      if (!resultBody) return;
+      const p = make('p');
+      p.className = working ? 'ss-working' : 'ss-empty';
+      p.textContent = working
+        ? 'Reading the sample and preparing a draft…'
+        : 'Nothing here yet. Run the example to turn the request into a structured result.';
+      resultBody.replaceChildren(p);
+    };
+
+    const renderSummaryBlock = (scenario: Scenario): HTMLElement => {
+      const wrap = make('div');
+      const summary = make('p');
+      summary.className = 'ss-result-summary';
+      summary.textContent = scenario.summary;
+      const subhead = make('h4');
+      subhead.className = 'ss-subhead';
+      subhead.textContent = 'Follow-up actions';
+      const list = make('ul');
+      list.className = 'ss-tasks';
+      wrap.append(summary, subhead, list);
+      return wrap;
+    };
+
+    const addTask = (scenario: Scenario, index: number): void => {
+      if (!resultBody) return;
+      const list = resultBody.querySelector<HTMLElement>('.ss-tasks');
+      const task = scenario.tasks[index];
+      if (!list || !task) return;
+      const item = make('li');
+      item.className = 'ss-task';
+      const title = make('span');
+      title.className = 'ss-task-title';
+      title.textContent = task.title;
+      const meta = make('span');
+      meta.className = 'ss-task-meta';
+      meta.textContent = task.meta;
+      item.append(title, meta);
+      list.append(item);
+    };
+
+    const appendReviewNote = (scenario: Scenario): void => {
+      if (!resultBody) return;
+      const note = make('p');
+      note.className = 'ss-review-note';
+      note.textContent = scenario.reviewNote;
+      resultBody.append(note);
+    };
+
+    const resetToIdle = (scenario: Scenario): void => {
+      newToken();
+      renderRequest(scenario);
+      renderChips(scenario);
+      showEmptyResult(false);
+      setBadge('Awaiting run', 'idle');
+      setSteps({ request: 'active', tools: 'idle', result: 'idle', review: 'idle' });
+      if (reviewInput) {
+        reviewInput.checked = false;
+        reviewInput.disabled = true;
+      }
+    };
+
+    const runExample = (): void => {
+      const scenario = currentScenario;
+      const token = newToken();
+      if (reviewInput) {
+        reviewInput.checked = false;
+        reviewInput.disabled = true;
+      }
+      renderChips(scenario);
+      showEmptyResult(true);
+      setBadge('Working', 'working');
+      setSteps({ request: 'done', tools: 'active', result: 'idle', review: 'idle' });
+      say(`Running the example for the ${scenario.controlLabel.toLowerCase()}.`);
+
+      const chipStep = 150;
+      const chipGap = 140;
+      scenario.tools.forEach((_tool, index) => {
+        at(chipStep + index * chipGap, token, () => markChip(index));
+      });
+
+      const resultStart = chipStep + scenario.tools.length * chipGap + 120;
+      at(resultStart, token, () => {
+        setSteps({ request: 'done', tools: 'done', result: 'active', review: 'idle' });
+        if (resultBody) resultBody.replaceChildren(renderSummaryBlock(scenario));
+      });
+
+      const taskStart = resultStart + 140;
+      const taskGap = 130;
+      scenario.tasks.forEach((_task, index) => {
+        at(taskStart + index * taskGap, token, () => addTask(scenario, index));
+      });
+
+      const readyAt = taskStart + scenario.tasks.length * taskGap + 110;
+      at(readyAt, token, () => {
+        appendReviewNote(scenario);
+        setSteps({ request: 'done', tools: 'done', result: 'done', review: 'active' });
+        setBadge('Ready for review', 'ready');
+        if (reviewInput) reviewInput.disabled = false;
+        say('Result ready for review. It is not approved until you mark the review as done.');
+      });
+    };
+
+    for (const radio of radios) {
+      radio.addEventListener('change', () => {
+        if (!radio.checked) return;
+        const scenario = SCENARIOS[radio.value];
+        if (!scenario) return;
+        currentScenario = scenario;
+        resetToIdle(scenario);
+        say(`Sample changed to ${scenario.controlLabel}. Run the example to build a result.`);
+      });
+    }
+
+    runButton?.addEventListener('click', runExample);
+
+    resetButton?.addEventListener('click', () => {
+      resetToIdle(currentScenario);
+      say('Reset. The sample request is back to its starting state.');
+    });
+
+    reviewInput?.addEventListener('change', () => {
+      if (!reviewInput.checked) {
+        setBadge('Ready for review', 'ready');
+        setSteps({ request: 'done', tools: 'done', result: 'done', review: 'active' });
+        say('Review reopened. The result is ready for review again.');
+        return;
+      }
+      setBadge('Reviewed by you', 'reviewed');
+      setSteps({ request: 'done', tools: 'done', result: 'done', review: 'done' });
+      say('Marked as reviewed by you.');
+    });
+
+    resetToIdle(currentScenario);
+  }
+</script>
+
+<style>
+  .ss {
+    --ss-pink: #ff9dc7;
+    --ss-lilac: #c3b5ff;
+    --ss-mint: #9fe3c4;
+    --ss-text: #f6f6f6;
+    --ss-muted: #9aa7b4;
+    --ss-panel: #0d121a;
+    --ss-panel-2: #111826;
+    --ss-line: rgba(246, 246, 246, 0.1);
+    color: var(--ss-text);
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: anywhere;
+  }
+
+  .ss-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Header */
+  .ss-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 18px clamp(16px, 4vw, 48px);
+  }
+  .ss-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 4px 2px;
+    color: var(--ss-text);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+  .ss-brand-mark { color: var(--ss-pink); flex: none; }
+  .ss-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+  }
+  .ss-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 8px 12px;
+    color: var(--ss-muted);
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: color 160ms ease, background-color 160ms ease;
+  }
+  .ss-nav-link:hover { color: var(--ss-text); background: rgba(246, 246, 246, 0.06); }
+  .ss-nav-visit {
+    color: var(--ss-text);
+    border: 1px solid var(--ss-line);
+  }
+  .ss-nav-visit:hover { border-color: var(--ss-pink); color: var(--ss-pink); }
+
+  /* Layout */
+  .ss-main {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(32px, 4vw, 48px);
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: clamp(16px, 4vw, 32px) clamp(16px, 4vw, 48px) clamp(56px, 8vw, 96px);
+  }
+  .ss-main > section { scroll-margin-top: 24px; }
+
+  /* Hero */
+  .ss-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+    padding: clamp(24px, 5vw, 56px) 0 0;
+  }
+  .ss-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: var(--ss-muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .ss-eyebrow-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ss-pink);
+  }
+  .ss-title {
+    max-width: 15ch;
+    margin: 0;
+    font-size: clamp(2.15rem, 6.4vw, 3.9rem);
+    font-weight: 600;
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+  }
+  .ss-accent { color: var(--ss-pink); }
+  .ss-lede {
+    max-width: 34rem;
+    margin: 0;
+    color: var(--ss-muted);
+    font-size: clamp(1rem, 2.2vw, 1.15rem);
+  }
+  .ss-role {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0;
+    padding: 8px 14px;
+    border: 1px solid var(--ss-line);
+    border-radius: 999px;
+    color: var(--ss-muted);
+    font-size: 0.9rem;
+  }
+  .ss-role-label {
+    color: var(--ss-lilac);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Demo head */
+  .ss-demo { display: flex; flex-direction: column; gap: 20px; }
+  .ss-demo-head { display: flex; flex-direction: column; gap: 12px; }
+  .ss-demo-head h2 {
+    margin: 0;
+    font-size: clamp(1.35rem, 3.4vw, 1.8rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .ss-labels {
+    align-self: flex-start;
+    margin: 0;
+    padding: 6px 12px;
+    border: 1px solid var(--ss-line);
+    border-radius: 999px;
+    color: var(--ss-muted);
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+  .ss-labels .ss-label-strong { color: var(--ss-pink); }
+  .ss-demo-note { max-width: 46rem; margin: 0; color: var(--ss-muted); font-size: 0.92rem; }
+
+  /* Steps */
+  .ss-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: none;
+  }
+  .ss-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 6px 14px 6px 6px;
+    border: 1px solid var(--ss-line);
+    border-radius: 999px;
+    color: var(--ss-muted);
+    font-size: 0.86rem;
+    transition: color 200ms ease, border-color 200ms ease, background-color 200ms ease;
+  }
+  .ss-step-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(246, 246, 246, 0.07);
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .ss-step.is-active { color: var(--ss-text); border-color: rgba(255, 157, 199, 0.5); background: rgba(255, 157, 199, 0.08); }
+  .ss-step.is-active .ss-step-index { background: var(--ss-pink); color: #080b10; }
+  .ss-step.is-done { color: var(--ss-text); border-color: rgba(159, 227, 196, 0.35); }
+  .ss-step.is-done .ss-step-index { background: rgba(159, 227, 196, 0.16); color: var(--ss-mint); }
+
+  /* Sample picker */
+  .ss-picker {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .ss-picker legend {
+    padding: 0 0 8px;
+    color: var(--ss-muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .ss-picker-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .ss-choice {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 8px 16px;
+    border: 1px solid var(--ss-line);
+    border-radius: 12px;
+    background: rgba(246, 246, 246, 0.03);
+    color: var(--ss-text);
+    font-size: 0.94rem;
+    cursor: pointer;
+    transition: border-color 160ms ease, background-color 160ms ease;
+  }
+  .ss-choice:hover { border-color: rgba(246, 246, 246, 0.28); }
+  .ss-choice:has(input:checked) { border-color: var(--ss-pink); background: rgba(255, 157, 199, 0.08); }
+  .ss-choice input { accent-color: var(--ss-pink); width: 18px; height: 18px; margin: 0; }
+
+  /* Unified artifact */
+  .ss-artifact {
+    border: 1px solid var(--ss-line);
+    border-radius: 20px;
+    background: var(--ss-panel);
+    overflow: hidden;
+  }
+  .ss-rail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+    padding: 14px clamp(14px, 3vw, 22px);
+    border-bottom: 1px solid var(--ss-line);
+    background: var(--ss-panel-2);
+  }
+  .ss-rail-label {
+    margin: 0;
+    color: var(--ss-text);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .ss-rail-hint { color: var(--ss-muted); letter-spacing: 0.06em; text-transform: none; }
+  .ss-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ss-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    border: 1px dashed var(--ss-line);
+    border-radius: 999px;
+    color: var(--ss-muted);
+    font-size: 0.8rem;
+    transition: color 220ms ease, border-color 220ms ease, background-color 220ms ease;
+  }
+  .ss-chip-check { display: inline-flex; color: var(--ss-mint); opacity: 0; transition: opacity 220ms ease; }
+  .ss-chip.is-done { color: var(--ss-text); border-style: solid; border-color: rgba(159, 227, 196, 0.35); background: rgba(159, 227, 196, 0.07); }
+  .ss-chip.is-done .ss-chip-check { opacity: 1; }
+
+  .ss-panes {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .ss-pane {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+    padding: clamp(16px, 3vw, 24px);
+  }
+  .ss-pane-result { border-left: 1px solid var(--ss-line); background: rgba(246, 246, 246, 0.02); }
+  .ss-pane-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .ss-pane-head h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .ss-pane-meta { margin: 0; color: var(--ss-muted); font-size: 0.82rem; }
+  .ss-request {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid var(--ss-line);
+    border-radius: 12px;
+    background: rgba(8, 11, 16, 0.6);
+    color: var(--ss-text);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+  .ss-request p { margin: 0; }
+
+  .ss-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border: 1px solid var(--ss-line);
+    border-radius: 999px;
+    color: var(--ss-muted);
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .ss-badge[data-kind='working'] { color: var(--ss-lilac); border-color: rgba(195, 181, 255, 0.45); }
+  .ss-badge[data-kind='ready'] { color: var(--ss-pink); border-color: rgba(255, 157, 199, 0.45); }
+  .ss-badge[data-kind='reviewed'] { color: var(--ss-mint); border-color: rgba(159, 227, 196, 0.45); }
+
+  .ss-result { display: flex; flex-direction: column; gap: 14px; min-height: 200px; }
+  .ss-empty, .ss-working {
+    margin: 0;
+    padding: 16px;
+    border: 1px dashed var(--ss-line);
+    border-radius: 12px;
+    color: var(--ss-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+  .ss-working { color: var(--ss-lilac); border-style: solid; }
+  .ss-result-summary { margin: 0; font-size: 0.98rem; line-height: 1.6; }
+  .ss-subhead {
+    margin: 4px 0 0;
+    color: var(--ss-muted);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .ss-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ss-task {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 10px 12px;
+    border: 1px solid var(--ss-line);
+    border-radius: 12px;
+    background: rgba(8, 11, 16, 0.5);
+    animation: ss-task-in 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .ss-task-title { font-size: 0.92rem; font-weight: 550; line-height: 1.45; }
+  .ss-task-meta { color: var(--ss-muted); font-size: 0.8rem; }
+  .ss-review-note {
+    margin: 0;
+    padding: 10px 12px;
+    border-left: 1px solid var(--ss-pink);
+    color: var(--ss-muted);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+  @keyframes ss-task-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ss-review {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--ss-line);
+  }
+  .ss-review-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    color: var(--ss-text);
+    font-size: 0.92rem;
+    cursor: pointer;
+  }
+  .ss-review-label:has(input:disabled) { color: var(--ss-muted); cursor: not-allowed; }
+  .ss-review-label input { accent-color: var(--ss-pink); width: 18px; height: 18px; margin: 0; }
+  .ss-review-hint { margin: 0; color: var(--ss-muted); font-size: 0.8rem; }
+
+  /* Actions + live status */
+  .ss-actions { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .ss-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 20px;
+    border: 1px solid var(--ss-line);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--ss-text);
+    font-size: 0.94rem;
+    transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+  }
+  .ss-btn:hover { border-color: rgba(246, 246, 246, 0.32); background: rgba(246, 246, 246, 0.06); }
+  .ss-btn-primary { background: var(--ss-pink); border-color: var(--ss-pink); color: #080b10; font-weight: 600; }
+  .ss-btn-primary:hover { background: #ffb3d2; border-color: #ffb3d2; color: #080b10; }
+  .ss-live { margin: 0; color: var(--ss-muted); font-size: 0.88rem; }
+
+  /* Story + notes */
+  .ss-story h2, .ss-notes h2 {
+    margin: 0 0 18px;
+    font-size: clamp(1.35rem, 3.4vw, 1.8rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .ss-prose { display: flex; flex-direction: column; gap: 16px; max-width: 44rem; }
+  .ss-prose p { margin: 0; color: #dfe4ea; font-size: 1.02rem; }
+  .ss-notes-intro { margin: 0 0 22px; color: var(--ss-muted); max-width: 44rem; }
+  .ss-note-list { display: flex; flex-direction: column; gap: 16px; margin: 0; }
+  .ss-note {
+    padding: 18px 20px;
+    border: 1px solid var(--ss-line);
+    border-radius: 16px;
+    background: rgba(246, 246, 246, 0.03);
+  }
+  .ss-note dt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .ss-note dt::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ss-lilac);
+    flex: none;
+  }
+  .ss-note dd { margin: 0; color: var(--ss-muted); font-size: 0.94rem; line-height: 1.65; }
+
+  .ss-foot {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(16px, 4vw, 48px) 40px;
+  }
+  .ss-foot p { margin: 0; padding-top: 18px; border-top: 1px solid var(--ss-line); color: var(--ss-muted); font-size: 0.82rem; }
+
+  /* Responsive */
+  @media (max-width: 820px) {
+    .ss-panes { grid-template-columns: minmax(0, 1fr); }
+    .ss-pane-result { border-left: 0; border-top: 1px solid var(--ss-line); }
+  }
+  @media (max-width: 480px) {
+    .ss-title { max-width: 100%; }
+    .ss-actions { flex-direction: column; }
+    .ss-btn { width: 100%; }
+    .ss-choice { width: 100%; }
+    .ss-top { justify-content: flex-start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ss-task { animation: none; }
+  }
+</style>

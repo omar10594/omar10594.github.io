@@ -1,7 +1,7 @@
 # Guillermo Omar López López - Portfolio
 
-A personal workspace built with Astro, TypeScript and CSS. The phase-1 desktop
-replaces the CV layout with an interactive terminal and Markdown document windows.
+A personal workspace built with Astro, TypeScript and CSS: an interactive
+terminal, Markdown documents and five independently designed project views.
 
 - **Production URL**: [lopezlopez.com.mx](https://lopezlopez.com.mx)
 - **Repository**: [omar10594.github.io](https://github.com/omar10594/omar10594.github.io)
@@ -42,7 +42,7 @@ versions and a committed lockfile; `.npmrc` enforces the supported Node version.
    npm run preview -- --host 127.0.0.1 --port 4321
    ```
 
-## Phase-1 workspace
+## Workspace
 
 Start with `help`, `ls`, `ll`, `cd cv`, `cat experience.md`, `..` or
 `open contact.md`. Files in a listing are clickable. Tab completes commands
@@ -60,6 +60,19 @@ from the taskbar. Focus a title bar to move with arrow keys, resize with
 Shift+arrows, maximize/restore with Enter, or center with Home. About and Contact
 start open in front of the terminal, with About active. The startup composition
 is centered and capped at 1320 px so wide screens keep the windows together.
+
+## Project views
+
+Open `projects/` from the welcome screen or run `open projects`. PlayBusiness,
+SoSimple, Miss Luciana, Horarios and Roomies each have a distinct, interactive
+case study using fictional data. On desktop they open in movable, resizable
+windows. On mobile they open as independent responsive pages; the surrounding
+mobile workspace retains its existing navigation.
+
+Each case study is a separate Astro document. CSS and JavaScript stay isolated
+from the shell and the other brands. Routes and virtual folders come from a
+small registry; see [the project-view guide](src/features/projects/README.md)
+for the extension workflow. Demonstrations make no model or production API calls.
 
 Mobile starts with About above a persistent terminal using roughly 34% of the
 available work area. Drag the separator to resize the split or expand the
@@ -89,9 +102,9 @@ the `cv/` subfolder holds experience, education and skills from the prior site.
 creates text/DOM nodes and does not insert Markdown as raw HTML. Commands do
 not execute code, mutate files or access the machine's shell.
 
-The bespoke project landings and mobile demonstrations are phase 2. Projects
-currently has a Markdown index only. The optional final-phase AI fallback has
-a typed interface in `src/lib/terminal/fallback.ts` and is disconnected: no
+The five project views are linked from their Markdown index and virtual folders.
+The optional final-phase AI fallback has a typed interface in
+`src/lib/terminal/fallback.ts` and is disconnected: no
 model, credentials, backend or paid requests are configured. A later adapter
 can receive virtual context and character dimensions and return bounded text
 lines without changing the local command interpreter.

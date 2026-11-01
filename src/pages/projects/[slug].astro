@@ -1,0 +1,12 @@
+---
+import { projects } from '../../features/projects/registry';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.id } }));
+}
+const components = import.meta.glob<{ default: AstroComponentFactory }>('../../features/projects/*/Project.astro');
+const load = components[`../../features/projects/${Astro.params.slug}/Project.astro`];
+if (!load) throw new Error(`Missing project component: ${Astro.params.slug}`);
+const { default: Project } = await load();
+---
+<Project />

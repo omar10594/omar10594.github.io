@@ -1,4 +1,5 @@
 import type { WorkspaceDocument } from '../terminal/engine';
+import { projects as projectDefinitions, projectDocumentPath } from '../../features/projects/registry';
 import readme from '../../data/workspace/README.md?raw';
 import about from '../../data/workspace/about.md?raw';
 import contact from '../../data/workspace/contact.md?raw';
@@ -57,6 +58,11 @@ export const documents: WorkspaceDocument[] = [
     content: projects,
     kind: 'projects',
   },
+  ...projectDefinitions.map((project): WorkspaceDocument => ({
+    path: projectDocumentPath(project.id), title: project.title,
+    content: `# ${project.title}\n\n${project.summary}\n\nOpen this document to explore the interactive project view.`,
+    kind: 'document',
+  })),
 ];
 
 export const encodedEmail = 'Z3VpbGxlcm1vQGxvcGV6bG9wZXouY29tLm14';

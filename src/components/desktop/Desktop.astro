@@ -65,4 +65,10 @@ const initialDocuments = documents.filter((doc) => ['About', 'Contact'].includes
 <script>
   import { initializeDesktop } from '../../lib/workspace/desktop';
   initializeDesktop();
+  window.matchMedia('(max-width: 700px)').addEventListener('change', (event) => {
+    if (!event.matches) {
+      initializeDesktop();
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    }
+  });
 </script>

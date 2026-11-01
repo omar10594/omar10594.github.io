@@ -23,6 +23,7 @@ interface WorkspaceWindow {
 }
 
 export function initializeDesktop(): void {
+  if (window.innerWidth <= 700) return;
   const desktop = document.querySelector<HTMLElement>('#desktop');
   if (!desktop || desktop.dataset.initialized) return;
   desktop.dataset.initialized = 'true';
@@ -778,6 +779,7 @@ export function initializeDesktop(): void {
   window.addEventListener('resize', updateViewport);
   window.visualViewport?.addEventListener('resize', updateViewport);
   const readHash = () => {
+    if (compact()) return;
     if (!window.location.hash || window.location.hash === '#') { focusWindow('terminal', true); return; }
     if (!window.location.hash.startsWith('#file=')) return;
     try { openDocument(decodeURIComponent(window.location.hash.slice(6)), false); } catch { /* An invalid fragment leaves the usable desktop in place. */ }

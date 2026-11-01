@@ -374,3 +374,22 @@ Shared reveal motion is `600ms cubic-bezier(.16,1,.3,1)` from `translateY(12px)`
 ### Miss Luciana author invitation — refinement 2026-10-31
 
 The hero pairs a transparent teacher-penguin derivative with a prominent Meet Luciana link to `https://soy.missluciana.com/`, repeated in her authorship section. Keep the person and her classroom expertise explicit. The cutout is a decorative brand illustration, not a portrait of Luciana. Source is `src/assets/projects/penguin-teacher-cutout.png` with prompt/origin metadata; Astro Image emits an optimized WebP. Display width is 150–210px on desktop and 156px on compact screens, capped to 52% of its row. Preserve alpha, natural proportions and the warm cream surface; no blue square thumbnail.
+
+## Implemented mobile shell — 2026-11-01
+
+The owner reopened mobile and approved the current Geist Mono. Below701px the
+new MobileWorkspace replaces the compact terminal split with one opaque window.
+It has decorative traffic dots, a title/path bar,44px Back/Home targets, and a
+single content viewport. Home has the existing character-built identity, normal
+monospaced name, four plain separator-led section links and text social links.
+No mobile script signature or functional window controls are rendered.
+
+Documents share existing Markdown and #file links; internal per-entry history
+restores scroll and uses hierarchical parents only for a fresh deep link. Project
+pages fill an isolated iframe below the persistent navigation and retain their
+own identity. Real marks are imported for PlayBusiness, SoSimple, Miss Luciana
+and Horarios; Roomies has a neutral line icon. No new private hosting links.
+New-view blocks/rows arrive in a fast opacity sequence capped at500ms, with no
+layout movement or repeat on Back. Reduced-motion disables all mobile animation.
+This supersedes the older compact-split specification above for the active mobile
+shell; desktop window geometry, interactions and typography remain unchanged.

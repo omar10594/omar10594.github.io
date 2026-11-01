@@ -1,0 +1,130 @@
+---
+import '../../styles/mobile.css';
+
+const lettering = [
+  '   ___  _ __ ___   __ _ _ __ ',
+  "  / _ \\| '_ ` _ \\ / _` | '__|",
+  ' | (_) | | | | | | (_| | |   ',
+  '  \\___/|_| |_| |_|\\__,_|_|   ',
+].join('\n');
+const slash = ['    /', '   / ', '  /  ', ' /   '].join('\n');
+const fileHref = (path: string): string => `#file=${encodeURIComponent(path)}`;
+---
+
+<main id="mobile-workspace" aria-label="Portfolio">
+  <div class="mobile-frame">
+    <header class="mobile-titlebar">
+      <div class="mobile-dots" aria-hidden="true">
+        <span class="mobile-dot mobile-dot-close"></span>
+        <span class="mobile-dot mobile-dot-minimize"></span>
+        <span class="mobile-dot mobile-dot-maximize"></span>
+      </div>
+      <h1 id="mobile-title" class="mobile-title">Home</h1>
+      <span class="mobile-titlebar-spacer" aria-hidden="true"></span>
+    </header>
+
+    <nav id="mobile-nav" class="mobile-nav is-home" aria-label="Mobile workspace navigation">
+      <button id="mobile-back" class="mobile-nav-action" type="button" data-mobile-action="back" hidden>
+        <span aria-hidden="true">←</span> Back
+      </button>
+      <a id="mobile-home" class="mobile-nav-action" href="/" data-mobile-action="home" hidden>Home</a>
+      <p id="mobile-path" class="mobile-path">~/</p>
+    </nav>
+
+    <div id="mobile-content" class="mobile-content" tabindex="-1">
+      <section class="mobile-view mobile-home" aria-labelledby="mobile-home-name">
+        <div class="mobile-home-ascii" aria-hidden="true">
+          <pre class="mobile-ascii">{lettering}</pre>
+          <pre class="mobile-ascii mobile-ascii-slash">{slash}</pre>
+        </div>
+        <h2 id="mobile-home-name" class="mobile-home-name" tabindex="-1">Guillermo Omar López López</h2>
+        <p class="mobile-home-line">I build web products and the systems behind them.</p>
+
+        <nav class="mobile-home-links" aria-label="Portfolio sections">
+          <a class="mobile-row mobile-row-primary" href={fileHref('/home/omar/projects/README.md')}>
+            <span class="mobile-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"></path>
+                <path d="M3 10h18"></path>
+              </svg>
+            </span>
+            <span class="mobile-row-copy">
+              <span class="mobile-row-title">Projects</span>
+              <span class="mobile-row-subtitle">Selected products and case studies</span>
+            </span>
+            <svg class="mobile-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="m9 5 7 7-7 7"></path>
+            </svg>
+          </a>
+
+          <a class="mobile-row" href={fileHref('/home/omar/about.md')}>
+            <span class="mobile-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path>
+                <path d="M4 21a8 8 0 0 1 16 0"></path>
+              </svg>
+            </span>
+            <span class="mobile-row-copy">
+              <span class="mobile-row-title">About</span>
+              <span class="mobile-row-subtitle">How I work and what I value</span>
+            </span>
+            <svg class="mobile-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="m9 5 7 7-7 7"></path>
+            </svg>
+          </a>
+
+          <a class="mobile-row" href={fileHref('/home/omar/cv/README.md')}>
+            <span class="mobile-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                <path d="M7 3h7l4 4v14H7Z"></path>
+                <path d="M14 3v4h4"></path>
+                <path d="M10 12h5"></path>
+                <path d="M10 16h5"></path>
+              </svg>
+            </span>
+            <span class="mobile-row-copy">
+              <span class="mobile-row-title">CV</span>
+              <span class="mobile-row-subtitle">Experience, education and skills</span>
+            </span>
+            <svg class="mobile-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="m9 5 7 7-7 7"></path>
+            </svg>
+          </a>
+
+          <a class="mobile-row" href={fileHref('/home/omar/contact.md')}>
+            <span class="mobile-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                <path d="M3 6h18v12H3Z"></path>
+                <path d="m3 7 9 7 9-7"></path>
+              </svg>
+            </span>
+            <span class="mobile-row-copy">
+              <span class="mobile-row-title">Contact</span>
+              <span class="mobile-row-subtitle">Email, GitHub and LinkedIn</span>
+            </span>
+            <svg class="mobile-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="m9 5 7 7-7 7"></path>
+            </svg>
+          </a>
+        </nav>
+
+        <nav class="mobile-social" aria-label="Elsewhere">
+          <a class="mobile-social-link" href="https://github.com/omar10594" target="_blank" rel="noopener noreferrer">
+            GitHub<span aria-hidden="true"> ↗</span>
+          </a>
+          <a class="mobile-social-link" href="https://www.linkedin.com/in/omar10594/" target="_blank" rel="noopener noreferrer">
+            LinkedIn<span aria-hidden="true"> ↗</span>
+          </a>
+        </nav>
+      </section>
+    </div>
+
+    <p id="mobile-announcer" class="mobile-sr-only" aria-live="polite" aria-atomic="true"></p>
+  </div>
+</main>
+
+<script>
+  import { initializeMobileWorkspace } from '../../lib/workspace/mobile';
+
+  initializeMobileWorkspace();
+</script>

@@ -283,7 +283,7 @@ Responsive rules follow document viewport width, including narrow desktop frames
 | Horarios | 940, 560, 360px | Hero and story stack at 940px; smaller navigation, scenarios and calendar typography support narrow screens. |
 | Roomies | 900, 560, 360px | Hero/device stack at 900px; navigation, story padding and balance rows tighten on smaller screens. |
 
-Horarios and Roomies retain the shared device preview. Hardware width is `min(100%, 366px)` with an outer aspect ratio of `9 / 19.5` (366 × 793px at full width). `min-height: 0` and `flex: none` prevent content or a short window from distorting it. The screen fills the hardware; content and the surrounding page scroll independently. Do not compress the silhouette to fit viewport height.
+Horarios and Roomies retain the shared device preview. Hardware width is `min(100%, 366px)` with an outer aspect ratio of `9 / 19.5` (366 × 793px at full width). `min-height: 0` and `flex: none` prevent content or a short window from distorting it. The screen fills the hardware; content and the surrounding page scroll independently, with normal scroll chaining at the preview boundary so it never traps wheel/touch gestures. Do not compress the silhouette to fit viewport height.
 
 ## Elevation & Depth
 

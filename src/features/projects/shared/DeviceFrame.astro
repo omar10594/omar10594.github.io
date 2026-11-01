@@ -95,7 +95,8 @@ const hasCaption = Astro.slots.has('caption');
     min-height: 0;
     overflow-x: hidden;
     overflow-y: auto;
-    overscroll-behavior: contain;
+    /* Continue into the page at either end; a tall preview must not trap scrolling. */
+    overscroll-behavior-y: auto;
     scrollbar-width: thin;
   }
 

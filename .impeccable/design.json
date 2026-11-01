@@ -651,7 +651,8 @@
       "source": "src/features/projects/shared/DeviceFrame.astro",
       "hardwareWidth": "min(100%, 366px)",
       "hardwareAspectRatio": "9 / 19.5",
-      "heightPolicy": "Independent of viewport height; min-height 0 and flex none; preview scrolls internally."
+      "heightPolicy": "Independent of viewport height; min-height 0 and flex none; preview scrolls internally.",
+      "scrollPolicy": "Preview scrolls internally when needed; normal chaining continues into the surrounding page at its edges."
     },
     "missLucianaMascot": {
       "source": "src/assets/projects/penguin-teacher-cutout.png",
